@@ -3,6 +3,7 @@
 [![Go Version](https://img.shields.io/badge/Go-1.19%2B-00ADD8)](https://golang.org/)
 [![GitHub Release](https://img.shields.io/github/v/release/CreatorOss/certifycli)](https://github.com/CreatorOss/certifycli/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![GitHub Sponsors](https://img.shields.io/badge/Sponsor-%E2%9D%A4-%23db61a2)](https://github.com/sponsors/CreatorOss)
 [![GitHub Downloads](https://img.shields.io/github/downloads/CreatorOss/certifycli/total)](https://github.com/CreatorOss/certifycli/releases)
 [![Platform Support](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-brightgreen)](https://github.com/CreatorOss/certifycli/releases)
 
@@ -15,6 +16,28 @@
 - ⚡ **One-Command Setup** - Get started in under 60 seconds
 - 🔍 **Comprehensive Verification** - Verify individual commits or entire repositories
 - 💼 **Professional Ready** - Perfect for developers, teams, and enterprises
+
+## 💖 Support CertifyCLI
+
+CertifyCLI is free and open source. If it helps you in your work, please consider supporting its development:
+
+### 🤝 GitHub Sponsors
+[![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-%23db61a2)](https://github.com/sponsors/CreatorOss)
+
+Support monthly development through [GitHub Sponsors](https://github.com/sponsors/CreatorOss). Even $3/month helps!
+
+### 💰 PayPal Donation
+[![PayPal](https://img.shields.io/badge/PayPal-00457C?logo=paypal&logoColor=white)](https://paypal.me/Sendec?country.x=ID&locale.x=id_ID)
+
+Prefer one-time support? [Send via PayPal](https://paypal.me/Sendec?country.x=ID&locale.x=id_ID) to show your appreciation.
+
+### ☕ Buy Me a Coffee
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/creatoross)
+
+Another way to support: [Buy me a coffee](https://buymeacoffee.com/creatoross) for quick appreciation.
+
+### 🏢 Enterprise Support
+Need custom features, on-premise deployment, or SLA guarantees? Contact us at **enterprise@certifycli.com**
 
 ## 🏁 Quick Start
 
@@ -161,5 +184,5 @@ CertifyCLI is dual-licensed:
 ---
 
 <div align="center">
-Made with ❤️ by the CertifyCLI Team
+Made with ❤️ by <a href="https://github.com/CreatorOss">CreatorOss</a>
 </div>

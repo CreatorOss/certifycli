@@ -284,6 +284,28 @@ certifycli/
 - [Project Discussions](https://github.com/CreatorOss/certifycli/discussions)
 - [Project Wiki](https://github.com/CreatorOss/certifycli/wiki)
 
+## 💖 Supporting the Project
+
+CertifyCLI is free and open source. If you find it valuable, please consider supporting its development:
+
+### 🤝 GitHub Sponsors
+[![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-%23db61a2)](https://github.com/sponsors/CreatorOss)
+
+Support monthly development through [GitHub Sponsors](https://github.com/sponsors/CreatorOss). Even $3/month helps!
+
+### 💰 PayPal Donation
+[![PayPal](https://img.shields.io/badge/PayPal-00457C?logo=paypal&logoColor=white)](https://paypal.me/Sendec?country.x=ID&locale.x=id_ID)
+
+Prefer one-time support? [Send via PayPal](https://paypal.me/Sendec?country.x=ID&locale.x=id_ID) to show your appreciation.
+
+### ☕ Buy Me a Coffee
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/creatoross)
+
+Another way to support: [Buy me a coffee](https://buymeacoffee.com/creatoross) for quick appreciation.
+
+### 🏢 Enterprise Support
+Need custom features, priority support, or SLA guarantees? Contact us at **enterprise@certifycli.com**
+
 ## 🤝 Community
 
 ### Code of Conduct
@@ -296,6 +318,7 @@ We are committed to providing a welcoming and inclusive environment for all cont
 - **Issues**: Search existing issues before creating new ones
 - **Discussions**: Use GitHub Discussions for questions and ideas
 - **Security**: Report security issues privately to maintainers
+- **Sponsors**: Join our [sponsor community](https://github.com/sponsors/CreatorOss) for priority support
 
 ## 🎯 Roadmap
 
