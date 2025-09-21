@@ -1,4 +1,4 @@
-module github.com/your-username/certifycli
+module github.com/CreatorOss/certifycli
 
 go 1.21
 

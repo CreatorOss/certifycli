@@ -3,8 +3,10 @@ package crypto
 import (
 	"crypto/rand"
 	"crypto/rsa"
+	"crypto/sha256"
 	"crypto/x509"
 	"crypto/x509/pkix"
+	"encoding/hex"
 	"encoding/pem"
 	"fmt"
 	"math/big"
@@ -113,4 +115,15 @@ func GenerateTestCertificate(privateKey *rsa.PrivateKey, commonName string) ([]b
 	})
 
 	return certPEM, nil
+}
+
+// GetPublicKeyFingerprint generates a fingerprint for the public key
+func GetPublicKeyFingerprint(publicKey *rsa.PublicKey) string {
+	publicKeyBytes, err := x509.MarshalPKIXPublicKey(publicKey)
+	if err != nil {
+		return "error generating fingerprint"
+	}
+
+	hash := sha256.Sum256(publicKeyBytes)
+	return hex.EncodeToString(hash[:])[:16] // Return first 16 characters
 }

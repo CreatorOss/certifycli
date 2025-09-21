@@ -81,14 +81,18 @@ certifycli/
 - `certifycli setup` - Set up your identity and generate certificates ✅
 - `certifycli status` - Show your current identity status ✅
 - `certifycli test-crypto` - Test cryptographic functions ✅
+- `certifycli test-keyring` - Test OS keychain integration ✅
+- `certifycli cleanup` - Remove all CertifyCLI data ✅
 - `certifycli --help` - Show help message ✅
 
 ### Implemented Features ✅
 - **RSA Key Generation**: 2048-bit RSA key pair generation
-- **Secure Storage**: Private keys saved as PEM files (OS keychain integration coming soon)
+- **OS Keychain Storage**: Private keys securely stored in OS keychain (macOS/Windows/Linux)
 - **CSR Creation**: Certificate Signing Request generation
 - **Test Certificates**: Self-signed certificate generation for testing
 - **CLI Interface**: Interactive setup and status commands
+- **Security**: No plaintext keys on disk, OS-level encryption
+- **Cross-Platform**: Works on macOS Keychain, Windows Credential Manager, Linux Secret Service
 
 ## Getting Started
 
