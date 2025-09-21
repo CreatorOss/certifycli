@@ -11,6 +11,7 @@ import (
 	"github.com/CreatorOss/certifycli/internal/auth"
 	"github.com/CreatorOss/certifycli/internal/ca"
 	"github.com/CreatorOss/certifycli/internal/crypto"
+	"github.com/CreatorOss/certifycli/internal/git"
 	"github.com/CreatorOss/certifycli/internal/utils"
 )
 
@@ -39,6 +40,8 @@ func main() {
 		handleRevokeCert()
 	case "verify-cert":
 		handleVerifyCert()
+	case "git":
+		handleGitCommands()
 	case "test-crypto":
 		handleTestCrypto()
 	case "test-keyring":
@@ -58,6 +61,223 @@ func main() {
 	}
 }
 
+func handleGitCommands() {
+	if len(os.Args) < 3 {
+		printGitHelp()
+		os.Exit(1)
+	}
+
+	gitService, err := git.NewGitService()
+	if err != nil {
+		fmt.Printf("❌ Error creating git service: %v\n", err)
+		os.Exit(1)
+	}
+
+	switch os.Args[2] {
+	case "configure":
+		handleGitConfigure(gitService)
+	case "sign":
+		handleGitSign(gitService)
+	case "status":
+		handleGitStatus(gitService)
+	case "disable":
+		handleGitDisable(gitService)
+	case "test":
+		handleGitTest(gitService)
+	case "verify":
+		handleGitVerify(gitService)
+	case "verify-all":
+		handleGitVerifyAll(gitService)
+	case "version":
+		handleGitVersion(gitService)
+	default:
+		fmt.Printf("Unknown git command: %s\n", os.Args[2])
+		printGitHelp()
+		os.Exit(1)
+	}
+}
+
+func handleGitConfigure(gitService *git.GitService) {
+	fmt.Println("🔧 Configuring Git to use CertifyCLI for commit signing...")
+	
+	// Check if user has identity set up
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		fmt.Printf("❌ Error finding home directory: %v\n", err)
+		os.Exit(1)
+	}
+
+	userConfigPath := filepath.Join(homeDir, ".certifycli", "user")
+	if _, err := os.Stat(userConfigPath); os.IsNotExist(err) {
+		fmt.Println("❌ No identity configured. Please run 'certifycli setup' first.")
+		os.Exit(1)
+	}
+
+	if err := gitService.ConfigureGitSigning(); err != nil {
+		fmt.Printf("❌ Error configuring git: %v\n", err)
+		os.Exit(1)
+	}
+
+	fmt.Println("\n🎉 Git integration setup complete!")
+	fmt.Println("💡 Now all your commits will be automatically signed with CertifyCLI")
+	fmt.Println("🚀 Try making a commit to test it out!")
+}
+
+func handleGitSign(gitService *git.GitService) {
+	// This is called by Git internally when signing commits
+	if err := gitService.SignCommit(); err != nil {
+		fmt.Fprintf(os.Stderr, "Error signing commit: %v\n", err)
+		os.Exit(1)
+	}
+}
+
+func handleGitStatus(gitService *git.GitService) {
+	fmt.Println("📊 Git Signing Configuration Status")
+	fmt.Println("==================================")
+	
+	// Check Git version
+	version, err := gitService.GetGitVersion()
+	if err != nil {
+		fmt.Printf("❌ Git: Not installed or not available\n")
+		fmt.Printf("   Error: %v\n", err)
+		return
+	}
+	fmt.Printf("✅ Git: %s\n", version)
+
+	// Check configuration
+	config, err := gitService.VerifyGitConfig()
+	if err != nil {
+		fmt.Printf("❌ Error checking git config: %v\n", err)
+		os.Exit(1)
+	}
+
+	fmt.Println("\n🔧 Git Configuration:")
+	fmt.Printf("  user.name: %s\n", getConfigStatus(config["user.name"]))
+	fmt.Printf("  user.email: %s\n", getConfigStatus(config["user.email"]))
+	fmt.Printf("  user.signingkey: %s\n", getConfigStatus(config["user.signingkey"]))
+	fmt.Printf("  gpg.format: %s\n", getConfigStatus(config["gpg.format"]))
+	fmt.Printf("  gpg.x509.program: %s\n", getConfigStatus(config["gpg.x509.program"]))
+	fmt.Printf("  commit.gpgsign: %s\n", getConfigStatus(config["commit.gpgsign"]))
+	fmt.Printf("  tag.gpgsign: %s\n", getConfigStatus(config["tag.gpgsign"]))
+
+	// Check if configured to use certifycli
+	fmt.Println("\n📋 Integration Status:")
+	if config["gpg.x509.program"] != "NOT SET" && strings.Contains(config["gpg.x509.program"], "certifycli") {
+		fmt.Println("✅ Git is configured to use CertifyCLI for signing!")
+		if config["commit.gpgsign"] == "true" {
+			fmt.Println("✅ Automatic commit signing is enabled")
+		} else {
+			fmt.Println("⚠️  Automatic commit signing is disabled")
+		}
+	} else {
+		fmt.Println("❌ Git is not configured to use CertifyCLI for signing")
+		fmt.Println("💡 Run 'certifycli git configure' to set it up")
+	}
+
+	// Check identity
+	homeDir, _ := os.UserHomeDir()
+	userConfigPath := filepath.Join(homeDir, ".certifycli", "user")
+	if _, err := os.Stat(userConfigPath); err == nil {
+		fmt.Println("✅ CertifyCLI identity is configured")
+	} else {
+		fmt.Println("❌ CertifyCLI identity not found")
+		fmt.Println("💡 Run 'certifycli setup' to create your identity")
+	}
+}
+
+func handleGitDisable(gitService *git.GitService) {
+	fmt.Println("🚫 Disabling Git signing with CertifyCLI...")
+	
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("Are you sure you want to disable Git signing? (y/N): ")
+	response, _ := reader.ReadString('\n')
+	response = strings.TrimSpace(strings.ToLower(response))
+	
+	if response != "y" && response != "yes" {
+		fmt.Println("Operation cancelled.")
+		return
+	}
+
+	if err := gitService.DisableGitSigning(); err != nil {
+		fmt.Printf("❌ Error disabling git signing: %v\n", err)
+		os.Exit(1)
+	}
+
+	fmt.Println("💡 You can re-enable signing anytime with 'certifycli git configure'")
+}
+
+func handleGitTest(gitService *git.GitService) {
+	fmt.Println("🧪 Testing Git signing integration...")
+	
+	if err := gitService.TestGitSigning(); err != nil {
+		fmt.Printf("❌ Git signing test failed: %v\n", err)
+		os.Exit(1)
+	}
+
+	fmt.Println("🎉 Git signing test completed successfully!")
+}
+
+func handleGitVersion(gitService *git.GitService) {
+	version, err := gitService.GetGitVersion()
+	if err != nil {
+		fmt.Printf("❌ Error getting Git version: %v\n", err)
+		os.Exit(1)
+	}
+	fmt.Printf("Git version: %s\n", version)
+}
+
+func handleGitVerify(gitService *git.GitService) {
+	fmt.Println("🔍 Verifying last commit signature...")
+	
+	if err := gitService.VerifyLastCommit(); err != nil {
+		fmt.Printf("❌ Error verifying commit: %v\n", err)
+		os.Exit(1)
+	}
+}
+
+func handleGitVerifyAll(gitService *git.GitService) {
+	fmt.Println("🔍 Verifying all commit signatures in repository...")
+	
+	if err := gitService.VerifyAllCommits(); err != nil {
+		fmt.Printf("❌ Error verifying commits: %v\n", err)
+		os.Exit(1)
+	}
+}
+
+// Helper functions
+
+func getConfigStatus(value string) string {
+	if value == "NOT SET" {
+		return "❌ " + value
+	}
+	return "✅ " + value
+}
+
+func printGitHelp() {
+	fmt.Println("CertifyCLI Git Integration Commands")
+	fmt.Println("==================================")
+	fmt.Println("\nUsage:")
+	fmt.Println("  certifycli git <subcommand>")
+	fmt.Println("\nConfiguration Commands:")
+	fmt.Println("  configure  Set up Git to use CertifyCLI for signing")
+	fmt.Println("  status     Check Git signing configuration")
+	fmt.Println("  disable    Disable CertifyCLI Git signing")
+	fmt.Println("  version    Show Git version")
+	fmt.Println("\nSigning Commands:")
+	fmt.Println("  test       Test Git signing with a temporary repository")
+	fmt.Println("  sign       Sign a Git commit (internal use by Git)")
+	fmt.Println("\nVerification Commands:")
+	fmt.Println("  verify     Verify the last commit signature")
+	fmt.Println("  verify-all Verify all commit signatures in repository")
+	fmt.Println("\nExamples:")
+	fmt.Println("  certifycli git configure   # Enable Git signing")
+	fmt.Println("  certifycli git status      # Check configuration")
+	fmt.Println("  certifycli git test        # Test signing")
+	fmt.Println("  certifycli git verify      # Verify last commit")
+	fmt.Println("  certifycli git verify-all  # Verify all commits")
+}
+
+// Previous functions remain the same...
 func handleSetup() {
 	fmt.Println("🔧 Setting up your CertifyCLI identity...")
 
@@ -175,6 +395,7 @@ func handleSetup() {
 	fmt.Printf("📅 Valid from: %s\n", signResp.ValidFrom)
 	fmt.Printf("📅 Valid to: %s\n", signResp.ValidTo)
 	fmt.Println("\n🎉 Your identity is now ready to use!")
+	fmt.Println("💡 Next step: Run 'certifycli git configure' to enable Git commit signing")
 }
 
 func handleListCerts() {
@@ -498,6 +719,20 @@ func handleStatus() {
 		fmt.Println("✅ Connected")
 	}
 
+	// Check Git integration
+	gitService, err := git.NewGitService()
+	if err == nil {
+		config, err := gitService.VerifyGitConfig()
+		if err == nil {
+			fmt.Print("🔧 Git integration: ")
+			if config["gpg.x509.program"] != "NOT SET" && strings.Contains(config["gpg.x509.program"], "certifycli") {
+				fmt.Println("✅ Configured")
+			} else {
+				fmt.Println("❌ Not configured")
+			}
+		}
+	}
+
 	fmt.Println("\n💡 Available commands:")
 	if !auth.IsLoggedIn() {
 		fmt.Println("  - certifycli register (create account)")
@@ -505,6 +740,7 @@ func handleStatus() {
 	} else {
 		fmt.Println("  - certifycli certificates (list certificates)")
 		fmt.Println("  - certifycli verify-cert (verify certificate)")
+		fmt.Println("  - certifycli git configure (setup Git signing)")
 		fmt.Println("  - certifycli logout (sign out)")
 	}
 }
@@ -646,6 +882,11 @@ func printHelp() {
 	fmt.Println("  get-cert      Get details of a specific certificate ✅")
 	fmt.Println("  revoke-cert   Revoke a certificate ✅")
 	fmt.Println("  verify-cert   Verify a certificate against CA ✅")
+	fmt.Println("\nGit Integration Commands:")
+	fmt.Println("  git configure Configure Git to use CertifyCLI for signing ✅")
+	fmt.Println("  git status    Check Git signing configuration ✅")
+	fmt.Println("  git disable   Disable CertifyCLI Git signing ✅")
+	fmt.Println("  git test      Test Git signing integration ✅")
 	fmt.Println("\nTesting Commands:")
 	fmt.Println("  test-crypto   Test cryptographic functions ✅")
 	fmt.Println("  test-keyring  Test OS keychain integration ✅")
@@ -659,9 +900,10 @@ func printHelp() {
 	fmt.Println("  🛡️  Secure token storage for authentication")
 	fmt.Println("  🌐 JWT-based server authentication")
 	fmt.Println("  🏛️  Real Certificate Authority with X.509 certificates")
+	fmt.Println("  🔧 Git commit signing integration")
 	fmt.Println("\nComplete Workflow:")
 	fmt.Println("  1. certifycli setup          # Generate identity & get CA certificate")
-	fmt.Println("  2. certifycli status         # Check everything is working")
-	fmt.Println("  3. certifycli certificates   # List your certificates")
-	fmt.Println("  4. certifycli verify-cert    # Verify your certificate")
+	fmt.Println("  2. certifycli git configure  # Enable Git commit signing")
+	fmt.Println("  3. git commit -m \"message\"   # All commits now automatically signed!")
+	fmt.Println("  4. certifycli status         # Check everything is working")
 }

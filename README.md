@@ -82,6 +82,13 @@ certifycli/
 - `certifycli logout` - Sign out and remove stored token ✅
 - `certifycli setup` - Set up your identity and generate certificates ✅
 - `certifycli status` - Show your current identity status ✅
+- `certifycli certificates` - List your certificates ✅
+- `certifycli verify-cert` - Verify certificate against CA ✅
+- `certifycli git configure` - Configure Git to use CertifyCLI for signing ✅
+- `certifycli git status` - Check Git signing configuration ✅
+- `certifycli git test` - Test Git signing integration ✅
+- `certifycli git verify` - Verify last commit signature ✅
+- `certifycli git verify-all` - Verify all commit signatures ✅
 - `certifycli test-crypto` - Test cryptographic functions ✅
 - `certifycli test-keyring` - Test OS keychain integration ✅
 - `certifycli test-server` - Test connection to CA server ✅
@@ -94,10 +101,11 @@ certifycli/
 - **OS Keychain Storage**: Private keys securely stored in OS keychain (macOS/Windows/Linux)
 - **Certificate Authority**: Complete CA infrastructure with RSA key pair
 - **CSR Signing**: Real certificate signing with X.509 structure
+- **Git Integration**: GPG-compatible commit signing with verification
 - **Server Authentication**: JWT-based login/logout with secure token storage
 - **User Management**: Registration, authentication, and profile management
 - **Certificate Management**: List, verify, and revoke certificates
-- **CLI Interface**: Interactive setup and status commands
+- **CLI Interface**: Interactive setup and status commands with pretty output
 - **Security**: No plaintext keys on disk, OS-level encryption
 - **Cross-Platform**: Works on macOS Keychain, Windows Credential Manager, Linux Secret Service
 - **Database Integration**: SQLite database for user and certificate management
