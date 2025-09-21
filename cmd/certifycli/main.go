@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -9,6 +10,7 @@ import (
 
 	"github.com/CreatorOss/certifycli/internal/auth"
 	"github.com/CreatorOss/certifycli/internal/crypto"
+	"github.com/CreatorOss/certifycli/internal/utils"
 )
 
 func main() {
@@ -19,7 +21,11 @@ func main() {
 
 	switch os.Args[1] {
 	case "login":
-		fmt.Println("Login command not yet implemented.")
+		handleLogin()
+	case "register":
+		handleRegister()
+	case "logout":
+		handleLogout()
 	case "setup":
 		handleSetup()
 	case "status":
@@ -28,6 +34,10 @@ func main() {
 		handleTestCrypto()
 	case "test-keyring":
 		handleTestKeyring()
+	case "test-server":
+		handleTestServer()
+	case "test-auth":
+		handleTestAuth()
 	case "cleanup":
 		handleCleanup()
 	case "--help", "-h", "help":
@@ -37,6 +47,92 @@ func main() {
 		printHelp()
 		os.Exit(1)
 	}
+}
+
+func handleLogin() {
+	fmt.Println("🔐 Logging in to CertifyCLI server...")
+	
+	// Test server connection first
+	if err := utils.TestServerConnection(); err != nil {
+		fmt.Printf("❌ Cannot connect to server: %v\n", err)
+		fmt.Println("💡 Make sure the server is running: cd server && npm start")
+		os.Exit(1)
+	}
+
+	token, err := auth.Login()
+	if err != nil {
+		fmt.Printf("❌ Login failed: %v\n", err)
+		os.Exit(1)
+	}
+
+	fmt.Println("✅ Login successful!")
+	fmt.Println("🔐 Authentication token saved securely in keychain")
+}
+
+func handleRegister() {
+	fmt.Println("📝 Registering new user...")
+	
+	// Test server connection first
+	if err := utils.TestServerConnection(); err != nil {
+		fmt.Printf("❌ Cannot connect to server: %v\n", err)
+		fmt.Println("💡 Make sure the server is running: cd server && npm start")
+		os.Exit(1)
+	}
+
+	if err := auth.Register(); err != nil {
+		fmt.Printf("❌ Registration failed: %v\n", err)
+		os.Exit(1)
+	}
+
+	fmt.Println("🚀 You can now login with: certifycli login")
+}
+
+func handleLogout() {
+	fmt.Println("🚪 Logging out...")
+	
+	if err := auth.Logout(); err != nil {
+		fmt.Printf("❌ Logout failed: %v\n", err)
+		os.Exit(1)
+	}
+
+	fmt.Println("✅ Logged out successfully")
+	fmt.Println("🔐 Authentication token removed from keychain")
+}
+
+func handleTestServer() {
+	fmt.Println("🌐 Testing server connection...")
+	
+	health, err := utils.GetServerHealth()
+	if err != nil {
+		fmt.Printf("❌ Server connection failed: %v\n", err)
+		fmt.Println("💡 Make sure the server is running: cd server && npm start")
+		os.Exit(1)
+	}
+
+	fmt.Println("✅ Server connection successful!")
+	fmt.Printf("📊 Server status: %v\n", health["status"])
+	fmt.Printf("📝 Message: %v\n", health["message"])
+	if version, ok := health["version"]; ok {
+		fmt.Printf("🔖 Version: %v\n", version)
+	}
+}
+
+func handleTestAuth() {
+	fmt.Println("🔐 Testing authentication...")
+	
+	if !auth.IsLoggedIn() {
+		fmt.Println("❌ Not logged in. Please run 'certifycli login' first.")
+		os.Exit(1)
+	}
+
+	if err := auth.TestAuthentication(); err != nil {
+		fmt.Printf("❌ Authentication test failed: %v\n", err)
+		fmt.Println("💡 Try logging in again: certifycli login")
+		os.Exit(1)
+	}
+
+	fmt.Println("✅ Authentication test successful!")
+	fmt.Println("🎫 Your token is valid and working")
 }
 
 func handleSetup() {
@@ -125,7 +221,9 @@ func handleSetup() {
 	fmt.Printf("🔐 Private key: Securely stored in OS keychain\n")
 	fmt.Printf("📄 Test certificate: %s\n", certPath)
 	fmt.Printf("🔍 Public key fingerprint: %s\n", fingerprint)
-	fmt.Println("\n🚀 Next steps: Run 'certifycli login' to authenticate with the server.")
+	fmt.Println("\n🚀 Next steps:")
+	fmt.Println("  1. Register account: certifycli register")
+	fmt.Println("  2. Login to server: certifycli login")
 }
 
 func handleStatus() {
@@ -172,16 +270,36 @@ func handleStatus() {
 		fmt.Println("📄 Certificate: ❌ Not found")
 	}
 
-	// Check token (for future login implementation)
-	keyManager := auth.NewKeyringManager()
-	if keyManager.HasToken(username) {
-		fmt.Println("🎫 Auth token: ✅ Found in keychain")
+	// Check authentication status
+	if auth.IsLoggedIn() {
+		fmt.Println("🎫 Auth status: ✅ Logged in")
+		
+		// Test if token is still valid
+		if err := auth.TestAuthentication(); err != nil {
+			fmt.Println("⚠️  Warning: Token may be expired or invalid")
+		} else {
+			fmt.Println("🔐 Token status: ✅ Valid")
+		}
 	} else {
-		fmt.Println("🎫 Auth token: ❌ Not found (not logged in)")
+		fmt.Println("🎫 Auth status: ❌ Not logged in")
 	}
 
-	fmt.Println("🌐 Server: ❌ Not connected (login not implemented)")
-	fmt.Println("\n💡 Run 'certifycli setup' to generate your identity")
+	// Check server connectivity
+	fmt.Print("🌐 Server: ")
+	if err := utils.TestServerConnection(); err != nil {
+		fmt.Println("❌ Not reachable")
+	} else {
+		fmt.Println("✅ Connected")
+	}
+
+	fmt.Println("\n💡 Available commands:")
+	if !auth.IsLoggedIn() {
+		fmt.Println("  - certifycli register (create account)")
+		fmt.Println("  - certifycli login (authenticate)")
+	} else {
+		fmt.Println("  - certifycli logout (sign out)")
+		fmt.Println("  - certifycli test-auth (verify token)")
+	}
 }
 
 func handleTestCrypto() {
@@ -309,20 +427,30 @@ func printHelp() {
 	fmt.Println("================================================")
 	fmt.Println("\nUsage:")
 	fmt.Println("  certifycli <command> [arguments]")
-	fmt.Println("\nCommands:")
-	fmt.Println("  login         Authenticate with the CertifyCLI server (coming soon)")
+	fmt.Println("\nAuthentication Commands:")
+	fmt.Println("  register      Create a new user account ✅")
+	fmt.Println("  login         Authenticate with the CertifyCLI server ✅")
+	fmt.Println("  logout        Sign out and remove stored token ✅")
+	fmt.Println("  test-auth     Test if authentication token is valid ✅")
+	fmt.Println("\nIdentity Commands:")
 	fmt.Println("  setup         Set up your identity and generate certificates ✅")
 	fmt.Println("  status        Show your current identity status ✅")
+	fmt.Println("\nTesting Commands:")
 	fmt.Println("  test-crypto   Test cryptographic functions ✅")
 	fmt.Println("  test-keyring  Test OS keychain integration ✅")
+	fmt.Println("  test-server   Test connection to the CA server ✅")
+	fmt.Println("\nUtility Commands:")
 	fmt.Println("  cleanup       Remove all CertifyCLI data ✅")
 	fmt.Println("  --help, -h    Show this help message")
 	fmt.Println("\nSecurity Features:")
 	fmt.Println("  🔐 Private keys stored in OS keychain (macOS/Windows/Linux)")
 	fmt.Println("  🔒 No plaintext keys on disk")
 	fmt.Println("  🛡️  Secure token storage for authentication")
-	fmt.Println("\nExamples:")
-	fmt.Println("  certifycli setup")
-	fmt.Println("  certifycli status")
-	fmt.Println("  certifycli test-keyring")
+	fmt.Println("  🌐 JWT-based server authentication")
+	fmt.Println("\nQuick Start:")
+	fmt.Println("  1. certifycli setup          # Generate your identity")
+	fmt.Println("  2. certifycli test-server    # Check server connection")
+	fmt.Println("  3. certifycli register       # Create account")
+	fmt.Println("  4. certifycli login          # Authenticate")
+	fmt.Println("  5. certifycli status         # Check everything")
 }

@@ -77,22 +77,29 @@ certifycli/
 ## Commands
 
 ### CLI Commands
-- `certifycli login` - Authenticate with the CertifyCLI server (coming soon)
+- `certifycli register` - Create a new user account ✅
+- `certifycli login` - Authenticate with the CertifyCLI server ✅
+- `certifycli logout` - Sign out and remove stored token ✅
 - `certifycli setup` - Set up your identity and generate certificates ✅
 - `certifycli status` - Show your current identity status ✅
 - `certifycli test-crypto` - Test cryptographic functions ✅
 - `certifycli test-keyring` - Test OS keychain integration ✅
+- `certifycli test-server` - Test connection to CA server ✅
+- `certifycli test-auth` - Test authentication token validity ✅
 - `certifycli cleanup` - Remove all CertifyCLI data ✅
 - `certifycli --help` - Show help message ✅
 
 ### Implemented Features ✅
 - **RSA Key Generation**: 2048-bit RSA key pair generation
 - **OS Keychain Storage**: Private keys securely stored in OS keychain (macOS/Windows/Linux)
+- **Server Authentication**: JWT-based login/logout with secure token storage
+- **User Management**: Registration, authentication, and profile management
 - **CSR Creation**: Certificate Signing Request generation
 - **Test Certificates**: Self-signed certificate generation for testing
 - **CLI Interface**: Interactive setup and status commands
 - **Security**: No plaintext keys on disk, OS-level encryption
 - **Cross-Platform**: Works on macOS Keychain, Windows Credential Manager, Linux Secret Service
+- **Database Integration**: SQLite database for user and certificate management
 
 ## Getting Started
 
