@@ -29,7 +29,14 @@ function initializeDatabase() {
             email TEXT UNIQUE,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
-    `);
+    `, (err) => {
+        if (err) {
+            console.error('Error creating users table:', err);
+        } else {
+            console.log('✅ Users table ready');
+            createDefaultUser();
+        }
+    });
 
     // Create certificates table
     db.run(`
@@ -45,7 +52,13 @@ function initializeDatabase() {
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users (id)
         )
-    `);
+    `, (err) => {
+        if (err) {
+            console.error('Error creating certificates table:', err);
+        } else {
+            console.log('✅ Certificates table ready');
+        }
+    });
 
     // Create certificate_requests table (for CSRs)
     db.run(`
@@ -57,8 +70,16 @@ function initializeDatabase() {
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users (id)
         )
-    `);
+    `, (err) => {
+        if (err) {
+            console.error('Error creating certificate_requests table:', err);
+        } else {
+            console.log('✅ Certificate requests table ready');
+        }
+    });
+}
 
+function createDefaultUser() {
     // Create a default test user for development
     const bcrypt = require('bcryptjs');
     const defaultPassword = bcrypt.hashSync('testpass123', 12);

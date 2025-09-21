@@ -92,10 +92,11 @@ certifycli/
 ### Implemented Features ✅
 - **RSA Key Generation**: 2048-bit RSA key pair generation
 - **OS Keychain Storage**: Private keys securely stored in OS keychain (macOS/Windows/Linux)
+- **Certificate Authority**: Complete CA infrastructure with RSA key pair
+- **CSR Signing**: Real certificate signing with X.509 structure
 - **Server Authentication**: JWT-based login/logout with secure token storage
 - **User Management**: Registration, authentication, and profile management
-- **CSR Creation**: Certificate Signing Request generation
-- **Test Certificates**: Self-signed certificate generation for testing
+- **Certificate Management**: List, verify, and revoke certificates
 - **CLI Interface**: Interactive setup and status commands
 - **Security**: No plaintext keys on disk, OS-level encryption
 - **Cross-Platform**: Works on macOS Keychain, Windows Credential Manager, Linux Secret Service

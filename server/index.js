@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const User = require('./models/User');
+const Certificate = require('./models/Certificate');
+const cryptoUtils = require('./utils/crypto');
 const db = require('./models/database');
 
 const app = express();
@@ -19,8 +21,24 @@ app.get('/api/health', (req, res) => {
         status: 'OK', 
         message: 'CertifyCLI Server is running!',
         timestamp: new Date().toISOString(),
-        version: '0.2.0'
+        version: '0.3.0',
+        ca: 'CertifyCLI Development CA'
     });
+});
+
+// Get CA Certificate (public endpoint)
+app.get('/api/ca-certificate', (req, res) => {
+    try {
+        const caCert = cryptoUtils.getCACertificate();
+        res.json({
+            certificate: caCert,
+            issuer: 'CertifyCLI Development CA',
+            message: 'CA certificate for verification'
+        });
+    } catch (error) {
+        console.error('CA certificate error:', error);
+        res.status(500).json({ error: 'Failed to retrieve CA certificate' });
+    }
 });
 
 // User Registration
@@ -118,82 +136,164 @@ app.get('/api/profile', authenticateToken, async (req, res) => {
     }
 });
 
-// Certificate Signing Request endpoint
-app.post('/api/certificate/request', authenticateToken, async (req, res) => {
+// Certificate Signing Request endpoint - MAIN FEATURE
+app.post('/api/certificate/sign', authenticateToken, async (req, res) => {
     try {
-        const { csrData, commonName } = req.body;
+        const { csr: csrData, validityDays = 365 } = req.body;
         
         if (!csrData) {
             return res.status(400).json({ error: 'CSR data is required' });
         }
 
-        if (!commonName) {
-            return res.status(400).json({ error: 'Common name is required' });
+        // Validate CSR format
+        if (!csrData.includes('BEGIN CERTIFICATE REQUEST') || !csrData.includes('END CERTIFICATE REQUEST')) {
+            return res.status(400).json({ error: 'Invalid CSR format' });
         }
 
-        // Store CSR in database
-        db.run(
-            'INSERT INTO certificate_requests (user_id, csr_data) VALUES (?, ?)',
-            [req.user.userId, csrData],
-            function(err) {
-                if (err) {
-                    console.error('Database error:', err);
-                    return res.status(500).json({ error: 'Failed to store CSR' });
-                }
+        // Get user from database
+        const user = await User.findByUsername(req.user.username);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
 
-                // For now, just acknowledge receipt
-                // In production, we would actually sign the CSR and return a certificate
-                res.json({ 
-                    message: 'CSR received and stored successfully',
-                    requestId: this.lastID,
-                    status: 'pending',
-                    commonName: commonName,
-                    note: 'Certificate signing not yet implemented - this is a demo response'
-                });
-            }
+        // Sign the CSR and create certificate
+        const certificate = await Certificate.createFromCSR(
+            user.id, 
+            csrData, 
+            req.user.username,
+            validityDays
         );
+
+        console.log(`✅ Certificate signed for user: ${req.user.username}, Serial: ${certificate.serialNumber}`);
+
+        res.json({ 
+            message: 'Certificate created successfully',
+            certificate: certificate.certificate,
+            serialNumber: certificate.serialNumber,
+            validFrom: certificate.validFrom,
+            validTo: certificate.validTo,
+            status: certificate.status,
+            commonName: req.user.username
+        });
     } catch (error) {
-        console.error('CSR error:', error);
+        console.error('Certificate signing error:', error);
+        if (error.message.includes('Failed to sign CSR') || error.message.includes('Invalid CSR')) {
+            res.status(400).json({ error: 'Invalid CSR format or signing failed' });
+        } else {
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
+});
+
+// Get user's certificates
+app.get('/api/certificates', authenticateToken, async (req, res) => {
+    try {
+        const user = await User.findByUsername(req.user.username);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const certificates = await Certificate.findByUserId(user.id);
+        res.json({ 
+            certificates,
+            count: certificates.length
+        });
+    } catch (error) {
+        console.error('Get certificates error:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
 
-// List user's certificates
-app.get('/api/certificates', authenticateToken, (req, res) => {
-    db.all(
-        'SELECT * FROM certificates WHERE user_id = ? ORDER BY created_at DESC',
-        [req.user.userId],
-        (err, rows) => {
-            if (err) {
-                console.error('Database error:', err);
-                return res.status(500).json({ error: 'Failed to retrieve certificates' });
-            }
-
-            res.json({
-                certificates: rows,
-                count: rows.length
-            });
+// Get specific certificate by ID
+app.get('/api/certificate/:id', authenticateToken, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const certificate = await Certificate.findById(id);
+        
+        if (!certificate) {
+            return res.status(404).json({ error: 'Certificate not found' });
         }
-    );
+
+        // Check if certificate belongs to the authenticated user
+        const user = await User.findByUsername(req.user.username);
+        if (certificate.user_id !== user.id) {
+            return res.status(403).json({ error: 'Access denied' });
+        }
+
+        res.json({ certificate });
+    } catch (error) {
+        console.error('Get certificate error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
-// List user's certificate requests
-app.get('/api/certificate-requests', authenticateToken, (req, res) => {
-    db.all(
-        'SELECT * FROM certificate_requests WHERE user_id = ? ORDER BY created_at DESC',
-        [req.user.userId],
-        (err, rows) => {
-            if (err) {
-                console.error('Database error:', err);
-                return res.status(500).json({ error: 'Failed to retrieve certificate requests' });
-            }
-
-            res.json({
-                requests: rows,
-                count: rows.length
-            });
+// Revoke certificate
+app.post('/api/certificate/:id/revoke', authenticateToken, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { reason = 'user_request' } = req.body;
+        
+        const certificate = await Certificate.findById(id);
+        if (!certificate) {
+            return res.status(404).json({ error: 'Certificate not found' });
         }
-    );
+
+        // Check if certificate belongs to the authenticated user
+        const user = await User.findByUsername(req.user.username);
+        if (certificate.user_id !== user.id) {
+            return res.status(403).json({ error: 'Access denied' });
+        }
+
+        const result = await Certificate.revoke(certificate.serial_number, reason);
+        
+        console.log(`🚫 Certificate revoked: ${certificate.serial_number} by user: ${req.user.username}`);
+        
+        res.json({
+            message: 'Certificate revoked successfully',
+            serialNumber: result.serialNumber,
+            status: result.status,
+            reason: result.reason
+        });
+    } catch (error) {
+        console.error('Revoke certificate error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Verify certificate
+app.post('/api/certificate/verify', (req, res) => {
+    try {
+        const { certificate } = req.body;
+        
+        if (!certificate) {
+            return res.status(400).json({ error: 'Certificate data is required' });
+        }
+
+        const isValid = Certificate.verify(certificate);
+        
+        res.json({
+            valid: isValid,
+            message: isValid ? 'Certificate is valid' : 'Certificate is invalid or not signed by this CA',
+            ca: 'CertifyCLI Development CA'
+        });
+    } catch (error) {
+        console.error('Certificate verification error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Get certificate statistics (admin endpoint)
+app.get('/api/admin/statistics', authenticateToken, async (req, res) => {
+    try {
+        const stats = await Certificate.getStatistics();
+        res.json({
+            statistics: stats,
+            timestamp: new Date().toISOString()
+        });
+    } catch (error) {
+        console.error('Statistics error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
 // Test protected endpoint
@@ -242,4 +342,5 @@ app.listen(port, () => {
     console.log(`🚀 CertifyCLI server listening on port ${port}`);
     console.log(`📊 Health check: http://localhost:${port}/api/health`);
     console.log(`🔐 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`🏛️  Certificate Authority: CertifyCLI Development CA`);
 });
