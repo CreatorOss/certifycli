@@ -86,35 +86,71 @@ func CreateCSR(privateKey *rsa.PrivateKey, commonName string) ([]byte, error) {
 	return csrPEM, nil
 }
 
-// GenerateTestCertificate generates a self-signed certificate for testing.
-// In production, the certificate will be signed by our central CA server.
+// GenerateTestCertificate creates a self-signed certificate for testing
 func GenerateTestCertificate(privateKey *rsa.PrivateKey, commonName string) ([]byte, error) {
 	template := x509.Certificate{
 		SerialNumber: big.NewInt(1),
 		Subject: pkix.Name{
 			CommonName: commonName,
 		},
-		NotBefore: time.Now(),
-		NotAfter:  time.Now().Add(365 * 24 * time.Hour), // Valid for 1 year
-		KeyUsage:  x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
-		ExtKeyUsage: []x509.ExtKeyUsage{
-			x509.ExtKeyUsageClientAuth,
-			x509.ExtKeyUsageCodeSigning, // Important for Git signing
-		},
-		BasicConstraintsValid: true,
+		NotBefore:    time.Now(),
+		NotAfter:     time.Now().Add(365 * 24 * time.Hour),
+		KeyUsage:     x509.KeyUsageKeyEncipherment | x509.KeyUsageDigitalSignature,
+		ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
+		IPAddresses:  []net.IP{net.IPv4(127, 0, 0, 1), net.IPv6loopback},
 	}
 
-	certBytes, err := x509.CreateCertificate(rand.Reader, &template, &template, &privateKey.PublicKey, privateKey)
+	certDER, err := x509.CreateCertificate(rand.Reader, &template, &template, &privateKey.PublicKey, privateKey)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create certificate: %v", err)
 	}
 
 	certPEM := pem.EncodeToMemory(&pem.Block{
 		Type:  "CERTIFICATE",
-		Bytes: certBytes,
+		Bytes: certDER,
 	})
 
 	return certPEM, nil
+}
+
+// SavePrivateKeyToPEM saves a private key to a PEM file
+func SavePrivateKeyToPEM(privateKey *rsa.PrivateKey, filename string) error {
+	privateKeyBytes, err := x509.MarshalPKCS8PrivateKey(privateKey)
+	if err != nil {
+		return fmt.Errorf("failed to marshal private key: %v", err)
+	}
+
+	privateKeyPEM := pem.EncodeToMemory(&pem.Block{
+		Type:  "PRIVATE KEY",
+		Bytes: privateKeyBytes,
+	})
+
+	return os.WriteFile(filename, privateKeyPEM, 0600)
+}
+
+// LoadPrivateKeyFromPEM loads a private key from a PEM file
+func LoadPrivateKeyFromPEM(filename string) (*rsa.PrivateKey, error) {
+	pemData, err := os.ReadFile(filename)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read PEM file: %v", err)
+	}
+
+	block, _ := pem.Decode(pemData)
+	if block == nil {
+		return nil, fmt.Errorf("failed to decode PEM block")
+	}
+
+	privateKey, err := x509.ParsePKCS8PrivateKey(block.Bytes)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse private key: %v", err)
+	}
+
+	rsaKey, ok := privateKey.(*rsa.PrivateKey)
+	if !ok {
+		return nil, fmt.Errorf("not an RSA private key")
+	}
+
+	return rsaKey, nil
 }
 
 // GetPublicKeyFingerprint generates a fingerprint for the public key

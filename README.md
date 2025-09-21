@@ -1,41 +1,43 @@
-# CertifyCLI
+# CertifyCLI - Local Identity for the Command Line
 
-A Global Identity and Trust Layer for the Command Line.
+A secure, serverless identity management system that provides automatic Git commit signing with local certificate authority. CertifyCLI operates completely offline while maintaining enterprise-grade security standards.
 
 ## MVP Goal: Simplified Git Commit Signing
 
 ### Features
-- Centralized Certificate Management
+- Local Certificate Authority (no server required)
 - Secure Key Storage (using OS keychain)
 - Easy-to-use CLI interface
+- Complete offline operation
+- Backup and restore functionality
 
 ## Development
 
 ### Building the CLI
 ```bash
-# Download dependencies
-go mod tidy
-
-# Build the CLI
 go build -o certifycli ./cmd/certifycli
-
-# Test the CLI
-./certifycli --help
-./certifycli test-crypto
 ```
 
-### Running the Server
+### Local Mode Setup
 ```bash
-cd server && npm install && npm start
+# No server required - everything runs locally!
+./certifycli setup
+./certifycli git configure
 ```
 
 ### Testing Implementation
 ```bash
-# Test crypto implementation
-./test-crypto-implementation.sh
+# Test local mode functionality
+./test-local-mode.sh
 
-# Test project setup
-./test-setup.sh
+# Test keychain integration
+./certifycli test-keyring
+
+# Test crypto functions
+./certifycli test-crypto
+
+# Test Git integration
+./certifycli git test
 ```
 
 ## Project Structure
@@ -77,13 +79,11 @@ certifycli/
 ## Commands
 
 ### CLI Commands
-- `certifycli register` - Create a new user account ✅
-- `certifycli login` - Authenticate with the CertifyCLI server ✅
-- `certifycli logout` - Sign out and remove stored token ✅
-- `certifycli setup` - Set up your identity and generate certificates ✅
+- `certifycli setup` - Set up your local identity and generate certificates ✅
 - `certifycli status` - Show your current identity status ✅
-- `certifycli certificates` - List your certificates ✅
-- `certifycli verify-cert` - Verify certificate against CA ✅
+- `certifycli certificates` - Show certificate information ✅
+- `certifycli backup` - Backup your identity to ~/certifycli-backup ✅
+- `certifycli restore` - Restore identity from backup ✅
 - `certifycli git configure` - Configure Git to use CertifyCLI for signing ✅
 - `certifycli git status` - Check Git signing configuration ✅
 - `certifycli git test` - Test Git signing integration ✅
@@ -91,24 +91,22 @@ certifycli/
 - `certifycli git verify-all` - Verify all commit signatures ✅
 - `certifycli test-crypto` - Test cryptographic functions ✅
 - `certifycli test-keyring` - Test OS keychain integration ✅
-- `certifycli test-server` - Test connection to CA server ✅
-- `certifycli test-auth` - Test authentication token validity ✅
 - `certifycli cleanup` - Remove all CertifyCLI data ✅
 - `certifycli --help` - Show help message ✅
 
 ### Implemented Features ✅
 - **RSA Key Generation**: 2048-bit RSA key pair generation
 - **OS Keychain Storage**: Private keys securely stored in OS keychain (macOS/Windows/Linux)
-- **Certificate Authority**: Complete CA infrastructure with RSA key pair
+- **Local Certificate Authority**: Complete local CA infrastructure (no server required)
 - **CSR Signing**: Real certificate signing with X.509 structure
 - **Git Integration**: GPG-compatible commit signing with verification
-- **Server Authentication**: JWT-based login/logout with secure token storage
-- **User Management**: Registration, authentication, and profile management
-- **Certificate Management**: List, verify, and revoke certificates
+- **Offline Operation**: Complete functionality without internet connection
+- **Backup & Restore**: Identity backup and restore functionality
+- **Certificate Management**: Local certificate lifecycle management
 - **CLI Interface**: Interactive setup and status commands with pretty output
 - **Security**: No plaintext keys on disk, OS-level encryption
 - **Cross-Platform**: Works on macOS Keychain, Windows Credential Manager, Linux Secret Service
-- **Database Integration**: SQLite database for user and certificate management
+- **Portable**: Self-contained identity that can be backed up and restored
 
 ## Getting Started
 
