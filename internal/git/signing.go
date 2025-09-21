@@ -9,8 +9,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/CreatorOss/certifycli/internal/crypto"
-	"github.com/CreatorOss/certifycli/internal/utils"
+	"github.com/CreatorOss/sertifycli/internal/crypto"
+	"github.com/CreatorOss/sertifycli/internal/utils"
 )
 
 // ProperSignCommit implements GPG-compatible signing for Git

@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/CreatorOss/certifycli/internal/crypto"
+	"github.com/CreatorOss/sertifycli/internal/crypto"
 )
 
 type LocalCA struct {

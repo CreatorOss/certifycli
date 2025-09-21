@@ -7,11 +7,11 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/CreatorOss/certifycli/internal/auth"
-	"github.com/CreatorOss/certifycli/internal/ca"
-	"github.com/CreatorOss/certifycli/internal/crypto"
-	"github.com/CreatorOss/certifycli/internal/git"
-	"github.com/CreatorOss/certifycli/internal/utils"
+	"github.com/CreatorOss/sertifycli/internal/auth"
+	"github.com/CreatorOss/sertifycli/internal/ca"
+	"github.com/CreatorOss/sertifycli/internal/crypto"
+	"github.com/CreatorOss/sertifycli/internal/git"
+	"github.com/CreatorOss/sertifycli/internal/utils"
 )
 
 func main() {

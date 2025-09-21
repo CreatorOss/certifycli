@@ -1,0 +1,104 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: 1.21
+
+    - name: Run tests
+      run: |
+        go test -v ./...
+        go build -o certifycli ./cmd/certifycli
+        ./certifycli test-crypto
+
+    - name: Build release binaries
+      run: |
+        # Linux amd64
+        GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o certifycli-linux-amd64 ./cmd/certifycli
+        
+        # Linux arm64
+        GOOS=linux GOARCH=arm64 go build -ldflags="-s -w" -o certifycli-linux-arm64 ./cmd/certifycli
+        
+        # macOS amd64
+        GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o certifycli-darwin-amd64 ./cmd/certifycli
+        
+        # macOS arm64 (Apple Silicon)
+        GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o certifycli-darwin-arm64 ./cmd/certifycli
+        
+        # Windows amd64
+        GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o certifycli-windows-amd64.exe ./cmd/certifycli
+
+    - name: Create checksums
+      run: |
+        sha256sum certifycli-* > checksums.txt
+
+    - name: Create release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          certifycli-linux-amd64
+          certifycli-linux-arm64
+          certifycli-darwin-amd64
+          certifycli-darwin-arm64
+          certifycli-windows-amd64.exe
+          checksums.txt
+        body: |
+          ## CertifyCLI Release ${{ github.ref_name }}
+          
+          ### Downloads
+          
+          Choose the appropriate binary for your platform:
+          
+          - **Linux (x64)**: `certifycli-linux-amd64`
+          - **Linux (ARM64)**: `certifycli-linux-arm64`
+          - **macOS (Intel)**: `certifycli-darwin-amd64`
+          - **macOS (Apple Silicon)**: `certifycli-darwin-arm64`
+          - **Windows (x64)**: `certifycli-windows-amd64.exe`
+          
+          ### Installation
+          
+          1. Download the appropriate binary for your platform
+          2. Make it executable: `chmod +x certifycli-*`
+          3. Move to PATH: `sudo mv certifycli-* /usr/local/bin/certifycli`
+          4. Verify: `certifycli --help`
+          
+          ### Quick Start
+          
+          ```bash
+          # Setup your identity
+          certifycli setup
+          
+          # Configure Git signing
+          certifycli git configure
+          
+          # Start signing commits!
+          git commit -m "My signed commit"
+          ```
+          
+          ### Verification
+          
+          Verify the integrity of downloaded files using the provided checksums:
+          
+          ```bash
+          sha256sum -c checksums.txt
+          ```
+        draft: false
+        prerelease: false
