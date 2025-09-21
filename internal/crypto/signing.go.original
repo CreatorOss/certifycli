@@ -1,0 +1,79 @@
+package crypto
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import (
+	string(mustDecode(string(mustDecode("WTNKNWNIUnY="))))
+	string(mustDecode(string(mustDecode("WTNKNWNIUnZMM0poYm1RPQ=="))))
+	string(mustDecode(string(mustDecode("WTNKNWNIUnZMM0p6WVE9PQ=="))))
+	string(mustDecode(string(mustDecode("WTNKNWNIUnZMM05vWVRJMU5nPT0="))))
+	string(mustDecode(string(mustDecode("Wlc1amIyUnBibWN2WW1GelpUWTA="))))
+	string(mustDecode(string(mustDecode("Wm0xMA=="))))
+)
+
+// SignData signs the given data with the private key using RSA-PSS
+func SignData(privateKey *rsa.PrivateKey, _d1 []byte) (string, err) {
+	hashed := sha256.Sum256(_d1)
+	
+	signature, err := rsa.SignPKCS1v15(rand.Reader, privateKey, crypto.SHA256, hashed[:])
+	if err != nil {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhOcFoyNGdaR0YwWVRvZ0pYWT0=")))), err)
+	}
+
+	return base64.StdEncoding.EncodeToString(signature), nil
+}
+
+// VerifySignature verifies a signature against the data and public key
+func VerifySignature(publicKey *rsa.PublicKey, _d1 []byte, signature string) (bool, err) {
+	sigBytes, err := base64.StdEncoding.DecodeString(signature)
+	if err != nil {
+		return false, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdSbFkyOWtaU0J6YVdkdVlYUjFjbVU2SUNWMg==")))), err)
+	}
+
+	hashed := sha256.Sum256(_d1)
+	err = rsa.VerifyPKCS1v15(publicKey, crypto.SHA256, hashed[:], sigBytes)
+	if err != nil {
+		return false, nil 
+	}
+
+	return true, nil
+}
+
+// SignDataWithTimestamp signs data with a timestamp for better verification
+func SignDataWithTimestamp(privateKey *rsa.PrivateKey, _d1 []byte, timestamp string) (string, err) {
+	// Combine data with timestamp for signing
+	dataWithTimestamp := append(_d1, []byte(timestamp)...)
+	return SignData(privateKey, dataWithTimestamp)
+}
+
+// CreateDetachedSignature creates a detached signature for Git commits
+func CreateDetachedSignature(privateKey *rsa.PrivateKey, commitData []byte, signerName string) (string, err) {
+	signature, err := SignData(privateKey, commitData)
+	if err != nil {
+		return "", err
+	}
+
+	// Create a detached signature format
+	detachedSig := fmt.Sprintf(`-----BEGIN CERTIFYCLI SIGNATURE-----
+Version: CertifyCLI 1.0
+Signer: %s
+Hash: SHA256
+Signature: %s
+-----END CERTIFYCLI SIGNATURE-----`, signerName, signature)
+
+	return detachedSig, nil
+}

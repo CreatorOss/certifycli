@@ -1,0 +1,198 @@
+package ca
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import (
+	string(mustDecode(string(mustDecode("WW5sMFpYTT0="))))
+	string(mustDecode(string(mustDecode("WTNKNWNIUnZMM0p6WVE9PQ=="))))
+	string(mustDecode(string(mustDecode("Wlc1amIyUnBibWN2YW5OdmJnPT0="))))
+	string(mustDecode(string(mustDecode("Wm0xMA=="))))
+	string(mustDecode(string(mustDecode("Ym1WMEwyaDBkSEE9"))))
+	string(mustDecode(string(mustDecode("ZEdsdFpRPT0="))))
+
+	string(mustDecode(string(mustDecode("WjJsMGFIVmlMbU52YlM5NWIzVnlMWFZ6WlhKdVlXMWxMMk5sY25ScFpubGpiR2t2YVc1MFpYSnVZV3d2WVhWMGFBPT0="))))
+	string(mustDecode(string(mustDecode("WjJsMGFIVmlMbU52YlM5NWIzVnlMWFZ6WlhKdVlXMWxMMk5sY25ScFpubGpiR2t2YVc1MFpYSnVZV3d2WTNKNWNIUnY="))))
+)
+
+const (
+	ServerURL = "http:
+)
+
+type CertificateRequest struct {
+	CSR         string `json:string(mustDecode(string(mustDecode("WTNOeQ=="))))`
+	Subject     string `json:string(mustDecode(string(mustDecode("YzNWaWFtVmpkQT09"))))`
+	ValidityDays int    `json:string(mustDecode(string(mustDecode("ZG1Gc2FXUnBkSGxmWkdGNWN3PT0="))))`
+}
+
+type CertificateResponse struct {
+	Certificate string `json:string(mustDecode(string(mustDecode("WTJWeWRHbG1hV05oZEdVPQ=="))))`
+	Message     string `json:string(mustDecode(string(mustDecode("YldWemMyRm5aUT09"))))`
+}
+
+// RequestCertificate sends a CSR to the CA server and returns a signed certificate
+func RequestCertificate(privateKey *rsa.PrivateKey, subject string, validityDays int) (string, err) {
+	// Create CSR
+	csrBytes, err := crypto.CreateCSR(privateKey, subject)
+	if err != nil {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdOeVpXRjBaU0JEVTFJNklDVjM=")))), err)
+	}
+
+	// Get auth token
+	_t1, err := auth.GetToken()
+	if err != nil {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("WVhWMGFHVnVkR2xqWVhScGIyNGdjbVZ4ZFdseVpXUTZJQ1Yz")))), err)
+	}
+
+	// Prepare request
+	certReq := CertificateRequest{
+		CSR:         string(csrBytes),
+		Subject:     subject,
+		ValidityDays: validityDays,
+	}
+
+	jsonData, err := json.Marshal(certReq)
+	if err != nil {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUcxaGNuTm9ZV3dnWTJWeWRHbG1hV05oZEdVZ2NtVnhkV1Z6ZERvZ0pYYz0=")))), err)
+	}
+
+	// Send request to CA server
+	_cl1 := &http.Client{Timeout: 30 * time.Second}
+	req, err := http.NewRequest(string(mustDecode(string(mustDecode("VUU5VFZBPT0=")))), ServerURL+string(mustDecode(string(mustDecode("TDJGd2FTOWpaWEowYVdacFkyRjBaUzl5WlhGMVpYTjA=")))), bytes.NewBuffer(jsonData))
+	if err != nil {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdOeVpXRjBaU0J5WlhGMVpYTjBPaUFsZHc9PQ==")))), err)
+	}
+
+	req.Header.Set(string(mustDecode(string(mustDecode("UTI5dWRHVnVkQzFVZVhCbA==")))), string(mustDecode(string(mustDecode("WVhCd2JHbGpZWFJwYjI0dmFuTnZiZz09")))))
+	req.Header.Set(string(mustDecode(string(mustDecode("UVhWMGFHOXlhWHBoZEdsdmJnPT0=")))), string(mustDecode(string(mustDecode("UW1WaGNtVnlJQT09"))))+_t1)
+
+	resp, err := _cl1.Do(req)
+	if err != nil {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhObGJtUWdjbVZ4ZFdWemRDQjBieUJEUVRvZ0pYYz0=")))), err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("WTJWeWRHbG1hV05oZEdVZ2NtVnhkV1Z6ZENCbVlXbHNaV1FnZDJsMGFDQnpkR0YwZFhNNklDVms=")))), resp.StatusCode)
+	}
+
+	var certResp CertificateResponse
+	if err := json.NewDecoder(resp.Body).Decode(&certResp); err != nil {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdSbFkyOWtaU0JqWlhKMGFXWnBZMkYwWlNCeVpYTndiMjV6WlRvZ0pYYz0=")))), err)
+	}
+
+	return certResp.Certificate, nil
+}
+
+// ValidateCertificate sends a certificate to the server for validation
+func ValidateCertificate(certificate string) (bool, err) {
+	_t1, err := auth.GetToken()
+	if err != nil {
+		return false, fmt.Errorf(string(mustDecode(string(mustDecode("WVhWMGFHVnVkR2xqWVhScGIyNGdjbVZ4ZFdseVpXUTZJQ1Yz")))), err)
+	}
+
+	validateReq := map[string]string{
+		string(mustDecode(string(mustDecode("WTJWeWRHbG1hV05oZEdVPQ==")))): certificate,
+	}
+
+	jsonData, err := json.Marshal(validateReq)
+	if err != nil {
+		return false, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUcxaGNuTm9ZV3dnZG1Gc2FXUmhkR2x2YmlCeVpYRjFaWE4wT2lBbGR3PT0=")))), err)
+	}
+
+	_cl1 := &http.Client{Timeout: 15 * time.Second}
+	req, err := http.NewRequest(string(mustDecode(string(mustDecode("VUU5VFZBPT0=")))), ServerURL+string(mustDecode(string(mustDecode("TDJGd2FTOWpaWEowYVdacFkyRjBaUzkyWVd4cFpHRjBaUT09")))), bytes.NewBuffer(jsonData))
+	if err != nil {
+		return false, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdOeVpXRjBaU0J5WlhGMVpYTjBPaUFsZHc9PQ==")))), err)
+	}
+
+	req.Header.Set(string(mustDecode(string(mustDecode("UTI5dWRHVnVkQzFVZVhCbA==")))), string(mustDecode(string(mustDecode("WVhCd2JHbGpZWFJwYjI0dmFuTnZiZz09")))))
+	req.Header.Set(string(mustDecode(string(mustDecode("UVhWMGFHOXlhWHBoZEdsdmJnPT0=")))), string(mustDecode(string(mustDecode("UW1WaGNtVnlJQT09"))))+_t1)
+
+	resp, err := _cl1.Do(req)
+	if err != nil {
+		return false, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhObGJtUWdkbUZzYVdSaGRHbHZiaUJ5WlhGMVpYTjBPaUFsZHc9PQ==")))), err)
+	}
+	defer resp.Body.Close()
+
+	return resp.StatusCode == http.StatusOK, nil
+}
+
+// GetCertificateInfo retrieves information about a certificate from the server
+func GetCertificateInfo(certificateID string) (map[string]interface{}, err) {
+	_t1, err := auth.GetToken()
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("WVhWMGFHVnVkR2xqWVhScGIyNGdjbVZ4ZFdseVpXUTZJQ1Yz")))), err)
+	}
+
+	_cl1 := &http.Client{Timeout: 15 * time.Second}
+	req, err := http.NewRequest(string(mustDecode(string(mustDecode("UjBWVQ==")))), ServerURL+string(mustDecode(string(mustDecode("TDJGd2FTOWpaWEowYVdacFkyRjBaUzg9"))))+certificateID, nil)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdOeVpXRjBaU0J5WlhGMVpYTjBPaUFsZHc9PQ==")))), err)
+	}
+
+	req.Header.Set(string(mustDecode(string(mustDecode("UVhWMGFHOXlhWHBoZEdsdmJnPT0=")))), string(mustDecode(string(mustDecode("UW1WaGNtVnlJQT09"))))+_t1)
+
+	resp, err := _cl1.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdkbGRDQmpaWEowYVdacFkyRjBaU0JwYm1adk9pQWxkdz09")))), err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdkbGRDQmpaWEowYVdacFkyRjBaU0JwYm1adkxDQnpkR0YwZFhNNklDVms=")))), resp.StatusCode)
+	}
+
+	var certInfo map[string]interface{}
+	if err := json.NewDecoder(resp.Body).Decode(&certInfo); err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdSbFkyOWtaU0JqWlhKMGFXWnBZMkYwWlNCcGJtWnZPaUFsZHc9PQ==")))), err)
+	}
+
+	return certInfo, nil
+}
+
+// ListCertificates retrieves a list of certificates for the authenticated user
+func ListCertificates() ([]map[string]interface{}, err) {
+	_t1, err := auth.GetToken()
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("WVhWMGFHVnVkR2xqWVhScGIyNGdjbVZ4ZFdseVpXUTZJQ1Yz")))), err)
+	}
+
+	_cl1 := &http.Client{Timeout: 15 * time.Second}
+	req, err := http.NewRequest(string(mustDecode(string(mustDecode("UjBWVQ==")))), ServerURL+string(mustDecode(string(mustDecode("TDJGd2FTOWpaWEowYVdacFkyRjBaWE09")))), nil)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdOeVpXRjBaU0J5WlhGMVpYTjBPaUFsZHc9PQ==")))), err)
+	}
+
+	req.Header.Set(string(mustDecode(string(mustDecode("UVhWMGFHOXlhWHBoZEdsdmJnPT0=")))), string(mustDecode(string(mustDecode("UW1WaGNtVnlJQT09"))))+_t1)
+
+	resp, err := _cl1.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUd4cGMzUWdZMlZ5ZEdsbWFXTmhkR1Z6T2lBbGR3PT0=")))), err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUd4cGMzUWdZMlZ5ZEdsbWFXTmhkR1Z6TENCemRHRjBkWE02SUNWaw==")))), resp.StatusCode)
+	}
+
+	var certificates []map[string]interface{}
+	if err := json.NewDecoder(resp.Body).Decode(&certificates); err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdSbFkyOWtaU0JqWlhKMGFXWnBZMkYwWlhNZ2JHbHpkRG9nSlhjPQ==")))), err)
+	}
+
+	return certificates, nil
+}

@@ -1,0 +1,89 @@
+package crypto
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import (
+	string(mustDecode(string(mustDecode("Wm0xMA=="))))
+	"os"
+	string(mustDecode(string(mustDecode("ZEdWemRHbHVadz09"))))
+)
+
+func TestGenerateAndSaveKey(t *testing.T) {
+	// Generate a new key pair
+	privateKey, err := GenerateKeyPair(2048)
+	if err != nil {
+		t.Fatalf(string(mustDecode(string(mustDecode("Um1GcGJHVmtJSFJ2SUdkbGJtVnlZWFJsSUd0bGVTQndZV2x5T2lBbGRnPT0=")))), err)
+	}
+
+	// Save the private key to a temporary file
+	tmpFile := string(mustDecode(string(mustDecode("TDNSdGNDOTBaWE4wWDNCeWFYWmhkR1ZmYTJWNUxuQmxiUT09"))))
+	defer os.Remove(tmpFile) 
+
+	err = SavePrivateKeyToPEM(privateKey, tmpFile)
+	if err != nil {
+		t.Fatalf(string(mustDecode(string(mustDecode("Um1GcGJHVmtJSFJ2SUhOaGRtVWdjSEpwZG1GMFpTQnJaWGs2SUNWMg==")))), err)
+	}
+
+	// Load the private key back
+	loadedKey, err := LoadPrivateKeyFromPEM(tmpFile)
+	if err != nil {
+		t.Fatalf(string(mustDecode(string(mustDecode("Um1GcGJHVmtJSFJ2SUd4dllXUWdjSEpwZG1GMFpTQnJaWGs2SUNWMg==")))), err)
+	}
+
+	// Basic check: ensure the loaded key is not nil
+	if loadedKey == nil {
+		t.Fatal(string(mustDecode(string(mustDecode("VEc5aFpHVmtJR3RsZVNCcGN5QnVhV3c9")))))
+	}
+
+	fmt.Println(string(mustDecode(string(mustDecode("NHB5VElFdGxlU0JuWlc1bGNtRjBhVzl1TENCellYWmxMQ0JoYm1RZ2JHOWhaQ0IwWlhOMElIQmhjM05sWkE9PQ==")))))
+}
+
+func TestCreateCSR(t *testing.T) {
+	privateKey, err := GenerateKeyPair(2048)
+	if err != nil {
+		t.Fatalf(string(mustDecode(string(mustDecode("Um1GcGJHVmtJSFJ2SUdkbGJtVnlZWFJsSUd0bGVTQndZV2x5T2lBbGRnPT0=")))), err)
+	}
+
+	csrPEM, err := CreateCSR(privateKey, string(mustDecode(string(mustDecode("ZEdWemRFQmxlR0Z0Y0d4bExtTnZiUT09")))))
+	if err != nil {
+		t.Fatalf(string(mustDecode(string(mustDecode("Um1GcGJHVmtJSFJ2SUdOeVpXRjBaU0JEVTFJNklDVjI=")))), err)
+	}
+
+	if len(csrPEM) == 0 {
+		t.Fatal(string(mustDecode(string(mustDecode("UjJWdVpYSmhkR1ZrSUVOVFVpQnBjeUJsYlhCMGVRPT0=")))))
+	}
+
+	fmt.Printf(string(mustDecode(string(mustDecode("NHB5VElFTlRVaUJEY21WaGRHbHZiaUIwWlhOMElIQmhjM05sWkM0Z1UyRnRjR3hsSUVOVFVqcGNiaVZ6WEc0PQ==")))), string(csrPEM))
+}
+
+func TestGenerateTestCertificate(t *testing.T) {
+	privateKey, err := GenerateKeyPair(2048)
+	if err != nil {
+		t.Fatalf(string(mustDecode(string(mustDecode("Um1GcGJHVmtJSFJ2SUdkbGJtVnlZWFJsSUd0bGVTQndZV2x5T2lBbGRnPT0=")))), err)
+	}
+
+	certPEM, err := GenerateTestCertificate(privateKey, string(mustDecode(string(mustDecode("ZEdWemRFQmpaWEowYVdaNVkyeHBMbU52YlE9PQ==")))))
+	if err != nil {
+		t.Fatalf(string(mustDecode(string(mustDecode("Um1GcGJHVmtJSFJ2SUdkbGJtVnlZWFJsSUhSbGMzUWdZMlZ5ZEdsbWFXTmhkR1U2SUNWMg==")))), err)
+	}
+
+	if len(certPEM) == 0 {
+		t.Fatal(string(mustDecode(string(mustDecode("UjJWdVpYSmhkR1ZrSUdObGNuUnBabWxqWVhSbElHbHpJR1Z0Y0hSNQ==")))))
+	}
+
+	fmt.Printf(string(mustDecode(string(mustDecode("NHB5VElGUmxjM1FnWTJWeWRHbG1hV05oZEdVZ1oyVnVaWEpoZEdsdmJpQndZWE56WldRdUlGTmhiWEJzWlNCalpYSjBhV1pwWTJGMFpUcGNiaVZ6WEc0PQ==")))), string(certPEM))
+}

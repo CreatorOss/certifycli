@@ -1,0 +1,155 @@
+package crypto
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import (
+	string(mustDecode(string(mustDecode("WTNKNWNIUnZMM0p6WVE9PQ=="))))
+	string(mustDecode(string(mustDecode("WTNKNWNIUnZMM2cxTURrPQ=="))))
+	string(mustDecode(string(mustDecode("Wlc1amIyUnBibWN2Y0dWdA=="))))
+	string(mustDecode(string(mustDecode("Wm0xMA=="))))
+	string(mustDecode(string(mustDecode("ZEdsdFpRPT0="))))
+)
+
+// GetPublicKeyFromCertificate extracts public key from X509 certificate
+func GetPublicKeyFromCertificate(certPEM []byte) (*rsa.PublicKey, err) {
+	block, _ := pem.Decode(certPEM)
+	if block == nil || block.Type != string(mustDecode(string(mustDecode("UTBWU1ZFbEdTVU5CVkVVPQ==")))) {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdSbFkyOWtaU0JqWlhKMGFXWnBZMkYwWlNCUVJVMD0=")))))
+	}
+
+	cert, err := x509.ParseCertificate(block.Bytes)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhCaGNuTmxJR05sY25ScFptbGpZWFJsT2lBbGRnPT0=")))), err)
+	}
+
+	publicKey, ok := cert.PublicKey.(*rsa.PublicKey)
+	if !ok {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("WTJWeWRHbG1hV05oZEdVZ1pHOWxjeUJ1YjNRZ1kyOXVkR0ZwYmlCU1UwRWdjSFZpYkdsaklHdGxlUT09")))))
+	}
+
+	return publicKey, nil
+}
+
+// ExtractCommonNameFromCertificate extracts CN from certificate
+func ExtractCommonNameFromCertificate(certPEM []byte) (string, err) {
+	block, _ := pem.Decode(certPEM)
+	if block == nil || block.Type != string(mustDecode(string(mustDecode("UTBWU1ZFbEdTVU5CVkVVPQ==")))) {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdSbFkyOWtaU0JqWlhKMGFXWnBZMkYwWlNCUVJVMD0=")))))
+	}
+
+	cert, err := x509.ParseCertificate(block.Bytes)
+	if err != nil {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhCaGNuTmxJR05sY25ScFptbGpZWFJsT2lBbGRnPT0=")))), err)
+	}
+
+	return cert.Subject.CommonName, nil
+}
+
+// GetCertificateInfo extracts detailed information from certificate
+func GetCertificateInfo(certPEM []byte) (*CertificateInfo, err) {
+	block, _ := pem.Decode(certPEM)
+	if block == nil || block.Type != string(mustDecode(string(mustDecode("UTBWU1ZFbEdTVU5CVkVVPQ==")))) {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdSbFkyOWtaU0JqWlhKMGFXWnBZMkYwWlNCUVJVMD0=")))))
+	}
+
+	cert, err := x509.ParseCertificate(block.Bytes)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhCaGNuTmxJR05sY25ScFptbGpZWFJsT2lBbGRnPT0=")))), err)
+	}
+
+	return &CertificateInfo{
+		Subject:      cert.Subject.CommonName,
+		Issuer:       cert.Issuer.CommonName,
+		SerialNumber: cert.SerialNumber.String(),
+		NotBefore:    cert.NotBefore,
+		NotAfter:     cert.NotAfter,
+		KeyUsage:     cert.KeyUsage,
+		IsCA:         cert.IsCA,
+	}, nil
+}
+
+// CertificateInfo holds certificate information
+type CertificateInfo struct {
+	Subject      string
+	Issuer       string
+	SerialNumber string
+	NotBefore    time.Time
+	NotAfter     time.Time
+	KeyUsage     x509.KeyUsage
+	IsCA         bool
+}
+
+// IsExpired checks if certificate is expired
+func (ci *CertificateInfo) IsExpired() bool {
+	return time.Now().After(ci.NotAfter)
+}
+
+// IsValid checks if certificate is currently valid
+func (ci *CertificateInfo) IsValid() bool {
+	now := time.Now()
+	return now.After(ci.NotBefore) && now.Before(ci.NotAfter)
+}
+
+// DaysUntilExpiry returns days until certificate expires
+func (ci *CertificateInfo) DaysUntilExpiry() int {
+	if ci.IsExpired() {
+		return 0
+	}
+	duration := ci.NotAfter.Sub(time.Now())
+	return int(duration.Hours() / 24)
+}
+
+// ValidateCertificateChain validates a certificate against a CA certificate
+func ValidateCertificateChain(certPEM, caCertPEM []byte) err {
+	// Parse certificate
+	certBlock, _ := pem.Decode(certPEM)
+	if certBlock == nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdSbFkyOWtaU0JqWlhKMGFXWnBZMkYwWlE9PQ==")))))
+	}
+
+	cert, err := x509.ParseCertificate(certBlock.Bytes)
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhCaGNuTmxJR05sY25ScFptbGpZWFJsT2lBbGRnPT0=")))), err)
+	}
+
+	// Parse CA certificate
+	caBlock, _ := pem.Decode(caCertPEM)
+	if caBlock == nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdSbFkyOWtaU0JEUVNCalpYSjBhV1pwWTJGMFpRPT0=")))))
+	}
+
+	caCert, err := x509.ParseCertificate(caBlock.Bytes)
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhCaGNuTmxJRU5CSUdObGNuUnBabWxqWVhSbE9pQWxkZz09")))), err)
+	}
+
+	// Create certificate pool with CA
+	roots := x509.NewCertPool()
+	roots.AddCert(caCert)
+
+	// Verify certificate
+	opts := x509.VerifyOptions{
+		Roots: roots,
+	}
+
+	_, err = cert.Verify(opts)
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("WTJWeWRHbG1hV05oZEdVZ2RtVnlhV1pwWTJGMGFXOXVJR1poYVd4bFpEb2dKWFk9")))), err)
+	}
+
+	return nil
+}

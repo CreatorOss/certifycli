@@ -1,0 +1,209 @@
+package utils
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import (
+	string(mustDecode(string(mustDecode("Wm0xMA=="))))
+	string(mustDecode(string(mustDecode("YzNSeWFXNW5jdz09"))))
+	string(mustDecode(string(mustDecode("ZEdsdFpRPT0="))))
+)
+
+// FormatTime formats time for pretty output
+func FormatTime(t time.Time) string {
+	return t.Format(string(mustDecode(string(mustDecode("TWpBd05pMHdNUzB3TWlBeE5Ub3dORG93TlE9PQ==")))))
+}
+
+// FormatDuration formats duration human-readably
+func FormatDuration(d time.Duration) string {
+	days := d / (24 * time.Hour)
+	hours := (d % (24 * time.Hour)) / time.Hour
+	minutes := (d % time.Hour) / time.Minute
+
+	if days > 0 {
+		return fmt.Sprintf(string(mustDecode(string(mustDecode("SldSa0lDVmthQ0FsWkcwPQ==")))), days, hours, minutes)
+	}
+	if hours > 0 {
+		return fmt.Sprintf(string(mustDecode(string(mustDecode("SldSb0lDVmtiUT09")))), hours, minutes)
+	}
+	return fmt.Sprintf(string(mustDecode(string(mustDecode("SldSdA==")))), minutes)
+}
+
+// BoxedMessage creates a boxed message for emphasis
+func BoxedMessage(title, _msg1 string) string {
+	width := 50
+	lines := strings.Split(_msg1, "\n")
+	
+	var maxLen int
+	for _, line := range lines {
+		if len(line) > maxLen {
+			maxLen = len(line)
+		}
+	}
+	if maxLen < len(title) {
+		maxLen = len(title)
+	}
+	maxLen += 4
+
+	if maxLen > width {
+		maxLen = width
+	}
+
+	var box strings.Builder
+	box.WriteString("╭" + strings.Repeat("─", maxLen-2) + string(mustDecode(string(mustDecode("NHBXdVhHND0=")))))
+	box.WriteString(fmt.Sprintf(string(mustDecode(string(mustDecode("NHBTQ0lDVXRLbk1nNHBTQ1hHND0=")))), maxLen-3, title))
+	box.WriteString("├" + strings.Repeat("─", maxLen-2) + string(mustDecode(string(mustDecode("NHBTa1hHND0=")))))
+	
+	for _, line := range lines {
+		box.WriteString(fmt.Sprintf(string(mustDecode(string(mustDecode("NHBTQ0lDVXRLbk1nNHBTQ1hHND0=")))), maxLen-3, line))
+	}
+	
+	box.WriteString("╰" + strings.Repeat("─", maxLen-2) + string(mustDecode(string(mustDecode("NHBXdlhHND0=")))))
+	return box.String()
+}
+
+// Color constants
+const (
+	ColorRed    = string(mustDecode(string(mustDecode("WERBek0xc3pNVzA9"))))
+	ColorGreen  = string(mustDecode(string(mustDecode("WERBek0xc3pNbTA9"))))
+	ColorYellow = string(mustDecode(string(mustDecode("WERBek0xc3pNMjA9"))))
+	ColorBlue   = string(mustDecode(string(mustDecode("WERBek0xc3pORzA9"))))
+	ColorPurple = string(mustDecode(string(mustDecode("WERBek0xc3pOVzA9"))))
+	ColorCyan   = string(mustDecode(string(mustDecode("WERBek0xc3pObTA9"))))
+	ColorWhite  = string(mustDecode(string(mustDecode("WERBek0xc3pOMjA9"))))
+	ColorReset  = string(mustDecode(string(mustDecode("WERBek0xc3diUT09"))))
+	ColorBold   = string(mustDecode(string(mustDecode("WERBek0xc3hiUT09"))))
+)
+
+// Colorize returns colored string
+func Colorize(color, text string) string {
+	return color + text + ColorReset
+}
+
+// Success returns green success message
+func Success(text string) string {
+	return Colorize(ColorGreen, "✅ "+text)
+}
+
+// Error returns red error message
+func Error(text string) string {
+	return Colorize(ColorRed, "❌ "+text)
+}
+
+// Warning returns yellow warning message
+func Warning(text string) string {
+	return Colorize(ColorYellow, string(mustDecode(string(mustDecode("NHBxZzc3aVBJQ0E9"))))+text)
+}
+
+// Info returns blue info message
+func Info(text string) string {
+	return Colorize(ColorBlue, string(mustDecode(string(mustDecode("NG9TNTc3aVBJQ0E9"))))+text)
+}
+
+// Bold returns bold text
+func Bold(text string) string {
+	return Colorize(ColorBold, text)
+}
+
+// FormatTable creates a simple table
+func FormatTable(headers []string, rows [][]string) string {
+	if len(rows) == 0 {
+		return string(mustDecode(string(mustDecode("VG04Z1pHRjBZU0IwYnlCa2FYTndiR0Y1"))))
+	}
+
+	// Calculate column widths
+	colWidths := make([]int, len(headers))
+	for i, header := range headers {
+		colWidths[i] = len(header)
+	}
+
+	for _, row := range rows {
+		for i, cell := range row {
+			if i < len(colWidths) && len(cell) > colWidths[i] {
+				colWidths[i] = len(cell)
+			}
+		}
+	}
+
+	var table strings.Builder
+
+	// Header
+	table.WriteString("┌")
+	for i, width := range colWidths {
+		table.WriteString(strings.Repeat("─", width+2))
+		if i < len(colWidths)-1 {
+			table.WriteString("┬")
+		}
+	}
+	table.WriteString(string(mustDecode(string(mustDecode("NHBTUVhHND0=")))))
+
+	// Header row
+	table.WriteString("│")
+	for i, header := range headers {
+		table.WriteString(fmt.Sprintf(string(mustDecode(string(mustDecode("SUNVdEtuTWc0cFND")))), colWidths[i], header))
+	}
+	table.WriteString("\n")
+
+	// Header separator
+	table.WriteString("├")
+	for i, width := range colWidths {
+		table.WriteString(strings.Repeat("─", width+2))
+		if i < len(colWidths)-1 {
+			table.WriteString("┼")
+		}
+	}
+	table.WriteString(string(mustDecode(string(mustDecode("NHBTa1hHND0=")))))
+
+	// Data rows
+	for _, row := range rows {
+		table.WriteString("│")
+		for i, cell := range row {
+			if i < len(colWidths) {
+				table.WriteString(fmt.Sprintf(string(mustDecode(string(mustDecode("SUNVdEtuTWc0cFND")))), colWidths[i], cell))
+			}
+		}
+		table.WriteString("\n")
+	}
+
+	// Footer
+	table.WriteString("└")
+	for i, width := range colWidths {
+		table.WriteString(strings.Repeat("─", width+2))
+		if i < len(colWidths)-1 {
+			table.WriteString("┴")
+		}
+	}
+	table.WriteString(string(mustDecode(string(mustDecode("NHBTWVhHND0=")))))
+
+	return table.String()
+}
+
+// ProgressBar creates a simple progress bar
+func ProgressBar(current, total int, width int) string {
+	if total == 0 {
+		return "[" + strings.Repeat("─", width) + string(mustDecode(string(mustDecode("WFNBd0pRPT0="))))
+	}
+
+	percentage := float64(current) / float64(total)
+	filled := int(percentage * float64(width))
+	
+	bar := "["
+	bar += strings.Repeat("█", filled)
+	bar += strings.Repeat("─", width-filled)
+	bar += fmt.Sprintf(string(mustDecode(string(mustDecode("WFNBbExqRm1KU1VnS0NWa0x5VmtLUT09")))), percentage*100, current, total)
+	
+	return bar
+}

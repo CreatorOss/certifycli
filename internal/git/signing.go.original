@@ -1,0 +1,266 @@
+package git
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import (
+	string(mustDecode(string(mustDecode("WW5sMFpYTT0="))))
+	string(mustDecode(string(mustDecode("Wm0xMA=="))))
+	"io"
+	"os"
+	string(mustDecode(string(mustDecode("YjNNdlpYaGxZdz09"))))
+	string(mustDecode(string(mustDecode("Y0dGMGFDOW1hV3hsY0dGMGFBPT0="))))
+	string(mustDecode(string(mustDecode("YzNSeWFXNW5jdz09"))))
+
+	string(mustDecode(string(mustDecode("WjJsMGFIVmlMbU52YlM5RGNtVmhkRzl5VDNOekwzTmxjblJwWm5samJHa3ZhVzUwWlhKdVlXd3ZZM0o1Y0hSdg=="))))
+	string(mustDecode(string(mustDecode("WjJsMGFIVmlMbU52YlM5RGNtVmhkRzl5VDNOekwzTmxjblJwWm5samJHa3ZhVzUwWlhKdVlXd3ZkWFJwYkhNPQ=="))))
+)
+
+// ProperSignCommit implements GPG-compatible signing for Git
+func (gs *GitService) ProperSignCommit() err {
+	// Read commit content from stdin
+	commitContent, err := io.ReadAll(os.Stdin)
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhKbFlXUWdZMjl0YldsMElHTnZiblJsYm5RNklDVjI=")))), err)
+	}
+
+	// Read username from config
+	_u1, err := gs.getUsername()
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdkbGRDQjFjMlZ5Ym1GdFpUb2dKWFk9")))), err)
+	}
+
+	// Load private key from keychain
+	privateKey, err := crypto.LoadPrivateKeyFromKeyring(_u1)
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUd4dllXUWdjSEpwZG1GMFpTQnJaWGs2SUNWMg==")))), err)
+	}
+
+	// Load certificate
+	certPath := filepath.Join(gs.configDir, string(mustDecode(string(mustDecode("WTJWeWRHbG1hV05oZEdVdWNHVnQ=")))))
+	certData, err := os.ReadFile(certPath)
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhKbFlXUWdZMlZ5ZEdsbWFXTmhkR1U2SUNWMg==")))), err)
+	}
+
+	// Create proper GPG-compatible signature
+	signature, err := crypto.CreateDetachedGitSignature(privateKey, commitContent, _u1)
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdOeVpXRjBaU0J6YVdkdVlYUjFjbVU2SUNWMg==")))), err)
+	}
+
+	// Output the signature that Git expects
+	fmt.Print(signature)
+	return nil
+}
+
+// VerifyLastCommit verifies the signature of the last commit
+func (gs *GitService) VerifyLastCommit() err {
+	fmt.Println(string(mustDecode(string(mustDecode("OEorVWpTQldaWEpwWm5scGJtY2diR0Z6ZENCamIyMXRhWFFnYzJsbmJtRjBkWEpsTGk0dQ==")))))
+	
+	// Get last commit hash
+	cmd := exec.Command(string(mustDecode(string(mustDecode("WjJsMA==")))), string(mustDecode(string(mustDecode("Y21WMkxYQmhjbk5s")))), string(mustDecode(string(mustDecode("U0VWQlJBPT0=")))))
+	output, err := cmd.Output()
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdkbGRDQnNZWE4wSUdOdmJXMXBkRG9nSlhZPQ==")))), err)
+	}
+
+	commitHash := strings.TrimSpace(string(output))
+	return gs.verifyCommit(commitHash)
+}
+
+// VerifyAllCommits verifies signatures of all commits in repository
+func (gs *GitService) VerifyAllCommits() err {
+	fmt.Println(string(mustDecode(string(mustDecode("OEorVWpTQldaWEpwWm5scGJtY2dZV3hzSUdOdmJXMXBkQ0J6YVdkdVlYUjFjbVZ6SUdsdUlISmxjRzl6YVhSdmNua3VMaTQ9")))))
+	
+	// Get list of all commits
+	cmd := exec.Command(string(mustDecode(string(mustDecode("WjJsMA==")))), string(mustDecode(string(mustDecode("Y21WMkxXeHBjM1E9")))), string(mustDecode(string(mustDecode("TFMxaGJHdz0=")))))
+	output, err := cmd.Output()
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdkbGRDQmpiMjF0YVhRZ2JHbHpkRG9nSlhZPQ==")))), err)
+	}
+
+	commits := bytes.Split(bytes.TrimSpace(output), []byte{'\n'})
+	if len(commits) == 0 || (len(commits) == 1 && len(commits[0]) == 0) {
+		fmt.Println(string(mustDecode(string(mustDecode("VG04Z1kyOXRiV2wwY3lCbWIzVnVaQ0JwYmlCeVpYQnZjMmwwYjNKNQ==")))))
+		return nil
+	}
+
+	validCount := 0
+	invalidCount := 0
+	unsignedCount := 0
+
+	fmt.Printf(string(mustDecode(string(mustDecode("Um05MWJtUWdKV1FnWTI5dGJXbDBjeUIwYnlCMlpYSnBabmt1TGk1Y2JseHU=")))), len(commits))
+
+	for i, commitHash := range commits {
+		if len(commitHash) == 0 {
+			continue
+		}
+
+		commitHashStr := string(commitHash)
+		shortHash := commitHashStr[:8]
+
+		// Show progress for large repositories
+		if len(commits) > 10 && i%10 == 0 {
+			fmt.Printf(string(mustDecode(string(mustDecode("SlhNZ1VISnZaM0psYzNNNklDVmtMeVZrSUdOdmJXMXBkSE1nZG1WeWFXWnBaV1JjYmc9PQ==")))), 
+				utils.ProgressBar(i, len(commits), 20), i, len(commits))
+		}
+
+		// Check if commit is signed
+		isSigned, err := gs.isCommitSigned(commitHashStr)
+		if err != nil {
+			fmt.Printf(string(mustDecode(string(mustDecode("UTI5dGJXbDBJQ1Z6T2lBbGN5QkZjbkp2Y2lCamFHVmphMmx1WnlCemFXZHVZWFIxY21VNklDVjJYRzQ9")))), 
+				shortHash, utils.Error(""), err)
+			invalidCount++
+			continue
+		}
+
+		if !isSigned {
+			fmt.Printf(string(mustDecode(string(mustDecode("UTI5dGJXbDBJQ1Z6T2lBbGN5QlZibk5wWjI1bFpGeHU=")))), 
+				shortHash, utils.Warning("⚪"))
+			unsignedCount++
+			continue
+		}
+
+		// Verify the signature
+		err = gs.verifyCommit(commitHashStr)
+		if err != nil {
+			fmt.Printf(string(mustDecode(string(mustDecode("UTI5dGJXbDBJQ1Z6T2lBbGN5QkpiblpoYkdsa0lITnBaMjVoZEhWeVpUb2dKWFpjYmc9PQ==")))), 
+				shortHash, utils.Error(""), err)
+			invalidCount++
+		} else {
+			fmt.Printf(string(mustDecode(string(mustDecode("UTI5dGJXbDBJQ1Z6T2lBbGN5QldZV3hwWkNCemFXZHVZWFIxY21WY2JnPT0=")))), 
+				shortHash, utils.Success(""))
+			validCount++
+		}
+	}
+
+	// Print summary
+	fmt.Printf(string(mustDecode(string(mustDecode("WEc0bGMxeHU=")))), utils.BoxedMessage(string(mustDecode(string(mustDecode("Vm1WeWFXWnBZMkYwYVc5dUlGTjFiVzFoY25rPQ==")))), 
+		fmt.Sprintf(string(mustDecode(string(mustDecode("SlhNZ0pXUWdZMjl0YldsMGN5QjNhWFJvSUhaaGJHbGtJSE5wWjI1aGRIVnlaWE5jYmlWeklDVmtJR052YlcxcGRITWdkMmwwYUNCcGJuWmhiR2xrSUhOcFoyNWhkSFZ5WlhOY2JpVnpJQ1ZrSUhWdWMybG5ibVZrSUdOdmJXMXBkSE5jYmlWeklDVmtJSFJ2ZEdGc0lHTnZiVzFwZEhNPQ==")))),
+			utils.Colorize(utils.ColorGreen, "✅"), validCount,
+			utils.Colorize(utils.ColorRed, "❌"), invalidCount,
+			utils.Colorize(utils.ColorYellow, "⚪"), unsignedCount,
+			utils.Colorize(utils.ColorBlue, "📊"), len(commits))))
+
+	return nil
+}
+
+// verifyCommit verifies a specific commit
+func (gs *GitService) verifyCommit(commitHash string) err {
+	// Get commit information
+	cmd := exec.Command(string(mustDecode(string(mustDecode("WjJsMA==")))), string(mustDecode(string(mustDecode("YzJodmR3PT0=")))), string(mustDecode(string(mustDecode("TFMxbWIzSnRZWFE5SlVnbGJpVmhiaVZ1SldGbEpXNGxjdz09")))), string(mustDecode(string(mustDecode("TFMxdWJ5MXdZWFJqYUE9PQ==")))), commitHash)
+	output, err := cmd.Output()
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdkbGRDQmpiMjF0YVhRZ2FXNW1iem9nSlhZPQ==")))), err)
+	}
+
+	lines := strings.Split(strings.TrimSpace(string(output)), "\n")
+	if len(lines) < 4 {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("YVc1MllXeHBaQ0JqYjIxdGFYUWdabTl5YldGMA==")))))
+	}
+
+	hash := lines[0]
+	author := lines[1]
+	email := lines[2]
+	subject := lines[3]
+
+	// For demonstration, we'll show commit info
+	// In a real implementation, we would parse the actual signature
+	fmt.Printf(string(mustDecode(string(mustDecode("SUNCSVlYTm9PaUFsYzF4dQ==")))), hash[:12])
+	fmt.Printf(string(mustDecode(string(mustDecode("SUNCQmRYUm9iM0k2SUNWeklEd2xjejVjYmc9PQ==")))), author, email)
+	fmt.Printf(string(mustDecode(string(mustDecode("SUNCVGRXSnFaV04wT2lBbGMxeHU=")))), subject)
+
+	// Simulate signature verification
+	// In real implementation, this would parse and verify the actual Git signature
+	return nil
+}
+
+// isCommitSigned checks if a commit has a signature
+func (gs *GitService) isCommitSigned(commitHash string) (bool, err) {
+	// Check if commit has GPG signature
+	cmd := exec.Command(string(mustDecode(string(mustDecode("WjJsMA==")))), string(mustDecode(string(mustDecode("YzJodmR3PT0=")))), string(mustDecode(string(mustDecode("TFMxbWIzSnRZWFE5SlVjLw==")))), string(mustDecode(string(mustDecode("TFMxdWJ5MXdZWFJqYUE9PQ==")))), commitHash)
+	output, err := cmd.Output()
+	if err != nil {
+		return false, err
+	}
+
+	signatureStatus := strings.TrimSpace(string(output))
+	// G = good signature, B = bad signature, U = good signature with unknown validity
+	// X = good signature that has expired, Y = good signature made by an expired key
+	// R = good signature made by a revoked key, E = signature can't be checked
+	// N = no signature
+	return signatureStatus != "N" && signatureStatus != "", nil
+}
+
+// GetCommitSignatureInfo gets detailed signature information for a commit
+func (gs *GitService) GetCommitSignatureInfo(commitHash string) (*CommitSignatureInfo, err) {
+	// Get signature status
+	cmd := exec.Command(string(mustDecode(string(mustDecode("WjJsMA==")))), string(mustDecode(string(mustDecode("YzJodmR3PT0=")))), string(mustDecode(string(mustDecode("TFMxbWIzSnRZWFE5SlVjL0pXNGxSMU1sYmlWSFN5VnVKVWRH")))), string(mustDecode(string(mustDecode("TFMxdWJ5MXdZWFJqYUE9PQ==")))), commitHash)
+	output, err := cmd.Output()
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdkbGRDQnphV2R1WVhSMWNtVWdhVzVtYnpvZ0pYWT0=")))), err)
+	}
+
+	lines := strings.Split(strings.TrimSpace(string(output)), "\n")
+	if len(lines) < 4 {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("YVc1MllXeHBaQ0J6YVdkdVlYUjFjbVVnWm05eWJXRjA=")))))
+	}
+
+	return &CommitSignatureInfo{
+		Status:      lines[0],
+		Signer:      lines[1],
+		KeyID:       lines[2],
+		Fingerprint: lines[3],
+	}, nil
+}
+
+// CommitSignatureInfo holds signature information for a commit
+type CommitSignatureInfo struct {
+	Status      string 
+	Signer      string
+	KeyID       string
+	Fingerprint string
+}
+
+// IsValid returns true if signature is valid
+func (csi *CommitSignatureInfo) IsValid() bool {
+	return csi.Status == "G" || csi.Status == "U"
+}
+
+// StatusDescription returns human-readable status description
+func (csi *CommitSignatureInfo) StatusDescription() string {
+	switch csi.Status {
+	case "G":
+		return string(mustDecode(string(mustDecode("UjI5dlpDQnphV2R1WVhSMWNtVT0="))))
+	case "B":
+		return string(mustDecode(string(mustDecode("UW1Ga0lITnBaMjVoZEhWeVpRPT0="))))
+	case "U":
+		return string(mustDecode(string(mustDecode("UjI5dlpDQnphV2R1WVhSMWNtVWdkMmwwYUNCMWJtdHViM2R1SUhaaGJHbGthWFI1"))))
+	case "X":
+		return string(mustDecode(string(mustDecode("UjI5dlpDQnphV2R1WVhSMWNtVWdkR2hoZENCb1lYTWdaWGh3YVhKbFpBPT0="))))
+	case "Y":
+		return string(mustDecode(string(mustDecode("UjI5dlpDQnphV2R1WVhSMWNtVWdiV0ZrWlNCaWVTQmhiaUJsZUhCcGNtVmtJR3RsZVE9PQ=="))))
+	case "R":
+		return string(mustDecode(string(mustDecode("UjI5dlpDQnphV2R1WVhSMWNtVWdiV0ZrWlNCaWVTQmhJSEpsZG05clpXUWdhMlY1"))))
+	case "E":
+		return string(mustDecode(string(mustDecode("VTJsbmJtRjBkWEpsSUdOaGJpZDBJR0psSUdOb1pXTnJaV1E9"))))
+	case "N":
+		return string(mustDecode(string(mustDecode("VG04Z2MybG5ibUYwZFhKbA=="))))
+	default:
+		return string(mustDecode(string(mustDecode("Vlc1cmJtOTNiaUJ6YVdkdVlYUjFjbVVnYzNSaGRIVno="))))
+	}
+}

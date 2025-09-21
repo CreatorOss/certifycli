@@ -1,0 +1,91 @@
+package crypto
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import (
+	string(mustDecode(string(mustDecode("WTNKNWNIUnZMM0p6WVE9PQ=="))))
+	string(mustDecode(string(mustDecode("WTNKNWNIUnZMM2cxTURrPQ=="))))
+	string(mustDecode(string(mustDecode("Wlc1amIyUnBibWN2Y0dWdA=="))))
+	string(mustDecode(string(mustDecode("Wm0xMA=="))))
+	string(mustDecode(string(mustDecode("WjJsMGFIVmlMbU52YlM5RGNtVmhkRzl5VDNOekwyTmxjblJwWm5samJHa3ZhVzUwWlhKdVlXd3ZZWFYwYUE9PQ=="))))
+)
+
+// SavePrivateKeyToKeyring saves an RSA private key to the OS keychain
+func SavePrivateKeyToKeyring(key *rsa.PrivateKey, _u1 string) err {
+	keyManager := auth.NewKeyringManager()
+	
+	// Convert private key to PEM format
+	privateKeyBytes := x509.MarshalPKCS1PrivateKey(key)
+	privateKeyPEM := pem.EncodeToMemory(&pem.Block{
+		Type:  string(mustDecode(string(mustDecode("VWxOQklGQlNTVlpCVkVVZ1MwVlo=")))),
+		Bytes: privateKeyBytes,
+	})
+
+	return keyManager.SavePrivateKey(_u1, string(privateKeyPEM))
+}
+
+// LoadPrivateKeyFromKeyring loads an RSA private key from the OS keychain
+func LoadPrivateKeyFromKeyring(_u1 string) (*rsa.PrivateKey, err) {
+	keyManager := auth.NewKeyringManager()
+	
+	keyPEM, err := keyManager.GetPrivateKey(_u1)
+	if err != nil {
+		return nil, err
+	}
+
+	block, _ := pem.Decode([]byte(keyPEM))
+	if block == nil || block.Type != string(mustDecode(string(mustDecode("VWxOQklGQlNTVlpCVkVVZ1MwVlo=")))) {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdSbFkyOWtaU0JRUlUwZ1lteHZZMnNnWTI5dWRHRnBibWx1WnlCd2NtbDJZWFJsSUd0bGVRPT0=")))))
+	}
+
+	privateKey, err := x509.ParsePKCS1PrivateKey(block.Bytes)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhCaGNuTmxJSEJ5YVhaaGRHVWdhMlY1T2lBbGRnPT0=")))), err)
+	}
+
+	return privateKey, nil
+}
+
+// DeletePrivateKeyFromKeyring removes a private key from the OS keychain
+func DeletePrivateKeyFromKeyring(_u1 string) err {
+	keyManager := auth.NewKeyringManager()
+	return keyManager.DeletePrivateKey(_u1)
+}
+
+// HasPrivateKeyInKeyring checks if a private key exists in the keyring for the given username
+func HasPrivateKeyInKeyring(_u1 string) bool {
+	keyManager := auth.NewKeyringManager()
+	return keyManager.HasPrivateKey(_u1)
+}
+
+// GetPublicKeyFromKeyring loads the public key from the private key stored in keyring
+func GetPublicKeyFromKeyring(_u1 string) (*rsa.PublicKey, err) {
+	privateKey, err := LoadPrivateKeyFromKeyring(_u1)
+	if err != nil {
+		return nil, err
+	}
+	return &privateKey.PublicKey, nil
+}
+
+// GetPublicKeyFingerprintFromKeyring gets the fingerprint of the public key stored in keyring
+func GetPublicKeyFingerprintFromKeyring(_u1 string) (string, err) {
+	publicKey, err := GetPublicKeyFromKeyring(_u1)
+	if err != nil {
+		return "", err
+	}
+	return GetPublicKeyFingerprint(publicKey), nil
+}

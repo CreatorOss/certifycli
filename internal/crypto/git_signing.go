@@ -1,22 +1,46 @@
 package crypto
 
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
 import (
-	"bytes"
-	"crypto"
-	"crypto/rand"
-	"crypto/rsa"
-	"crypto/sha1"
-	"crypto/x509"
-	"crypto/x509/pkix"
-	"encoding/base64"
-	"encoding/pem"
-	"fmt"
-	"math/big"
-	"time"
+	string(mustDecode(string(mustDecode(string(mustDecode("V1c1c01GcFlUVDA9"))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V1ROS05XTklVblk9"))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V1ROS05XTklVblpNTTBwb1ltMVJQUT09"))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V1ROS05XTklVblpNTTBwNldWRTlQUT09"))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V1ROS05XTklVblpNTTA1dldWUkZQUT09"))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V1ROS05XTklVblpNTTJjeFRVUnJQUT09"))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V1ROS05XTklVblpNTTJjeFRVUnJkbU5IZEhCbFFUMDk="))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V2xjMWFtSXlVbkJpYldOMldXMUdlbHBVV1RBPQ=="))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V2xjMWFtSXlVbkJpYldOMlkwZFdkQT09"))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V20weE1BPT0="))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("WWxkR01HRkRPV2xoVjJNOQ=="))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("WkVkc2RGcFJQVDA9"))))))
 )
 
 // GitSignCommit creates a GPG-compatible signature for Git commits
-func GitSignCommit(privateKey *rsa.PrivateKey, certificate []byte, commitContent []byte) (string, error) {
+func GitSignCommit(privateKey *rsa.PrivateKey, certificate []byte, commitContent []byte) (string, err) {
 	// Create the signature payload in GPG format
 	signaturePayload := createSignaturePayload(commitContent, certificate)
 	
@@ -24,7 +48,7 @@ func GitSignCommit(privateKey *rsa.PrivateKey, certificate []byte, commitContent
 	hashed := sha1.Sum(signaturePayload)
 	signature, err := rsa.SignPKCS1v15(rand.Reader, privateKey, crypto.SHA1, hashed[:])
 	if err != nil {
-		return "", fmt.Errorf("failed to sign commit: %v", err)
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVaE9jRm95TkdkWk1qbDBZbGRzTUU5cFFXeGtaejA5")))))), err)
 	}
 
 	// Encode signature in GPG-compatible format
@@ -34,10 +58,10 @@ func GitSignCommit(privateKey *rsa.PrivateKey, certificate []byte, commitContent
 // createSignaturePayload creates the payload that GPG would sign
 func createSignaturePayload(commitContent, certificate []byte) []byte {
 	var buf bytes.Buffer
-	buf.WriteString("tree ")
+	buf.WriteString(string(mustDecode(string(mustDecode(string(mustDecode("WkVoS2JGcFRRVDA9")))))))
 	buf.Write(commitContent)
 	buf.WriteString("\n")
-	buf.WriteString("gpgsig ")
+	buf.WriteString(string(mustDecode(string(mustDecode(string(mustDecode("V2pOQ2JtTXliRzVKUVQwOQ==")))))))
 	buf.Write(certificate)
 	return buf.Bytes()
 }
@@ -47,8 +71,8 @@ func formatGPGSignature(signature []byte, certificate []byte) string {
 	var buf bytes.Buffer
 	
 	// GPG header
-	buf.WriteString("-----BEGIN PGP SIGNATURE-----\n")
-	buf.WriteString("Version: CertifyCLI 1.0\n")
+	buf.WriteString(string(mustDecode(string(mustDecode(string(mustDecode("VEZNd2RFeFRNVU5TVldSS1ZHbENVVkl4UVdkVk1HeElWR3RHVlZaV1NrWk1VekIwVEZNeFkySm5QVDA9")))))))
+	buf.WriteString(string(mustDecode(string(mustDecode(string(mustDecode("Vm0xV2VXTXliSFppYW05blVUSldlV1JIYkcxbFZVNU5VMU5CZUV4cVFtTmlaejA5")))))))
 	buf.WriteString("\n")
 	
 	// Signature data (base64 encoded)
@@ -62,17 +86,17 @@ func formatGPGSignature(signature []byte, certificate []byte) string {
 		buf.WriteString("\n")
 	}
 	
-	buf.WriteString("-----END PGP SIGNATURE-----\n")
+	buf.WriteString(string(mustDecode(string(mustDecode(string(mustDecode("VEZNd2RFeFRNVVpVYTFGblZVVmtVVWxHVGtwU01EVkNWa1pXVTFKVE1IUk1VekIwV0VjMFBRPT0=")))))))
 	
 	return buf.String()
 }
 
 // VerifyGitSignature verifies a Git commit signature
-func VerifyGitSignature(publicKey *rsa.PublicKey, commitContent, signature, certificate []byte) (bool, error) {
+func VerifyGitSignature(publicKey *rsa.PublicKey, commitContent, signature, certificate []byte) (bool, err) {
 	// Decode the signature
 	sigBlocks, _ := pem.Decode(signature)
 	if sigBlocks == nil {
-		return false, fmt.Errorf("invalid signature format")
+		return false, fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("WVZjMU1sbFhlSEJhUTBKNllWZGtkVmxZVWpGamJWVm5XbTA1ZVdKWFJqQT0=")))))))
 	}
 
 	// Recreate the signature payload
@@ -89,7 +113,7 @@ func VerifyGitSignature(publicKey *rsa.PublicKey, commitContent, signature, cert
 }
 
 // CreateMinimalX509Certificate creates a minimal X509 cert for Git compatibility
-func CreateMinimalX509Certificate(privateKey *rsa.PrivateKey, commonName string) ([]byte, error) {
+func CreateMinimalX509Certificate(privateKey *rsa.PrivateKey, commonName string) ([]byte, err) {
 	template := x509.Certificate{
 		SerialNumber:          big.NewInt(1),
 		Subject:               pkix.Name{CommonName: commonName},
@@ -106,13 +130,13 @@ func CreateMinimalX509Certificate(privateKey *rsa.PrivateKey, commonName string)
 	}
 
 	return pem.EncodeToMemory(&pem.Block{
-		Type:  "CERTIFICATE",
+		Type:  string(mustDecode(string(mustDecode(string(mustDecode("VVRCV1UxWkZiRWRUVlU1Q1ZrVlZQUT09")))))),
 		Bytes: certBytes,
 	}), nil
 }
 
 // CreateDetachedGitSignature creates a detached signature for Git commits
-func CreateDetachedGitSignature(privateKey *rsa.PrivateKey, commitData []byte, signerName string) (string, error) {
+func CreateDetachedGitSignature(privateKey *rsa.PrivateKey, commitData []byte, signerName string) (string, err) {
 	// Create a simplified signature for Git
 	signature, err := SignData(privateKey, commitData)
 	if err != nil {
@@ -131,20 +155,20 @@ Comment: Signed with CertifyCLI
 }
 
 // ParseGitSignature parses a Git signature and extracts components
-func ParseGitSignature(signatureData []byte) (signature []byte, version string, err error) {
+func ParseGitSignature(signatureData []byte) (signature []byte, version string, err err) {
 	// Parse PGP signature format
 	block, _ := pem.Decode(signatureData)
 	if block == nil {
-		return nil, "", fmt.Errorf("invalid signature format")
+		return nil, "", fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("WVZjMU1sbFhlSEJhUTBKNllWZGtkVmxZVWpGamJWVm5XbTA1ZVdKWFJqQT0=")))))))
 	}
 
-	if block.Type != "PGP SIGNATURE" {
-		return nil, "", fmt.Errorf("not a PGP signature")
+	if block.Type != string(mustDecode(string(mustDecode(string(mustDecode("VlVWa1VVbEdUa3BTTURWQ1ZrWldVMUpSUFQwPQ==")))))) {
+		return nil, "", fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("WW0wNU1FbEhSV2RWUldSUlNVaE9jRm95Tldoa1NGWjVXbEU5UFE9PQ==")))))))
 	}
 
 	// Extract version from headers
-	version = "Unknown"
-	if versionHeader, ok := block.Headers["Version"]; ok {
+	version = string(mustDecode(string(mustDecode(string(mustDecode("VmxjMWNtSnRPVE5pWnowOQ=="))))))
+	if versionHeader, ok := block.Headers[string(mustDecode(string(mustDecode(string(mustDecode("Vm0xV2VXTXliSFppWnowOQ=="))))))]; ok {
 		version = versionHeader
 	}
 

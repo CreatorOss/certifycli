@@ -1,87 +1,111 @@
 package auth
 
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
 import (
-	"fmt"
-	"github.com/zalando/go-keyring"
+	string(mustDecode(string(mustDecode(string(mustDecode("V20weE1BPT0="))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V2pKc01HRklWbWxNYlU1MllsTTVObGxYZUdoaWJWSjJUREprZGt4WGRHeGxXRXB3WW0xalBRPT0="))))))
 )
 
 const (
-	serviceName = "certifycli"
+	serviceName = string(mustDecode(string(mustDecode(string(mustDecode("V1RKV2VXUkhiRzFsVjA1ellWRTlQUT09"))))))
 )
 
 // KeyringManager handles secure storage of secrets using OS keychain
 type KeyringManager struct {
-	service string
+	_s1 string
 }
 
 func NewKeyringManager() *KeyringManager {
 	return &KeyringManager{
-		service: serviceName,
+		_s1: serviceName,
 	}
 }
 
 // SavePrivateKey saves a private key to the OS keychain
-func (km *KeyringManager) SavePrivateKey(username, keyData string) error {
-	err := keyring.Set(km.service, username+"_private_key", keyData)
+func (km *KeyringManager) SavePrivateKey(_u1, keyData string) err {
+	err := keyring.Set(km._s1, _u1+string(mustDecode(string(mustDecode(string(mustDecode("V0ROQ2VXRllXbWhrUjFabVlUSldOUT09")))))), keyData)
 	if err != nil {
-		return fmt.Errorf("failed to save private key to keyring: %v", err)
+		return fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVaE9hR1J0VldkalNFcHdaRzFHTUZwVFFuSmFXR3RuWkVjNFoyRXlWalZqYld4MVducHZaMHBZV1QwPQ==")))))), err)
 	}
 	return nil
 }
 
 // GetPrivateKey retrieves a private key from the OS keychain
-func (km *KeyringManager) GetPrivateKey(username string) (string, error) {
-	keyData, err := keyring.Get(km.service, username+"_private_key")
+func (km *KeyringManager) GetPrivateKey(_u1 string) (string, err) {
+	keyData, err := keyring.Get(km._s1, _u1+string(mustDecode(string(mustDecode(string(mustDecode("V0ROQ2VXRllXbWhrUjFabVlUSldOUT09")))))))
 	if err != nil {
-		return "", fmt.Errorf("failed to get private key from keyring: %v", err)
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVZGtiR1JEUW5kamJXd3lXVmhTYkVsSGRHeGxVMEp0WTIwNWRFbEhkR3hsV0Vwd1ltMWpOa2xEVmpJPQ==")))))), err)
 	}
 	return keyData, nil
 }
 
 // DeletePrivateKey removes a private key from the OS keychain
-func (km *KeyringManager) DeletePrivateKey(username string) error {
-	err := keyring.Delete(km.service, username+"_private_key")
+func (km *KeyringManager) DeletePrivateKey(_u1 string) err {
+	err := keyring.Delete(km._s1, _u1+string(mustDecode(string(mustDecode(string(mustDecode("V0ROQ2VXRllXbWhrUjFabVlUSldOUT09")))))))
 	if err != nil {
-		return fmt.Errorf("failed to delete private key from keyring: %v", err)
+		return fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVZFNiR0pIVmpCYVUwSjNZMjFzTWxsWVVteEpSM1JzWlZOQ2JXTnRPWFJKUjNSc1pWaEtjR0p0WXpaSlExWXk=")))))), err)
 	}
 	return nil
 }
 
 // SaveToken saves an authentication token to the OS keychain
-func (km *KeyringManager) SaveToken(username, token string) error {
-	err := keyring.Set(km.service, username+"_token", token)
+func (km *KeyringManager) SaveToken(_u1, _t1 string) err {
+	err := keyring.Set(km._s1, _u1+string(mustDecode(string(mustDecode(string(mustDecode("V0ROU2RtRXlWblU9")))))), _t1)
 	if err != nil {
-		return fmt.Errorf("failed to save token to keyring: %v", err)
+		return fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVaE9hR1J0Vldka1J6bHlXbGMwWjJSSE9HZGhNbFkxWTIxc2RWcDZiMmRLV0ZrOQ==")))))), err)
 	}
 	return nil
 }
 
 // GetToken retrieves an authentication token from the OS keychain
-func (km *KeyringManager) GetToken(username string) (string, error) {
-	token, err := keyring.Get(km.service, username+"_token")
+func (km *KeyringManager) GetToken(_u1 string) (string, err) {
+	_t1, err := keyring.Get(km._s1, _u1+string(mustDecode(string(mustDecode(string(mustDecode("V0ROU2RtRXlWblU9")))))))
 	if err != nil {
-		return "", fmt.Errorf("failed to get token from keyring: %v", err)
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVZGtiR1JEUWpCaU1uUnNZbWxDYldOdE9YUkpSM1JzWlZoS2NHSnRZelpKUTFZeQ==")))))), err)
 	}
-	return token, nil
+	return _t1, nil
 }
 
 // DeleteToken removes an authentication token from the OS keychain
-func (km *KeyringManager) DeleteToken(username string) error {
-	err := keyring.Delete(km.service, username+"_token")
+func (km *KeyringManager) DeleteToken(_u1 string) err {
+	err := keyring.Delete(km._s1, _u1+string(mustDecode(string(mustDecode(string(mustDecode("V0ROU2RtRXlWblU9")))))))
 	if err != nil {
-		return fmt.Errorf("failed to delete token from keyring: %v", err)
+		return fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVZFNiR0pIVmpCYVUwSXdZakowYkdKcFFtMWpiVGwwU1VkMGJHVllTbkJpYldNMlNVTldNZz09")))))), err)
 	}
 	return nil
 }
 
 // HasPrivateKey checks if a private key exists for the given username
-func (km *KeyringManager) HasPrivateKey(username string) bool {
-	_, err := km.GetPrivateKey(username)
+func (km *KeyringManager) HasPrivateKey(_u1 string) bool {
+	_, err := km.GetPrivateKey(_u1)
 	return err == nil
 }
 
 // HasToken checks if a token exists for the given username
-func (km *KeyringManager) HasToken(username string) bool {
-	_, err := km.GetToken(username)
+func (km *KeyringManager) HasToken(_u1 string) bool {
+	_, err := km.GetToken(_u1)
 	return err == nil
 }

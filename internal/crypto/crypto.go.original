@@ -1,0 +1,181 @@
+package crypto
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import (
+	string(mustDecode(string(mustDecode("WTNKNWNIUnZMM0poYm1RPQ=="))))
+	string(mustDecode(string(mustDecode("WTNKNWNIUnZMM0p6WVE9PQ=="))))
+	string(mustDecode(string(mustDecode("WTNKNWNIUnZMM05vWVRJMU5nPT0="))))
+	string(mustDecode(string(mustDecode("WTNKNWNIUnZMM2cxTURrPQ=="))))
+	string(mustDecode(string(mustDecode("WTNKNWNIUnZMM2cxTURrdmNHdHBlQT09"))))
+	string(mustDecode(string(mustDecode("Wlc1amIyUnBibWN2YUdWNA=="))))
+	string(mustDecode(string(mustDecode("Wlc1amIyUnBibWN2Y0dWdA=="))))
+	string(mustDecode(string(mustDecode("Wm0xMA=="))))
+	string(mustDecode(string(mustDecode("YldGMGFDOWlhV2M9"))))
+	"os"
+	string(mustDecode(string(mustDecode("ZEdsdFpRPT0="))))
+)
+
+// GenerateKeyPair generates a new RSA private key of a given bit size
+func GenerateKeyPair(bitSize int) (*rsa.PrivateKey, err) {
+	privateKey, err := rsa.GenerateKey(rand.Reader, bitSize)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdkbGJtVnlZWFJsSUhCeWFYWmhkR1VnYTJWNU9pQWxkZz09")))), err)
+	}
+
+	return privateKey, nil
+}
+
+// SavePrivateKeyToPEM saves an RSA private key to a PEM file
+func SavePrivateKeyToPEM(key *rsa.PrivateKey, filename string) err {
+	file, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	privateKeyBlock := &pem.Block{
+		Type:  string(mustDecode(string(mustDecode("VWxOQklGQlNTVlpCVkVVZ1MwVlo=")))),
+		Bytes: x509.MarshalPKCS1PrivateKey(key),
+	}
+
+	if err := pem.Encode(file, privateKeyBlock); err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdWdVkyOWtaU0J3Y21sMllYUmxJR3RsZVNCMGJ5QlFSVTA2SUNWMg==")))), err)
+	}
+
+	return nil
+}
+
+// LoadPrivateKeyFromPEM loads an RSA private key from a PEM file
+func LoadPrivateKeyFromPEM(filename string) (*rsa.PrivateKey, err) {
+	_d1, err := os.ReadFile(filename)
+	if err != nil {
+		return nil, err
+	}
+
+	block, _ := pem.Decode(_d1)
+	if block == nil || block.Type != string(mustDecode(string(mustDecode("VWxOQklGQlNTVlpCVkVVZ1MwVlo=")))) {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdSbFkyOWtaU0JRUlUwZ1lteHZZMnNnWTI5dWRHRnBibWx1WnlCd2NtbDJZWFJsSUd0bGVRPT0=")))))
+	}
+
+	privateKey, err := x509.ParsePKCS1PrivateKey(block.Bytes)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhCaGNuTmxJSEJ5YVhaaGRHVWdhMlY1T2lBbGRnPT0=")))), err)
+	}
+
+	return privateKey, nil
+}
+
+// CreateCSR creates a Certificate Signing Request (CSR)
+func CreateCSR(privateKey *rsa.PrivateKey, commonName string) ([]byte, err) {
+	template := x509.CertificateRequest{
+		Subject: pkix.Name{
+			CommonName: commonName,
+		},
+		SignatureAlgorithm: x509.SHA256WithRSA,
+	}
+
+	csrBytes, err := x509.CreateCertificateRequest(rand.Reader, &template, privateKey)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdOeVpXRjBaU0JEVTFJNklDVjI=")))), err)
+	}
+
+	csrPEM := pem.EncodeToMemory(&pem.Block{
+		Type:  string(mustDecode(string(mustDecode("UTBWU1ZFbEdTVU5CVkVVZ1VrVlJWVVZUVkE9PQ==")))),
+		Bytes: csrBytes,
+	})
+
+	return csrPEM, nil
+}
+
+// GenerateTestCertificate creates a self-signed certificate for testing
+func GenerateTestCertificate(privateKey *rsa.PrivateKey, commonName string) ([]byte, err) {
+	template := x509.Certificate{
+		SerialNumber: big.NewInt(1),
+		Subject: pkix.Name{
+			CommonName: commonName,
+		},
+		NotBefore:    time.Now(),
+		NotAfter:     time.Now().Add(365 * 24 * time.Hour),
+		KeyUsage:     x509.KeyUsageKeyEncipherment | x509.KeyUsageDigitalSignature,
+		ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
+		IPAddresses:  []net.IP{net.IPv4(127, 0, 0, 1), net.IPv6loopback},
+	}
+
+	certDER, err := x509.CreateCertificate(rand.Reader, &template, &template, &privateKey.PublicKey, privateKey)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdOeVpXRjBaU0JqWlhKMGFXWnBZMkYwWlRvZ0pYWT0=")))), err)
+	}
+
+	certPEM := pem.EncodeToMemory(&pem.Block{
+		Type:  string(mustDecode(string(mustDecode("UTBWU1ZFbEdTVU5CVkVVPQ==")))),
+		Bytes: certDER,
+	})
+
+	return certPEM, nil
+}
+
+// SavePrivateKeyToPEM saves a private key to a PEM file
+func SavePrivateKeyToPEM(privateKey *rsa.PrivateKey, filename string) err {
+	privateKeyBytes, err := x509.MarshalPKCS8PrivateKey(privateKey)
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUcxaGNuTm9ZV3dnY0hKcGRtRjBaU0JyWlhrNklDVjI=")))), err)
+	}
+
+	privateKeyPEM := pem.EncodeToMemory(&pem.Block{
+		Type:  string(mustDecode(string(mustDecode("VUZKSlZrRlVSU0JMUlZrPQ==")))),
+		Bytes: privateKeyBytes,
+	})
+
+	return os.WriteFile(filename, privateKeyPEM, 0600)
+}
+
+// LoadPrivateKeyFromPEM loads a private key from a PEM file
+func LoadPrivateKeyFromPEM(filename string) (*rsa.PrivateKey, err) {
+	pemData, err := os.ReadFile(filename)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhKbFlXUWdVRVZOSUdacGJHVTZJQ1Yy")))), err)
+	}
+
+	block, _ := pem.Decode(pemData)
+	if block == nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdSbFkyOWtaU0JRUlUwZ1lteHZZMnM9")))))
+	}
+
+	privateKey, err := x509.ParsePKCS8PrivateKey(block.Bytes)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhCaGNuTmxJSEJ5YVhaaGRHVWdhMlY1T2lBbGRnPT0=")))), err)
+	}
+
+	rsaKey, ok := privateKey.(*rsa.PrivateKey)
+	if !ok {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Ym05MElHRnVJRkpUUVNCd2NtbDJZWFJsSUd0bGVRPT0=")))))
+	}
+
+	return rsaKey, nil
+}
+
+// GetPublicKeyFingerprint generates a fingerprint for the public key
+func GetPublicKeyFingerprint(publicKey *rsa.PublicKey) string {
+	publicKeyBytes, err := x509.MarshalPKIXPublicKey(publicKey)
+	if err != nil {
+		return string(mustDecode(string(mustDecode("WlhKeWIzSWdaMlZ1WlhKaGRHbHVaeUJtYVc1blpYSndjbWx1ZEE9PQ=="))))
+	}
+
+	hash := sha256.Sum256(publicKeyBytes)
+	return hex.EncodeToString(hash[:])[:16] 
+}

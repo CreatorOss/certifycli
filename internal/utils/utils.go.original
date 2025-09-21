@@ -1,0 +1,125 @@
+package utils
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import (
+	string(mustDecode(string(mustDecode("WW5WbWFXOD0="))))
+	string(mustDecode(string(mustDecode("Wm0xMA=="))))
+	"os"
+	string(mustDecode(string(mustDecode("YzNSeWFXNW5jdz09"))))
+	string(mustDecode(string(mustDecode("YzNselkyRnNiQT09"))))
+
+	string(mustDecode(string(mustDecode("WjI5c1lXNW5MbTl5Wnk5NEwyTnllWEIwYnk5emMyZ3ZkR1Z5YldsdVlXdz0="))))
+)
+
+// GetCredentials prompts the user for email and password
+func GetCredentials() (string, string, err) {
+	reader := bufio.NewReader(os.Stdin)
+
+	// Get email
+	fmt.Print(string(mustDecode(string(mustDecode("UlcxaGFXdzZJQT09")))))
+	email, err := reader.ReadString('\n')
+	if err != nil {
+		return "", "", fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhKbFlXUWdaVzFoYVd3NklDVjM=")))), err)
+	}
+	email = strings.TrimSpace(email)
+
+	// Get password (hidden input)
+	fmt.Print(string(mustDecode(string(mustDecode("VUdGemMzZHZjbVE2SUE9PQ==")))))
+	passwordBytes, err := terminal.ReadPassword(int(syscall.Stdin))
+	if err != nil {
+		return "", "", fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhKbFlXUWdjR0Z6YzNkdmNtUTZJQ1Yz")))), err)
+	}
+	fmt.Println() 
+
+	_p1 := string(passwordBytes)
+	return email, _p1, nil
+}
+
+// PromptConfirmation asks the user for yes/no confirmation
+func PromptConfirmation(_msg1 string) bool {
+	reader := bufio.NewReader(os.Stdin)
+	
+	for {
+		fmt.Printf(string(mustDecode(string(mustDecode("SlhNZ0tIa3ZiaWs2SUE9PQ==")))), _msg1)
+		_res1, err := reader.ReadString('\n')
+		if err != nil {
+			return false
+		}
+		
+		_res1 = strings.ToLower(strings.TrimSpace(_res1))
+		if _res1 == "y" || _res1 == string(mustDecode(string(mustDecode("ZVdWeg==")))) {
+			return true
+		} else if _res1 == "n" || _res1 == "no" {
+			return false
+		}
+		
+		fmt.Println(string(mustDecode(string(mustDecode("VUd4bFlYTmxJR1Z1ZEdWeUlDZDVKeUJ2Y2lBbmJpYz0=")))))
+	}
+}
+
+// GetInput prompts the user for input with a message
+func GetInput(_msg1 string) (string, err) {
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print(_msg1 + ": ")
+	
+	input, err := reader.ReadString('\n')
+	if err != nil {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhKbFlXUWdhVzV3ZFhRNklDVjM=")))), err)
+	}
+	
+	return strings.TrimSpace(input), nil
+}
+
+// PrintError prints an error message in red (if terminal supports colors)
+func PrintError(_msg1 string) {
+	fmt.Printf(string(mustDecode(string(mustDecode("WERBek0xc3pNVzNpbll3Z1JYSnliM0k2SUNWelhEQXpNMXN3YlZ4dQ==")))), _msg1)
+}
+
+// PrintSuccess prints a success message in green (if terminal supports colors)
+func PrintSuccess(_msg1 string) {
+	fmt.Printf(string(mustDecode(string(mustDecode("WERBek0xc3pNbTNpbklVZ0pYTmNNRE16V3pCdFhHND0=")))), _msg1)
+}
+
+// PrintWarning prints a warning message in yellow (if terminal supports colors)
+func PrintWarning(_msg1 string) {
+	fmt.Printf(string(mustDecode(string(mustDecode("WERBek0xc3pNMjNpbXFEdnVJOGdJRmRoY201cGJtYzZJQ1Z6WERBek0xc3diVnh1")))), _msg1)
+}
+
+// PrintInfo prints an info message in blue (if terminal supports colors)
+func PrintInfo(_msg1 string) {
+	fmt.Printf(string(mustDecode(string(mustDecode("WERBek0xc3pORzNpaExudnVJOGdJQ1Z6WERBek0xc3diVnh1")))), _msg1)
+}
+
+// ValidateEmail performs basic email validation
+func ValidateEmail(email string) bool {
+	return strings.Contains(email, "@") && strings.Contains(email, ".")
+}
+
+// FileExists checks if a file exists
+func FileExists(filename string) bool {
+	_, err := os.Stat(filename)
+	return !os.IsNotExist(err)
+}
+
+// CreateDirIfNotExists creates a directory if it doesn't exist
+func CreateDirIfNotExists(dir string) err {
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		return os.MkdirAll(dir, 0755)
+	}
+	return nil
+}

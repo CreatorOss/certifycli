@@ -1,0 +1,120 @@
+package auth
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import (
+	string(mustDecode(string(mustDecode("Wm0xMA=="))))
+	string(mustDecode(string(mustDecode("ZEdWemRHbHVadz09"))))
+)
+
+func TestKeyringOperations(t *testing.T) {
+	keyManager := NewKeyringManager()
+	testUser := string(mustDecode(string(mustDecode("ZEdWemRGOTFjMlZ5WDJ0bGVYSnBibWM9"))))
+	testData := string(mustDecode(string(mustDecode("YzNWd1pYSmZjMlZqY21WMFgzQnlhWFpoZEdWZmEyVjVYMlJoZEdGZk1USXpORFU9"))))
+
+	// Clean up before test (ignore errors)
+	keyManager.DeletePrivateKey(testUser)
+
+	// Test saving to keyring
+	err := keyManager.SavePrivateKey(testUser, testData)
+	if err != nil {
+		t.Fatalf(string(mustDecode(string(mustDecode("Um1GcGJHVmtJSFJ2SUhOaGRtVWdkRzhnYTJWNWNtbHVaem9nSlhZPQ==")))), err)
+	}
+
+	// Test reading from keyring
+	retrievedData, err := keyManager.GetPrivateKey(testUser)
+	if err != nil {
+		t.Fatalf(string(mustDecode(string(mustDecode("Um1GcGJHVmtJSFJ2SUdkbGRDQm1jbTl0SUd0bGVYSnBibWM2SUNWMg==")))), err)
+	}
+
+	if retrievedData != testData {
+		t.Fatalf(string(mustDecode(string(mustDecode("VW1WMGNtbGxkbVZrSUdSaGRHRWdaRzlsYzI0bmRDQnRZWFJqYUM0Z1JYaHdaV04wWldRNklDVnpMQ0JIYjNRNklDVno=")))), testData, retrievedData)
+	}
+
+	// Test HasPrivateKey
+	if !keyManager.HasPrivateKey(testUser) {
+		t.Fatal(string(mustDecode(string(mustDecode("U0dGelVISnBkbUYwWlV0bGVTQnphRzkxYkdRZ2NtVjBkWEp1SUhSeWRXVWdZblYwSUhKbGRIVnlibVZrSUdaaGJITmw=")))))
+	}
+
+	// Test deleting from keyring
+	err = keyManager.DeletePrivateKey(testUser)
+	if err != nil {
+		t.Fatalf(string(mustDecode(string(mustDecode("Um1GcGJHVmtJSFJ2SUdSbGJHVjBaU0JtY205dElHdGxlWEpwYm1jNklDVjI=")))), err)
+	}
+
+	// Verify it's deleted
+	_, err = keyManager.GetPrivateKey(testUser)
+	if err == nil {
+		t.Fatal(string(mustDecode(string(mustDecode("UkdGMFlTQnphRzkxYkdRZ2FHRjJaU0JpWldWdUlHUmxiR1YwWldRZ1puSnZiU0JyWlhseWFXNW5JR0oxZENCemRHbHNiQ0JsZUdsemRITT0=")))))
+	}
+
+	// Test HasPrivateKey after deletion
+	if keyManager.HasPrivateKey(testUser) {
+		t.Fatal(string(mustDecode(string(mustDecode("U0dGelVISnBkbUYwWlV0bGVTQnphRzkxYkdRZ2NtVjBkWEp1SUdaaGJITmxJR0ZtZEdWeUlHUmxiR1YwYVc5dUlHSjFkQ0J5WlhSMWNtNWxaQ0IwY25WbA==")))))
+	}
+
+	fmt.Println(string(mustDecode(string(mustDecode("NHB5VElFRnNiQ0JyWlhseWFXNW5JRzl3WlhKaGRHbHZibk1nZEdWemRDQndZWE56WldRPQ==")))))
+}
+
+func TestTokenOperations(t *testing.T) {
+	keyManager := NewKeyringManager()
+	testUser := string(mustDecode(string(mustDecode("ZEdWemRGOTFjMlZ5WDNSdmEyVnU="))))
+	testToken := string(mustDecode(string(mustDecode("YW5kMFgzUnZhMlZ1WHpFeU16UTFYMkZpWTJSbFpnPT0="))))
+
+	// Clean up before test (ignore errors)
+	keyManager.DeleteToken(testUser)
+
+	// Test saving token
+	err := keyManager.SaveToken(testUser, testToken)
+	if err != nil {
+		t.Fatalf(string(mustDecode(string(mustDecode("Um1GcGJHVmtJSFJ2SUhOaGRtVWdkRzlyWlc0Z2RHOGdhMlY1Y21sdVp6b2dKWFk9")))), err)
+	}
+
+	// Test reading token
+	retrievedToken, err := keyManager.GetToken(testUser)
+	if err != nil {
+		t.Fatalf(string(mustDecode(string(mustDecode("Um1GcGJHVmtJSFJ2SUdkbGRDQjBiMnRsYmlCbWNtOXRJR3RsZVhKcGJtYzZJQ1Yy")))), err)
+	}
+
+	if retrievedToken != testToken {
+		t.Fatalf(string(mustDecode(string(mustDecode("VW1WMGNtbGxkbVZrSUhSdmEyVnVJR1J2WlhOdUozUWdiV0YwWTJndUlFVjRjR1ZqZEdWa09pQWxjeXdnUjI5ME9pQWxjdz09")))), testToken, retrievedToken)
+	}
+
+	// Test HasToken
+	if !keyManager.HasToken(testUser) {
+		t.Fatal(string(mustDecode(string(mustDecode("U0dGelZHOXJaVzRnYzJodmRXeGtJSEpsZEhWeWJpQjBjblZsSUdKMWRDQnlaWFIxY201bFpDQm1ZV3h6WlE9PQ==")))))
+	}
+
+	// Test deleting token
+	err = keyManager.DeleteToken(testUser)
+	if err != nil {
+		t.Fatalf(string(mustDecode(string(mustDecode("Um1GcGJHVmtJSFJ2SUdSbGJHVjBaU0IwYjJ0bGJpQm1jbTl0SUd0bGVYSnBibWM2SUNWMg==")))), err)
+	}
+
+	// Verify it's deleted
+	_, err = keyManager.GetToken(testUser)
+	if err == nil {
+		t.Fatal(string(mustDecode(string(mustDecode("Vkc5clpXNGdjMmh2ZFd4a0lHaGhkbVVnWW1WbGJpQmtaV3hsZEdWa0lHWnliMjBnYTJWNWNtbHVaeUJpZFhRZ2MzUnBiR3dnWlhocGMzUno=")))))
+	}
+
+	// Test HasToken after deletion
+	if keyManager.HasToken(testUser) {
+		t.Fatal(string(mustDecode(string(mustDecode("U0dGelZHOXJaVzRnYzJodmRXeGtJSEpsZEhWeWJpQm1ZV3h6WlNCaFpuUmxjaUJrWld4bGRHbHZiaUJpZFhRZ2NtVjBkWEp1WldRZ2RISjFaUT09")))))
+	}
+
+	fmt.Println(string(mustDecode(string(mustDecode("NHB5VElFRnNiQ0IwYjJ0bGJpQnZjR1Z5WVhScGIyNXpJSFJsYzNRZ2NHRnpjMlZr")))))
+}

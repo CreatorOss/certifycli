@@ -1,0 +1,250 @@
+package ca
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import (
+	string(mustDecode(string(mustDecode("WTNKNWNIUnZMM0poYm1RPQ=="))))
+	string(mustDecode(string(mustDecode("WTNKNWNIUnZMM2cxTURrPQ=="))))
+	string(mustDecode(string(mustDecode("WTNKNWNIUnZMM2cxTURrdmNHdHBlQT09"))))
+	string(mustDecode(string(mustDecode("Wlc1amIyUnBibWN2Y0dWdA=="))))
+	string(mustDecode(string(mustDecode("Wm0xMA=="))))
+	string(mustDecode(string(mustDecode("YldGMGFDOWlhV2M9"))))
+	"os"
+	string(mustDecode(string(mustDecode("Y0dGMGFDOW1hV3hsY0dGMGFBPT0="))))
+	string(mustDecode(string(mustDecode("ZEdsdFpRPT0="))))
+
+	string(mustDecode(string(mustDecode("WjJsMGFIVmlMbU52YlM5RGNtVmhkRzl5VDNOekwzTmxjblJwWm5samJHa3ZhVzUwWlhKdVlXd3ZZM0o1Y0hSdg=="))))
+)
+
+type LocalCA struct {
+	caCertPath    string
+	caKeyPath     string
+	configDir     string
+}
+
+func NewLocalCA() (*LocalCA, err) {
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		return nil, err
+	}
+
+	configDir := filepath.Join(homeDir, string(mustDecode(string(mustDecode("TG1ObGNuUnBabmxqYkdrPQ==")))))
+	return &LocalCA{
+		caCertPath: filepath.Join(configDir, string(mustDecode(string(mustDecode("WTJFdFkyVnlkR2xtYVdOaGRHVXVjR1Z0"))))),
+		caKeyPath:  filepath.Join(configDir, string(mustDecode(string(mustDecode("WTJFdGNISnBkbUYwWlMxclpYa3VjR1Z0"))))),
+		configDir:  configDir,
+	}, nil
+}
+
+// InitializeCA creates CA key pair if it doesn't exist
+func (l *LocalCA) InitializeCA() err {
+	if l.CAExists() {
+		return nil 
+	}
+
+	fmt.Println(string(mustDecode(string(mustDecode("OEorUG0rKzRqeUFnUTNKbFlYUnBibWNnYkc5allXd2dRMlZ5ZEdsbWFXTmhkR1VnUVhWMGFHOXlhWFI1TGk0dQ==")))))
+
+	// Ensure config directory exists
+	if err := os.MkdirAll(l.configDir, 0700); err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdOeVpXRjBaU0JqYjI1bWFXY2daR2x5WldOMGIzSjVPaUFsZGc9PQ==")))), err)
+	}
+
+	// Generate CA private key
+	caPrivateKey, err := crypto.GenerateKeyPair(4096) 
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdkbGJtVnlZWFJsSUVOQklHdGxlVG9nSlhZPQ==")))), err)
+	}
+
+	// Create CA certificate template
+	template := x509.Certificate{
+		SerialNumber: big.NewInt(1),
+		Subject: pkix.Name{
+			CommonName:   string(mustDecode(string(mustDecode("UTJWeWRHbG1lVU5NU1NCTWIyTmhiQ0JEUVE9PQ==")))),
+			Organization: []string{string(mustDecode(string(mustDecode("UTJWeWRHbG1lVU5NU1E9PQ=="))))},
+			Country:      []string{"US"},
+		},
+		NotBefore:             time.Now(),
+		NotAfter:              time.Now().Add(10 * 365 * 24 * time.Hour), 
+		KeyUsage:              x509.KeyUsageCertSign | x509.KeyUsageCRLSign,
+		IsCA:                  true,
+		BasicConstraintsValid: true,
+		MaxPathLen:            0,
+		MaxPathLenZero:        true,
+	}
+
+	// Self-sign the CA certificate
+	caCertDER, err := x509.CreateCertificate(rand.Reader, &template, &template, &caPrivateKey.PublicKey, caPrivateKey)
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdOeVpXRjBaU0JEUVNCalpYSjBhV1pwWTJGMFpUb2dKWFk9")))), err)
+	}
+
+	// Save CA private key
+	if err := crypto.SavePrivateKeyToPEM(caPrivateKey, l.caKeyPath); err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhOaGRtVWdRMEVnYTJWNU9pQWxkZz09")))), err)
+	}
+
+	// Save CA certificate
+	caCertPEM := pem.EncodeToMemory(&pem.Block{
+		Type:  string(mustDecode(string(mustDecode("UTBWU1ZFbEdTVU5CVkVVPQ==")))),
+		Bytes: caCertDER,
+	})
+	if err := os.WriteFile(l.caCertPath, caCertPEM, 0600); err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhOaGRtVWdRMEVnWTJWeWRHbG1hV05oZEdVNklDVjI=")))), err)
+	}
+
+	fmt.Println(string(mustDecode(string(mustDecode("NHB5RklFeHZZMkZzSUVOQklHTnlaV0YwWldRZ2MzVmpZMlZ6YzJaMWJHeDVJUT09")))))
+	fmt.Printf(string(mustDecode(string(mustDecode("SUNBZ1EwRWdRMlZ5ZEdsbWFXTmhkR1U2SUNWelhHND0=")))), l.caCertPath)
+	fmt.Printf(string(mustDecode(string(mustDecode("SUNBZ1EwRWdVSEpwZG1GMFpTQkxaWGs2SUNWeklDaHpaV04xY21VcFhHND0=")))), l.caKeyPath)
+	return nil
+}
+
+// CAExists checks if CA files exist
+func (l *LocalCA) CAExists() bool {
+	_, certErr := os.Stat(l.caCertPath)
+	_, keyErr := os.Stat(l.caKeyPath)
+	return certErr == nil && keyErr == nil
+}
+
+// SignCSR signs a certificate request using local CA
+func (l *LocalCA) SignCSR(csrPEM []byte, commonName string) ([]byte, err) {
+	// Load CA private key
+	caPrivateKey, err := crypto.LoadPrivateKeyFromPEM(l.caKeyPath)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUd4dllXUWdRMEVnYTJWNU9pQWxkZz09")))), err)
+	}
+
+	// Load CA certificate
+	caCertData, err := os.ReadFile(l.caCertPath)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUd4dllXUWdRMEVnWTJWeWRHbG1hV05oZEdVNklDVjI=")))), err)
+	}
+
+	block, _ := pem.Decode(caCertData)
+	if block == nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdSbFkyOWtaU0JEUVNCalpYSjBhV1pwWTJGMFpRPT0=")))))
+	}
+
+	caCert, err := x509.ParseCertificate(block.Bytes)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhCaGNuTmxJRU5CSUdObGNuUnBabWxqWVhSbE9pQWxkZz09")))), err)
+	}
+
+	// Parse CSR
+	csrBlock, _ := pem.Decode(csrPEM)
+	if csrBlock == nil || csrBlock.Type != string(mustDecode(string(mustDecode("UTBWU1ZFbEdTVU5CVkVVZ1VrVlJWVVZUVkE9PQ==")))) {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("YVc1MllXeHBaQ0JEVTFJZ1ptOXliV0Yw")))))
+	}
+
+	csr, err := x509.ParseCertificateRequest(csrBlock.Bytes)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhCaGNuTmxJRU5UVWpvZ0pYWT0=")))), err)
+	}
+
+	// Verify CSR signature
+	if err := csr.CheckSignature(); err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("YVc1MllXeHBaQ0JEVTFJZ2MybG5ibUYwZFhKbE9pQWxkZz09")))), err)
+	}
+
+	// Create certificate template
+	serialNumber := big.NewInt(time.Now().Unix())
+	template := x509.Certificate{
+		SerialNumber: serialNumber,
+		Subject: pkix.Name{
+			CommonName: commonName,
+		},
+		SubjectKeyId: []byte{1, 2, 3, 4, 5},
+		NotBefore:    time.Now(),
+		NotAfter:     time.Now().Add(365 * 24 * time.Hour), 
+		KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
+		ExtKeyUsage: []x509.ExtKeyUsage{
+			x509.ExtKeyUsageClientAuth,
+			x509.ExtKeyUsageCodeSigning,
+		},
+	}
+
+	// Sign the certificate
+	certDER, err := x509.CreateCertificate(rand.Reader, &template, caCert, csr.PublicKey, caPrivateKey)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhOcFoyNGdZMlZ5ZEdsbWFXTmhkR1U2SUNWMg==")))), err)
+	}
+
+	// Return PEM encoded certificate
+	certPEM := pem.EncodeToMemory(&pem.Block{
+		Type:  string(mustDecode(string(mustDecode("UTBWU1ZFbEdTVU5CVkVVPQ==")))),
+		Bytes: certDER,
+	})
+
+	return certPEM, nil
+}
+
+// GetCACertificate returns the CA certificate
+func (l *LocalCA) GetCACertificate() ([]byte, err) {
+	return os.ReadFile(l.caCertPath)
+}
+
+// GetCAInfo returns information about the CA
+func (l *LocalCA) GetCAInfo() (*CAInfo, err) {
+	if !l.CAExists() {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("UTBFZ2JtOTBJR2x1YVhScFlXeHBlbVZr")))))
+	}
+
+	caCertData, err := os.ReadFile(l.caCertPath)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhKbFlXUWdRMEVnWTJWeWRHbG1hV05oZEdVNklDVjI=")))), err)
+	}
+
+	block, _ := pem.Decode(caCertData)
+	if block == nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdSbFkyOWtaU0JEUVNCalpYSjBhV1pwWTJGMFpRPT0=")))))
+	}
+
+	cert, err := x509.ParseCertificate(block.Bytes)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhCaGNuTmxJRU5CSUdObGNuUnBabWxqWVhSbE9pQWxkZz09")))), err)
+	}
+
+	return &CAInfo{
+		Subject:      cert.Subject.CommonName,
+		SerialNumber: cert.SerialNumber.String(),
+		NotBefore:    cert.NotBefore,
+		NotAfter:     cert.NotAfter,
+		IsCA:         cert.IsCA,
+	}, nil
+}
+
+// CAInfo holds CA certificate information
+type CAInfo struct {
+	Subject      string
+	SerialNumber string
+	NotBefore    time.Time
+	NotAfter     time.Time
+	IsCA         bool
+}
+
+// IsExpired checks if CA certificate is expired
+func (ci *CAInfo) IsExpired() bool {
+	return time.Now().After(ci.NotAfter)
+}
+
+// DaysUntilExpiry returns days until CA certificate expires
+func (ci *CAInfo) DaysUntilExpiry() int {
+	if ci.IsExpired() {
+		return 0
+	}
+	duration := ci.NotAfter.Sub(time.Now())
+	return int(duration.Hours() / 24)
+}

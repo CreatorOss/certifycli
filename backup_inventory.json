@@ -1,0 +1,405 @@
+{
+  "total_backups": 66,
+  "by_extension": {
+    ".bak": 33,
+    ".original": 33
+  },
+  "files": [
+    {
+      "backup_file": "demo-local-mode.sh.bak",
+      "original_file": "demo-local-mode.sh",
+      "extension": ".bak",
+      "size": 7619
+    },
+    {
+      "backup_file": "demo-server-integration.sh.bak",
+      "original_file": "demo-server-integration.sh",
+      "extension": ".bak",
+      "size": 5384
+    },
+    {
+      "backup_file": "demo-keyring-features.sh.bak",
+      "original_file": "demo-keyring-features.sh",
+      "extension": ".bak",
+      "size": 3469
+    },
+    {
+      "backup_file": "test-git-integration.sh.bak",
+      "original_file": "test-git-integration.sh",
+      "extension": ".bak",
+      "size": 4496
+    },
+    {
+      "backup_file": "quick-verify.sh.bak",
+      "original_file": "quick-verify.sh",
+      "extension": ".bak",
+      "size": 4937
+    },
+    {
+      "backup_file": "demo-csr-signing.sh.bak",
+      "original_file": "demo-csr-signing.sh",
+      "extension": ".bak",
+      "size": 5939
+    },
+    {
+      "backup_file": "test-enhanced-git.sh.bak",
+      "original_file": "test-enhanced-git.sh",
+      "extension": ".bak",
+      "size": 4934
+    },
+    {
+      "backup_file": "test-keyring-implementation.sh.bak",
+      "original_file": "test-keyring-implementation.sh",
+      "extension": ".bak",
+      "size": 4111
+    },
+    {
+      "backup_file": "test-local-mode.sh.bak",
+      "original_file": "test-local-mode.sh",
+      "extension": ".bak",
+      "size": 6095
+    },
+    {
+      "backup_file": "test-crypto-implementation.sh.bak",
+      "original_file": "test-crypto-implementation.sh",
+      "extension": ".bak",
+      "size": 3074
+    },
+    {
+      "backup_file": "test-setup.sh.bak",
+      "original_file": "test-setup.sh",
+      "extension": ".bak",
+      "size": 2074
+    },
+    {
+      "backup_file": "test-server-integration.sh.bak",
+      "original_file": "test-server-integration.sh",
+      "extension": ".bak",
+      "size": 4172
+    },
+    {
+      "backup_file": "build-test.sh.bak",
+      "original_file": "build-test.sh",
+      "extension": ".bak",
+      "size": 1861
+    },
+    {
+      "backup_file": "test-csr-signing.sh.bak",
+      "original_file": "test-csr-signing.sh",
+      "extension": ".bak",
+      "size": 7611
+    },
+    {
+      "backup_file": "demo-git-integration.sh.bak",
+      "original_file": "demo-git-integration.sh",
+      "extension": ".bak",
+      "size": 5453
+    },
+    {
+      "backup_file": "demo-crypto-features.sh.bak",
+      "original_file": "demo-crypto-features.sh",
+      "extension": ".bak",
+      "size": 2494
+    },
+    {
+      "backup_file": "cmd/certifycli/main.go.bak",
+      "original_file": "cmd/certifycli/main.go",
+      "extension": ".bak",
+      "size": 34080
+    },
+    {
+      "backup_file": "internal/crypto/certificate.go.bak",
+      "original_file": "internal/crypto/certificate.go",
+      "extension": ".bak",
+      "size": 4310
+    },
+    {
+      "backup_file": "internal/crypto/signing.go.bak",
+      "original_file": "internal/crypto/signing.go",
+      "extension": ".bak",
+      "size": 2174
+    },
+    {
+      "backup_file": "internal/crypto/crypto.go.bak",
+      "original_file": "internal/crypto/crypto.go",
+      "extension": ".bak",
+      "size": 5250
+    },
+    {
+      "backup_file": "internal/crypto/git_signing.go.bak",
+      "original_file": "internal/crypto/git_signing.go",
+      "extension": ".bak",
+      "size": 5138
+    },
+    {
+      "backup_file": "internal/crypto/keyring_crypto.go.bak",
+      "original_file": "internal/crypto/keyring_crypto.go",
+      "extension": ".bak",
+      "size": 2588
+    },
+    {
+      "backup_file": "internal/crypto/crypto_test.go.bak",
+      "original_file": "internal/crypto/crypto_test.go",
+      "extension": ".bak",
+      "size": 2392
+    },
+    {
+      "backup_file": "internal/utils/format.go.bak",
+      "original_file": "internal/utils/format.go",
+      "extension": ".bak",
+      "size": 5193
+    },
+    {
+      "backup_file": "internal/utils/utils.go.bak",
+      "original_file": "internal/utils/utils.go",
+      "extension": ".bak",
+      "size": 3281
+    },
+    {
+      "backup_file": "internal/auth/keyring_test.go.bak",
+      "original_file": "internal/auth/keyring_test.go",
+      "extension": ".bak",
+      "size": 3540
+    },
+    {
+      "backup_file": "internal/auth/keyring.go.bak",
+      "original_file": "internal/auth/keyring.go",
+      "extension": ".bak",
+      "size": 2911
+    },
+    {
+      "backup_file": "internal/auth/auth.go.bak",
+      "original_file": "internal/auth/auth.go",
+      "extension": ".bak",
+      "size": 4025
+    },
+    {
+      "backup_file": "internal/git/service.go.bak",
+      "original_file": "internal/git/service.go",
+      "extension": ".bak",
+      "size": 10726
+    },
+    {
+      "backup_file": "internal/git/signing.go.bak",
+      "original_file": "internal/git/signing.go",
+      "extension": ".bak",
+      "size": 8979
+    },
+    {
+      "backup_file": "internal/ca/local.go.bak",
+      "original_file": "internal/ca/local.go",
+      "extension": ".bak",
+      "size": 7356
+    },
+    {
+      "backup_file": "internal/ca/ca.go.bak",
+      "original_file": "internal/ca/ca.go",
+      "extension": ".bak",
+      "size": 6776
+    },
+    {
+      "backup_file": "scripts/install.sh.bak",
+      "original_file": "scripts/install.sh",
+      "extension": ".bak",
+      "size": 1776
+    },
+    {
+      "backup_file": "demo-local-mode.sh.original",
+      "original_file": "demo-local-mode.sh",
+      "extension": ".original",
+      "size": 7619
+    },
+    {
+      "backup_file": "demo-keyring-features.sh.original",
+      "original_file": "demo-keyring-features.sh",
+      "extension": ".original",
+      "size": 3469
+    },
+    {
+      "backup_file": "demo-server-integration.sh.original",
+      "original_file": "demo-server-integration.sh",
+      "extension": ".original",
+      "size": 5384
+    },
+    {
+      "backup_file": "demo-crypto-features.sh.original",
+      "original_file": "demo-crypto-features.sh",
+      "extension": ".original",
+      "size": 2494
+    },
+    {
+      "backup_file": "test-crypto-implementation.sh.original",
+      "original_file": "test-crypto-implementation.sh",
+      "extension": ".original",
+      "size": 3074
+    },
+    {
+      "backup_file": "test-csr-signing.sh.original",
+      "original_file": "test-csr-signing.sh",
+      "extension": ".original",
+      "size": 7611
+    },
+    {
+      "backup_file": "build-test.sh.original",
+      "original_file": "build-test.sh",
+      "extension": ".original",
+      "size": 1861
+    },
+    {
+      "backup_file": "test-setup.sh.original",
+      "original_file": "test-setup.sh",
+      "extension": ".original",
+      "size": 2074
+    },
+    {
+      "backup_file": "demo-csr-signing.sh.original",
+      "original_file": "demo-csr-signing.sh",
+      "extension": ".original",
+      "size": 5939
+    },
+    {
+      "backup_file": "test-enhanced-git.sh.original",
+      "original_file": "test-enhanced-git.sh",
+      "extension": ".original",
+      "size": 4934
+    },
+    {
+      "backup_file": "demo-git-integration.sh.original",
+      "original_file": "demo-git-integration.sh",
+      "extension": ".original",
+      "size": 5453
+    },
+    {
+      "backup_file": "test-keyring-implementation.sh.original",
+      "original_file": "test-keyring-implementation.sh",
+      "extension": ".original",
+      "size": 4111
+    },
+    {
+      "backup_file": "test-server-integration.sh.original",
+      "original_file": "test-server-integration.sh",
+      "extension": ".original",
+      "size": 4172
+    },
+    {
+      "backup_file": "test-git-integration.sh.original",
+      "original_file": "test-git-integration.sh",
+      "extension": ".original",
+      "size": 4496
+    },
+    {
+      "backup_file": "test-local-mode.sh.original",
+      "original_file": "test-local-mode.sh",
+      "extension": ".original",
+      "size": 6095
+    },
+    {
+      "backup_file": "quick-verify.sh.original",
+      "original_file": "quick-verify.sh",
+      "extension": ".original",
+      "size": 4937
+    },
+    {
+      "backup_file": "cmd/certifycli/main.go.original",
+      "original_file": "cmd/certifycli/main.go",
+      "extension": ".original",
+      "size": 44977
+    },
+    {
+      "backup_file": "internal/crypto/crypto.go.original",
+      "original_file": "internal/crypto/crypto.go",
+      "extension": ".original",
+      "size": 6219
+    },
+    {
+      "backup_file": "internal/crypto/crypto_test.go.original",
+      "original_file": "internal/crypto/crypto_test.go",
+      "extension": ".original",
+      "size": 3149
+    },
+    {
+      "backup_file": "internal/crypto/keyring_crypto.go.original",
+      "original_file": "internal/crypto/keyring_crypto.go",
+      "extension": ".original",
+      "size": 3005
+    },
+    {
+      "backup_file": "internal/crypto/git_signing.go.original",
+      "original_file": "internal/crypto/git_signing.go",
+      "extension": ".original",
+      "size": 5967
+    },
+    {
+      "backup_file": "internal/crypto/certificate.go.original",
+      "original_file": "internal/crypto/certificate.go",
+      "extension": ".original",
+      "size": 5091
+    },
+    {
+      "backup_file": "internal/crypto/signing.go.original",
+      "original_file": "internal/crypto/signing.go",
+      "extension": ".original",
+      "size": 2531
+    },
+    {
+      "backup_file": "internal/utils/utils.go.original",
+      "original_file": "internal/utils/utils.go",
+      "extension": ".original",
+      "size": 3910
+    },
+    {
+      "backup_file": "internal/utils/format.go.original",
+      "original_file": "internal/utils/format.go",
+      "extension": ".original",
+      "size": 6094
+    },
+    {
+      "backup_file": "internal/auth/keyring.go.original",
+      "original_file": "internal/auth/keyring.go",
+      "extension": ".original",
+      "size": 3516
+    },
+    {
+      "backup_file": "internal/auth/keyring_test.go.original",
+      "original_file": "internal/auth/keyring_test.go",
+      "extension": ".original",
+      "size": 4509
+    },
+    {
+      "backup_file": "internal/auth/auth.go.original",
+      "original_file": "internal/auth/auth.go",
+      "extension": ".original",
+      "size": 4990
+    },
+    {
+      "backup_file": "internal/git/service.go.original",
+      "original_file": "internal/git/service.go",
+      "extension": ".original",
+      "size": 14331
+    },
+    {
+      "backup_file": "internal/git/signing.go.original",
+      "original_file": "internal/git/signing.go",
+      "extension": ".original",
+      "size": 11056
+    },
+    {
+      "backup_file": "internal/ca/local.go.original",
+      "original_file": "internal/ca/local.go",
+      "extension": ".original",
+      "size": 8705
+    },
+    {
+      "backup_file": "internal/ca/ca.go.original",
+      "original_file": "internal/ca/ca.go",
+      "extension": ".original",
+      "size": 8609
+    },
+    {
+      "backup_file": "scripts/install.sh.original",
+      "original_file": "scripts/install.sh",
+      "extension": ".original",
+      "size": 1776
+    }
+  ]
+}

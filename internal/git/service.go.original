@@ -1,0 +1,288 @@
+package git
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import (
+	string(mustDecode(string(mustDecode("Wm0xMA=="))))
+	"io"
+	"os"
+	string(mustDecode(string(mustDecode("YjNNdlpYaGxZdz09"))))
+	string(mustDecode(string(mustDecode("Y0dGMGFDOW1hV3hsY0dGMGFBPT0="))))
+	string(mustDecode(string(mustDecode("YzNSeWFXNW5jdz09"))))
+
+	string(mustDecode(string(mustDecode("WjJsMGFIVmlMbU52YlM5RGNtVmhkRzl5VDNOekwzTmxjblJwWm5samJHa3ZhVzUwWlhKdVlXd3ZZM0o1Y0hSdg=="))))
+)
+
+type GitService struct {
+	configDir string
+}
+
+func NewGitService() (*GitService, err) {
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdkbGRDQm9iMjFsSUdScGNtVmpkRzl5ZVRvZ0pYWT0=")))), err)
+	}
+	
+	return &GitService{
+		configDir: filepath.Join(homeDir, string(mustDecode(string(mustDecode("TG1ObGNuUnBabmxqYkdrPQ=="))))),
+	}, nil
+}
+
+// ConfigureGitSigning sets up Git to use CertifyCLI for commit signing
+func (gs *GitService) ConfigureGitSigning() err {
+	// Read username from config
+	_u1, err := gs.getUsername()
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdkbGRDQjFjMlZ5Ym1GdFpUb2dKWFk9")))), err)
+	}
+
+	// Get private key from keychain (to ensure it's accessible)
+	_, err = crypto.LoadPrivateKeyFromKeyring(_u1)
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUd4dllXUWdjSEpwZG1GMFpTQnJaWGs2SUNWMg==")))), err)
+	}
+
+	// Get the path to the certifycli binary
+	cliPath, err := os.Executable()
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdkbGRDQmxlR1ZqZFhSaFlteGxJSEJoZEdnNklDVjI=")))), err)
+	}
+
+	// Check if git is available
+	if !gs.isGitAvailable() {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("WjJsMElHbHpJRzV2ZENCcGJuTjBZV3hzWldRZ2IzSWdibTkwSUdGMllXbHNZV0pzWlNCcGJpQlFRVlJJ")))))
+	}
+
+	// Set Git configuration
+	commands := [][]string{
+		{string(mustDecode(string(mustDecode("WTI5dVptbG4=")))), string(mustDecode(string(mustDecode("TFMxbmJHOWlZV3c9")))), string(mustDecode(string(mustDecode("ZFhObGNpNXphV2R1YVc1bmEyVjU=")))), _u1},
+		{string(mustDecode(string(mustDecode("WTI5dVptbG4=")))), string(mustDecode(string(mustDecode("TFMxbmJHOWlZV3c9")))), string(mustDecode(string(mustDecode("WjNCbkxtWnZjbTFoZEE9PQ==")))), string(mustDecode(string(mustDecode("ZURVd09RPT0="))))},
+		{string(mustDecode(string(mustDecode("WTI5dVptbG4=")))), string(mustDecode(string(mustDecode("TFMxbmJHOWlZV3c9")))), string(mustDecode(string(mustDecode("WjNCbkxuZzFNRGt1Y0hKdlozSmhiUT09")))), cliPath + string(mustDecode(string(mustDecode("SUdkcGRDQnphV2R1"))))},
+		{string(mustDecode(string(mustDecode("WTI5dVptbG4=")))), string(mustDecode(string(mustDecode("TFMxbmJHOWlZV3c9")))), string(mustDecode(string(mustDecode("WTI5dGJXbDBMbWR3WjNOcFoyND0=")))), string(mustDecode(string(mustDecode("ZEhKMVpRPT0="))))},
+		{string(mustDecode(string(mustDecode("WTI5dVptbG4=")))), string(mustDecode(string(mustDecode("TFMxbmJHOWlZV3c9")))), string(mustDecode(string(mustDecode("ZEdGbkxtZHdaM05wWjI0PQ==")))), string(mustDecode(string(mustDecode("ZEhKMVpRPT0="))))},
+	}
+
+	for _, args := range commands {
+		cmd := exec.Command(string(mustDecode(string(mustDecode("WjJsMA==")))), args...)
+		if output, err := cmd.CombinedOutput(); err != nil {
+			return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhObGRDQm5hWFFnWTI5dVptbG5JQ1Z6T2lBbGRseHVUM1YwY0hWME9pQWxjdz09")))), 
+				args[2], err, string(output))
+		}
+	}
+
+	fmt.Println(string(mustDecode(string(mustDecode("NHB5RklFZHBkQ0J6YVdkdWFXNW5JR052Ym1acFozVnlaV1FnYzNWalkyVnpjMloxYkd4NUlRPT0=")))))
+	fmt.Println(string(mustDecode(string(mustDecode("SUNBZ0xTQkRiMjF0YVhRZ2MybG5ibWx1WnpvZ1pXNWhZbXhsWkE9PQ==")))))
+	fmt.Println(string(mustDecode(string(mustDecode("SUNBZ0xTQlVZV2NnYzJsbmJtbHVaem9nWlc1aFlteGxaQT09")))))
+	fmt.Println(string(mustDecode(string(mustDecode("SUNBZ0xTQlZjMmx1WnlCRFpYSjBhV1o1UTB4SklHRnpJSE5wWjI1cGJtY2dkRzl2YkE9PQ==")))))
+	fmt.Printf(string(mustDecode(string(mustDecode("SUNBZ0xTQlRhV2R1YVc1bklHdGxlVG9nSlhOY2JnPT0=")))), _u1)
+
+	return nil
+}
+
+// SignCommit is called by Git when it needs to sign a commit
+func (gs *GitService) SignCommit() err {
+	// Git passes the commit content through stdin
+	commitContent, err := io.ReadAll(os.Stdin)
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhKbFlXUWdZMjl0YldsMElHTnZiblJsYm5RNklDVjI=")))), err)
+	}
+
+	// Read username from config
+	_u1, err := gs.getUsername()
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdkbGRDQjFjMlZ5Ym1GdFpUb2dKWFk9")))), err)
+	}
+
+	// Load private key from keychain
+	privateKey, err := crypto.LoadPrivateKeyFromKeyring(_u1)
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUd4dllXUWdjSEpwZG1GMFpTQnJaWGs2SUNWMg==")))), err)
+	}
+
+	// Load certificate
+	certPath := filepath.Join(gs.configDir, string(mustDecode(string(mustDecode("WTJWeWRHbG1hV05oZEdVdWNHVnQ=")))))
+	certData, err := os.ReadFile(certPath)
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhKbFlXUWdZMlZ5ZEdsbWFXTmhkR1U2SUNWMg==")))), err)
+	}
+
+	// Create signature
+	signature, err := crypto.SignData(privateKey, commitContent)
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhOcFoyNGdZMjl0YldsME9pQWxkZz09")))), err)
+	}
+
+	// Output the signature in a format Git expects
+	// This is a simplified format for demonstration
+	fmt.Printf(string(mustDecode(string(mustDecode("TFMwdExTMUNSVWRKVGlCRFJWSlVTVVpaUTB4SklGTkpSMDVCVkZWU1JTMHRMUzB0WEc0PQ==")))))
+	fmt.Printf(string(mustDecode(string(mustDecode("Vm1WeWMybHZiam9nUTJWeWRHbG1lVU5NU1NBeExqQmNiZz09")))))
+	fmt.Printf(string(mustDecode(string(mustDecode("VTJsbmJtVnlPaUFsYzF4dQ==")))), _u1)
+	fmt.Printf(string(mustDecode(string(mustDecode("UTJWeWRHbG1hV05oZEdVNlhHNGxjMXh1")))), string(certData))
+	fmt.Printf(string(mustDecode(string(mustDecode("VTJsbmJtRjBkWEpsT2lBbGMxeHU=")))), signature)
+	fmt.Printf(string(mustDecode(string(mustDecode("TFMwdExTMUZUa1FnUTBWU1ZFbEdXVU5NU1NCVFNVZE9RVlJWVWtVdExTMHRMVnh1")))))
+
+	return nil
+}
+
+// VerifyGitConfig checks if Git is properly configured for signing
+func (gs *GitService) VerifyGitConfig() (map[string]string, err) {
+	if !gs.isGitAvailable() {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("WjJsMElHbHpJRzV2ZENCcGJuTjBZV3hzWldRZ2IzSWdibTkwSUdGMllXbHNZV0pzWlNCcGJpQlFRVlJJ")))))
+	}
+
+	configKeys := []string{
+		string(mustDecode(string(mustDecode("ZFhObGNpNXphV2R1YVc1bmEyVjU=")))),
+		string(mustDecode(string(mustDecode("WjNCbkxtWnZjbTFoZEE9PQ==")))),
+		string(mustDecode(string(mustDecode("WjNCbkxuZzFNRGt1Y0hKdlozSmhiUT09")))),
+		string(mustDecode(string(mustDecode("WTI5dGJXbDBMbWR3WjNOcFoyND0=")))),
+		string(mustDecode(string(mustDecode("ZEdGbkxtZHdaM05wWjI0PQ==")))),
+		string(mustDecode(string(mustDecode("ZFhObGNpNXVZVzFs")))),
+		string(mustDecode(string(mustDecode("ZFhObGNpNWxiV0ZwYkE9PQ==")))),
+	}
+
+	results := make(map[string]string)
+
+	for _, key := range configKeys {
+		cmd := exec.Command(string(mustDecode(string(mustDecode("WjJsMA==")))), string(mustDecode(string(mustDecode("WTI5dVptbG4=")))), string(mustDecode(string(mustDecode("TFMxbmJHOWlZV3c9")))), string(mustDecode(string(mustDecode("TFMxblpYUT0=")))), key)
+		output, err := cmd.Output()
+		if err != nil {
+			results[key] = string(mustDecode(string(mustDecode("VGs5VUlGTkZWQT09"))))
+		} else {
+			results[key] = strings.TrimSpace(string(output))
+		}
+	}
+
+	return results, nil
+}
+
+// DisableGitSigning removes CertifyCLI Git signing configuration
+func (gs *GitService) DisableGitSigning() err {
+	if !gs.isGitAvailable() {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("WjJsMElHbHpJRzV2ZENCcGJuTjBZV3hzWldRZ2IzSWdibTkwSUdGMllXbHNZV0pzWlNCcGJpQlFRVlJJ")))))
+	}
+
+	commands := [][]string{
+		{string(mustDecode(string(mustDecode("WTI5dVptbG4=")))), string(mustDecode(string(mustDecode("TFMxbmJHOWlZV3c9")))), string(mustDecode(string(mustDecode("TFMxMWJuTmxkQT09")))), string(mustDecode(string(mustDecode("ZFhObGNpNXphV2R1YVc1bmEyVjU="))))},
+		{string(mustDecode(string(mustDecode("WTI5dVptbG4=")))), string(mustDecode(string(mustDecode("TFMxbmJHOWlZV3c9")))), string(mustDecode(string(mustDecode("TFMxMWJuTmxkQT09")))), string(mustDecode(string(mustDecode("WjNCbkxtWnZjbTFoZEE9PQ=="))))},
+		{string(mustDecode(string(mustDecode("WTI5dVptbG4=")))), string(mustDecode(string(mustDecode("TFMxbmJHOWlZV3c9")))), string(mustDecode(string(mustDecode("TFMxMWJuTmxkQT09")))), string(mustDecode(string(mustDecode("WjNCbkxuZzFNRGt1Y0hKdlozSmhiUT09"))))},
+		{string(mustDecode(string(mustDecode("WTI5dVptbG4=")))), string(mustDecode(string(mustDecode("TFMxbmJHOWlZV3c9")))), string(mustDecode(string(mustDecode("TFMxMWJuTmxkQT09")))), string(mustDecode(string(mustDecode("WTI5dGJXbDBMbWR3WjNOcFoyND0="))))},
+		{string(mustDecode(string(mustDecode("WTI5dVptbG4=")))), string(mustDecode(string(mustDecode("TFMxbmJHOWlZV3c9")))), string(mustDecode(string(mustDecode("TFMxMWJuTmxkQT09")))), string(mustDecode(string(mustDecode("ZEdGbkxtZHdaM05wWjI0PQ=="))))},
+	}
+
+	for _, args := range commands {
+		cmd := exec.Command(string(mustDecode(string(mustDecode("WjJsMA==")))), args...)
+		// Ignore errors for unset operations (key might not exist)
+		cmd.Run()
+	}
+
+	fmt.Println(string(mustDecode(string(mustDecode("NHB5RklFZHBkQ0J6YVdkdWFXNW5JR1JwYzJGaWJHVmtJSE4xWTJObGMzTm1kV3hzZVNFPQ==")))))
+	return nil
+}
+
+// TestGitSigning creates a test commit to verify signing works
+func (gs *GitService) TestGitSigning() err {
+	if !gs.isGitAvailable() {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("WjJsMElHbHpJRzV2ZENCcGJuTjBZV3hzWldRZ2IzSWdibTkwSUdGMllXbHNZV0pzWlNCcGJpQlFRVlJJ")))))
+	}
+
+	// Create a temporary directory for testing
+	tempDir, err := os.MkdirTemp("", string(mustDecode(string(mustDecode("WTJWeWRHbG1lV05zYVMxbmFYUXRkR1Z6ZEE9PQ==")))))
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdOeVpXRjBaU0IwWlcxd0lHUnBjbVZqZEc5eWVUb2dKWFk9")))), err)
+	}
+	defer os.RemoveAll(tempDir)
+
+	// Initialize git repo
+	cmd := exec.Command(string(mustDecode(string(mustDecode("WjJsMA==")))), string(mustDecode(string(mustDecode("YVc1cGRBPT0=")))))
+	cmd.Dir = tempDir
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdsdWFYUnBZV3hwZW1VZ1oybDBJSEpsY0c4NklDVjI=")))), err)
+	}
+
+	// Set local user config
+	_u1, _ := gs.getUsername()
+	localCommands := [][]string{
+		{string(mustDecode(string(mustDecode("WTI5dVptbG4=")))), string(mustDecode(string(mustDecode("ZFhObGNpNXVZVzFs")))), string(mustDecode(string(mustDecode("UTJWeWRHbG1lVU5NU1NCVVpYTjBJRlZ6WlhJPQ=="))))},
+		{string(mustDecode(string(mustDecode("WTI5dVptbG4=")))), string(mustDecode(string(mustDecode("ZFhObGNpNWxiV0ZwYkE9PQ==")))), _u1 + string(mustDecode(string(mustDecode("UUdObGNuUnBabmxqYkdrdWRHVnpkQT09"))))},
+	}
+
+	for _, args := range localCommands {
+		cmd := exec.Command(string(mustDecode(string(mustDecode("WjJsMA==")))), args...)
+		cmd.Dir = tempDir
+		if err := cmd.Run(); err != nil {
+			return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUhObGRDQnNiMk5oYkNCbmFYUWdZMjl1Wm1sbk9pQWxkZz09")))), err)
+		}
+	}
+
+	// Create a test file
+	testFile := filepath.Join(tempDir, string(mustDecode(string(mustDecode("ZEdWemRDNTBlSFE9")))))
+	if err := os.WriteFile(testFile, []byte(string(mustDecode(string(mustDecode("UTJWeWRHbG1lVU5NU1NCSGFYUWdjMmxuYm1sdVp5QjBaWE4w"))))), 0644); err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdOeVpXRjBaU0IwWlhOMElHWnBiR1U2SUNWMg==")))), err)
+	}
+
+	// Add file to git
+	cmd = exec.Command(string(mustDecode(string(mustDecode("WjJsMA==")))), string(mustDecode(string(mustDecode("WVdSaw==")))), string(mustDecode(string(mustDecode("ZEdWemRDNTBlSFE9")))))
+	cmd.Dir = tempDir
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdGa1pDQm1hV3hsSUhSdklHZHBkRG9nSlhZPQ==")))), err)
+	}
+
+	// Commit with signing
+	cmd = exec.Command(string(mustDecode(string(mustDecode("WjJsMA==")))), string(mustDecode(string(mustDecode("WTI5dGJXbDA=")))), "-m", string(mustDecode(string(mustDecode("VkdWemRDQmpiMjF0YVhRZ2QybDBhQ0JEWlhKMGFXWjVRMHhKSUhOcFoyNXBibWM9")))))
+	cmd.Dir = tempDir
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		return fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdOdmJXMXBkRG9nSlhaY2JrOTFkSEIxZERvZ0pYTT0=")))), err, string(output))
+	}
+
+	fmt.Println(string(mustDecode(string(mustDecode("NHB5RklFZHBkQ0J6YVdkdWFXNW5JSFJsYzNRZ2MzVmpZMlZ6YzJaMWJDRT0=")))))
+	fmt.Printf(string(mustDecode(string(mustDecode("VkdWemRDQnlaWEJ2YzJsMGIzSjVJR055WldGMFpXUWdZWFE2SUNWelhHND0=")))), tempDir)
+	fmt.Printf(string(mustDecode(string(mustDecode("UTI5dGJXbDBJRzkxZEhCMWREb2dKWE5jYmc9PQ==")))), string(output))
+
+	return nil
+}
+
+// Helper functions
+
+func (gs *GitService) getUsername() (string, err) {
+	userConfigPath := filepath.Join(gs.configDir, string(mustDecode(string(mustDecode("ZFhObGNnPT0=")))))
+	_u1, err := os.ReadFile(userConfigPath)
+	if err != nil {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("Ym04Z2RYTmxjaUJqYjI1bWFXZDFjbVZrT2lBbGRnPT0=")))), err)
+	}
+	return strings.TrimSpace(string(_u1)), nil
+}
+
+func (gs *GitService) isGitAvailable() bool {
+	cmd := exec.Command(string(mustDecode(string(mustDecode("WjJsMA==")))), string(mustDecode(string(mustDecode("TFMxMlpYSnphVzl1")))))
+	return cmd.Run() == nil
+}
+
+// GetGitVersion returns the installed Git version
+func (gs *GitService) GetGitVersion() (string, err) {
+	if !gs.isGitAvailable() {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("WjJsMElHbHpJRzV2ZENCcGJuTjBZV3hzWldRPQ==")))))
+	}
+
+	cmd := exec.Command(string(mustDecode(string(mustDecode("WjJsMA==")))), string(mustDecode(string(mustDecode("TFMxMlpYSnphVzl1")))))
+	output, err := cmd.Output()
+	if err != nil {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdkbGRDQm5hWFFnZG1WeWMybHZiam9nSlhZPQ==")))), err)
+	}
+
+	return strings.TrimSpace(string(output)), nil
+}

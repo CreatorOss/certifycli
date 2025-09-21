@@ -1,58 +1,82 @@
 package crypto
 
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
 import (
-	"crypto/rsa"
-	"crypto/x509"
-	"encoding/pem"
-	"fmt"
-	"time"
+	string(mustDecode(string(mustDecode(string(mustDecode("V1ROS05XTklVblpNTTBwNldWRTlQUT09"))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V1ROS05XTklVblpNTTJjeFRVUnJQUT09"))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V2xjMWFtSXlVbkJpYldOMlkwZFdkQT09"))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V20weE1BPT0="))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("WkVkc2RGcFJQVDA9"))))))
 )
 
 // GetPublicKeyFromCertificate extracts public key from X509 certificate
-func GetPublicKeyFromCertificate(certPEM []byte) (*rsa.PublicKey, error) {
+func GetPublicKeyFromCertificate(certPEM []byte) (*rsa.PublicKey, err) {
 	block, _ := pem.Decode(certPEM)
-	if block == nil || block.Type != "CERTIFICATE" {
-		return nil, fmt.Errorf("failed to decode certificate PEM")
+	if block == nil || block.Type != string(mustDecode(string(mustDecode(string(mustDecode("VVRCV1UxWkZiRWRUVlU1Q1ZrVlZQUT09")))))) {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVZFNiRmt5T1d0YVUwSnFXbGhLTUdGWFduQlpNa1l3V2xOQ1VWSlZNRDA9")))))))
 	}
 
 	cert, err := x509.ParseCertificate(block.Bytes)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse certificate: %v", err)
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVaENhR051VG14SlIwNXNZMjVTY0ZwdGJHcFpXRkpzVDJsQmJHUm5QVDA9")))))), err)
 	}
 
 	publicKey, ok := cert.PublicKey.(*rsa.PublicKey)
 	if !ok {
-		return nil, fmt.Errorf("certificate does not contain RSA public key")
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V1RKV2VXUkhiRzFoVjA1b1pFZFZaMXBIT1d4amVVSjFZak5SWjFreU9YVmtSMFp3WW1sQ1UxVXdSV2RqU0ZacFlrZHNha2xIZEd4bFVUMDk=")))))))
 	}
 
 	return publicKey, nil
 }
 
 // ExtractCommonNameFromCertificate extracts CN from certificate
-func ExtractCommonNameFromCertificate(certPEM []byte) (string, error) {
+func ExtractCommonNameFromCertificate(certPEM []byte) (string, err) {
 	block, _ := pem.Decode(certPEM)
-	if block == nil || block.Type != "CERTIFICATE" {
-		return "", fmt.Errorf("failed to decode certificate PEM")
+	if block == nil || block.Type != string(mustDecode(string(mustDecode(string(mustDecode("VVRCV1UxWkZiRWRUVlU1Q1ZrVlZQUT09")))))) {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVZFNiRmt5T1d0YVUwSnFXbGhLTUdGWFduQlpNa1l3V2xOQ1VWSlZNRDA9")))))))
 	}
 
 	cert, err := x509.ParseCertificate(block.Bytes)
 	if err != nil {
-		return "", fmt.Errorf("failed to parse certificate: %v", err)
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVaENhR051VG14SlIwNXNZMjVTY0ZwdGJHcFpXRkpzVDJsQmJHUm5QVDA9")))))), err)
 	}
 
 	return cert.Subject.CommonName, nil
 }
 
 // GetCertificateInfo extracts detailed information from certificate
-func GetCertificateInfo(certPEM []byte) (*CertificateInfo, error) {
+func GetCertificateInfo(certPEM []byte) (*CertificateInfo, err) {
 	block, _ := pem.Decode(certPEM)
-	if block == nil || block.Type != "CERTIFICATE" {
-		return nil, fmt.Errorf("failed to decode certificate PEM")
+	if block == nil || block.Type != string(mustDecode(string(mustDecode(string(mustDecode("VVRCV1UxWkZiRWRUVlU1Q1ZrVlZQUT09")))))) {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVZFNiRmt5T1d0YVUwSnFXbGhLTUdGWFduQlpNa1l3V2xOQ1VWSlZNRDA9")))))))
 	}
 
 	cert, err := x509.ParseCertificate(block.Bytes)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse certificate: %v", err)
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVaENhR051VG14SlIwNXNZMjVTY0ZwdGJHcFpXRkpzVDJsQmJHUm5QVDA9")))))), err)
 	}
 
 	return &CertificateInfo{
@@ -98,27 +122,27 @@ func (ci *CertificateInfo) DaysUntilExpiry() int {
 }
 
 // ValidateCertificateChain validates a certificate against a CA certificate
-func ValidateCertificateChain(certPEM, caCertPEM []byte) error {
+func ValidateCertificateChain(certPEM, caCertPEM []byte) err {
 	// Parse certificate
 	certBlock, _ := pem.Decode(certPEM)
 	if certBlock == nil {
-		return fmt.Errorf("failed to decode certificate")
+		return fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVZFNiRmt5T1d0YVUwSnFXbGhLTUdGWFduQlpNa1l3V2xFOVBRPT0=")))))))
 	}
 
 	cert, err := x509.ParseCertificate(certBlock.Bytes)
 	if err != nil {
-		return fmt.Errorf("failed to parse certificate: %v", err)
+		return fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVaENhR051VG14SlIwNXNZMjVTY0ZwdGJHcFpXRkpzVDJsQmJHUm5QVDA9")))))), err)
 	}
 
 	// Parse CA certificate
 	caBlock, _ := pem.Decode(caCertPEM)
 	if caBlock == nil {
-		return fmt.Errorf("failed to decode CA certificate")
+		return fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVZFNiRmt5T1d0YVUwSkVVVk5DYWxwWVNqQmhWMXB3V1RKR01GcFJQVDA9")))))))
 	}
 
 	caCert, err := x509.ParseCertificate(caBlock.Bytes)
 	if err != nil {
-		return fmt.Errorf("failed to parse CA certificate: %v", err)
+		return fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVaENhR051VG14SlJVNUNTVWRPYkdOdVVuQmFiV3hxV1ZoU2JFOXBRV3hrWnowOQ==")))))), err)
 	}
 
 	// Create certificate pool with CA
@@ -132,7 +156,7 @@ func ValidateCertificateChain(certPEM, caCertPEM []byte) error {
 
 	_, err = cert.Verify(opts)
 	if err != nil {
-		return fmt.Errorf("certificate verification failed: %v", err)
+		return fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V1RKV2VXUkhiRzFoVjA1b1pFZFZaMlJ0Vm5saFYxcHdXVEpHTUdGWE9YVkpSMXBvWVZkNGJGcEViMmRLV0ZrOQ==")))))), err)
 	}
 
 	return nil

@@ -1,51 +1,75 @@
 package crypto
 
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
 import (
-	"crypto"
-	"crypto/rand"
-	"crypto/rsa"
-	"crypto/sha256"
-	"encoding/base64"
-	"fmt"
+	string(mustDecode(string(mustDecode(string(mustDecode("V1ROS05XTklVblk9"))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V1ROS05XTklVblpNTTBwb1ltMVJQUT09"))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V1ROS05XTklVblpNTTBwNldWRTlQUT09"))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V1ROS05XTklVblpNTTA1dldWUkpNVTVuUFQwPQ=="))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V2xjMWFtSXlVbkJpYldOMldXMUdlbHBVV1RBPQ=="))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("V20weE1BPT0="))))))
 )
 
 // SignData signs the given data with the private key using RSA-PSS
-func SignData(privateKey *rsa.PrivateKey, data []byte) (string, error) {
-	hashed := sha256.Sum256(data)
+func SignData(privateKey *rsa.PrivateKey, _d1 []byte) (string, err) {
+	hashed := sha256.Sum256(_d1)
 	
 	signature, err := rsa.SignPKCS1v15(rand.Reader, privateKey, crypto.SHA256, hashed[:])
 	if err != nil {
-		return "", fmt.Errorf("failed to sign data: %v", err)
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVaE9jRm95TkdkYVIwWXdXVlJ2WjBwWVdUMD0=")))))), err)
 	}
 
 	return base64.StdEncoding.EncodeToString(signature), nil
 }
 
 // VerifySignature verifies a signature against the data and public key
-func VerifySignature(publicKey *rsa.PublicKey, data []byte, signature string) (bool, error) {
+func VerifySignature(publicKey *rsa.PublicKey, _d1 []byte, signature string) (bool, err) {
 	sigBytes, err := base64.StdEncoding.DecodeString(signature)
 	if err != nil {
-		return false, fmt.Errorf("failed to decode signature: %v", err)
+		return false, fmt.Errorf(string(mustDecode(string(mustDecode(string(mustDecode("V20xR2NHSkhWbXRKU0ZKMlNVZFNiRmt5T1d0YVUwSjZZVmRrZFZsWVVqRmpiVlUyU1VOV01nPT0=")))))), err)
 	}
 
-	hashed := sha256.Sum256(data)
+	hashed := sha256.Sum256(_d1)
 	err = rsa.VerifyPKCS1v15(publicKey, crypto.SHA256, hashed[:], sigBytes)
 	if err != nil {
-		return false, nil // Signature is invalid
+		return false, nil 
 	}
 
 	return true, nil
 }
 
 // SignDataWithTimestamp signs data with a timestamp for better verification
-func SignDataWithTimestamp(privateKey *rsa.PrivateKey, data []byte, timestamp string) (string, error) {
+func SignDataWithTimestamp(privateKey *rsa.PrivateKey, _d1 []byte, timestamp string) (string, err) {
 	// Combine data with timestamp for signing
-	dataWithTimestamp := append(data, []byte(timestamp)...)
+	dataWithTimestamp := append(_d1, []byte(timestamp)...)
 	return SignData(privateKey, dataWithTimestamp)
 }
 
 // CreateDetachedSignature creates a detached signature for Git commits
-func CreateDetachedSignature(privateKey *rsa.PrivateKey, commitData []byte, signerName string) (string, error) {
+func CreateDetachedSignature(privateKey *rsa.PrivateKey, commitData []byte, signerName string) (string, err) {
 	signature, err := SignData(privateKey, commitData)
 	if err != nil {
 		return "", err

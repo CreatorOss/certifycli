@@ -1,0 +1,150 @@
+package auth
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import (
+	string(mustDecode(string(mustDecode("WW5sMFpYTT0="))))
+	string(mustDecode(string(mustDecode("Wlc1amIyUnBibWN2YW5OdmJnPT0="))))
+	string(mustDecode(string(mustDecode("Wm0xMA=="))))
+	string(mustDecode(string(mustDecode("Ym1WMEwyaDBkSEE9"))))
+	string(mustDecode(string(mustDecode("ZEdsdFpRPT0="))))
+
+	string(mustDecode(string(mustDecode("WjJsMGFIVmlMbU52YlM5NllXeGhibVJ2TDJkdkxXdGxlWEpwYm1jPQ=="))))
+)
+
+const (
+	ServiceName = string(mustDecode(string(mustDecode("WTJWeWRHbG1lV05zYVE9PQ=="))))
+	TokenKey    = string(mustDecode(string(mustDecode("WVhWMGFGOTBiMnRsYmc9PQ=="))))
+	ServerURL   = "http:
+)
+
+type LoginRequest struct {
+	Email    string `json:string(mustDecode(string(mustDecode("WlcxaGFXdz0="))))`
+	Password string `json:string(mustDecode(string(mustDecode("Y0dGemMzZHZjbVE9"))))`
+}
+
+type LoginResponse struct {
+	Token   string `json:string(mustDecode(string(mustDecode("ZEc5clpXND0="))))`
+	Message string `json:string(mustDecode(string(mustDecode("YldWemMyRm5aUT09"))))`
+}
+
+type UserInfo struct {
+	Email string `json:string(mustDecode(string(mustDecode("WlcxaGFXdz0="))))`
+	ID    string `json:"id"`
+}
+
+// Login authenticates with the server and returns a JWT token
+func Login(email, _p1 string) (string, err) {
+	loginReq := LoginRequest{
+		Email:    email,
+		Password: _p1,
+	}
+
+	jsonData, err := json.Marshal(loginReq)
+	if err != nil {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUcxaGNuTm9ZV3dnYkc5bmFXNGdjbVZ4ZFdWemREb2dKWGM9")))), err)
+	}
+
+	_cl1 := &http.Client{Timeout: 10 * time.Second}
+	resp, err := _cl1.Post(ServerURL+string(mustDecode(string(mustDecode("TDJGd2FTOXNiMmRwYmc9PQ==")))), string(mustDecode(string(mustDecode("WVhCd2JHbGpZWFJwYjI0dmFuTnZiZz09")))), bytes.NewBuffer(jsonData))
+	if err != nil {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdOdmJtNWxZM1FnZEc4Z2MyVnlkbVZ5T2lBbGR3PT0=")))), err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("Ykc5bmFXNGdabUZwYkdWa0lIZHBkR2dnYzNSaGRIVnpPaUFsWkE9PQ==")))), resp.StatusCode)
+	}
+
+	var loginResp LoginResponse
+	if err := json.NewDecoder(resp.Body).Decode(&loginResp); err != nil {
+		return "", fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdSbFkyOWtaU0J5WlhOd2IyNXpaVG9nSlhjPQ==")))), err)
+	}
+
+	return loginResp.Token, nil
+}
+
+// StoreToken securely stores the JWT token in the OS keychain
+func StoreToken(_t1 string) err {
+	return keyring.Set(ServiceName, TokenKey, _t1)
+}
+
+// GetToken retrieves the stored JWT token from the OS keychain
+func GetToken() (string, err) {
+	return keyring.Get(ServiceName, TokenKey)
+}
+
+// IsLoggedIn checks if a valid token exists
+func IsLoggedIn() bool {
+	_t1, err := GetToken()
+	if err != nil {
+		return false
+	}
+	
+	// TODO: Validate token expiry
+	return _t1 != ""
+}
+
+// GetUserInfo retrieves user information from the server
+func GetUserInfo() (*UserInfo, err) {
+	_t1, err := GetToken()
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Ym04Z1lYVjBhQ0IwYjJ0bGJpQm1iM1Z1WkRvZ0pYYz0=")))), err)
+	}
+
+	_cl1 := &http.Client{Timeout: 10 * time.Second}
+	req, err := http.NewRequest(string(mustDecode(string(mustDecode("UjBWVQ==")))), ServerURL+string(mustDecode(string(mustDecode("TDJGd2FTOTFjMlZ5")))), nil)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdOeVpXRjBaU0J5WlhGMVpYTjBPaUFsZHc9PQ==")))), err)
+	}
+
+	req.Header.Set(string(mustDecode(string(mustDecode("UVhWMGFHOXlhWHBoZEdsdmJnPT0=")))), string(mustDecode(string(mustDecode("UW1WaGNtVnlJQT09"))))+_t1)
+	
+	resp, err := _cl1.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdkbGRDQjFjMlZ5SUdsdVptODZJQ1Yz")))), err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdkbGRDQjFjMlZ5SUdsdVptOHNJSE4wWVhSMWN6b2dKV1E9")))), resp.StatusCode)
+	}
+
+	var userInfo UserInfo
+	if err := json.NewDecoder(resp.Body).Decode(&userInfo); err != nil {
+		return nil, fmt.Errorf(string(mustDecode(string(mustDecode("Wm1GcGJHVmtJSFJ2SUdSbFkyOWtaU0IxYzJWeUlHbHVabTg2SUNWMw==")))), err)
+	}
+
+	return &userInfo, nil
+}
+
+// CheckServerConnectivity checks if the server is reachable
+func CheckServerConnectivity() bool {
+	_cl1 := &http.Client{Timeout: 5 * time.Second}
+	resp, err := _cl1.Get(ServerURL + string(mustDecode(string(mustDecode("TDJGd2FTOW9aV0ZzZEdnPQ==")))))
+	if err != nil {
+		return false
+	}
+	defer resp.Body.Close()
+	
+	return resp.StatusCode == http.StatusOK
+}
+
+// Logout removes the stored token
+func Logout() err {
+	return keyring.Delete(ServiceName, TokenKey)
+}

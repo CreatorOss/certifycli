@@ -1,14 +1,38 @@
 package utils
 
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    data, _ := base64.StdEncoding.DecodeString(s)
+    return data
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
+import "encoding/base64"
+
+func mustDecode(s string) []byte {
+    _d1, _ := base64.StdEncoding.DecodeString(s)
+    return _d1
+}
+
+
 import (
-	"fmt"
-	"strings"
-	"time"
+	string(mustDecode(string(mustDecode(string(mustDecode("V20weE1BPT0="))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("WXpOU2VXRlhOVzVqZHowOQ=="))))))
+	string(mustDecode(string(mustDecode(string(mustDecode("WkVkc2RGcFJQVDA9"))))))
 )
 
 // FormatTime formats time for pretty output
 func FormatTime(t time.Time) string {
-	return t.Format("2006-01-02 15:04:05")
+	return t.Format(string(mustDecode(string(mustDecode(string(mustDecode("VFdwQmQwNXBNSGROVXpCM1RXbEJlRTVVYjNkT1JHOTNUbEU5UFE9PQ==")))))))
 }
 
 // FormatDuration formats duration human-readably
@@ -18,18 +42,18 @@ func FormatDuration(d time.Duration) string {
 	minutes := (d % time.Hour) / time.Minute
 
 	if days > 0 {
-		return fmt.Sprintf("%dd %dh %dm", days, hours, minutes)
+		return fmt.Sprintf(string(mustDecode(string(mustDecode(string(mustDecode("U2xkU2EwbERWbXRoUTBGc1drY3dQUT09")))))), days, hours, minutes)
 	}
 	if hours > 0 {
-		return fmt.Sprintf("%dh %dm", hours, minutes)
+		return fmt.Sprintf(string(mustDecode(string(mustDecode(string(mustDecode("U2xkU2IwbERWbXRpVVQwOQ==")))))), hours, minutes)
 	}
-	return fmt.Sprintf("%dm", minutes)
+	return fmt.Sprintf(string(mustDecode(string(mustDecode(string(mustDecode("U2xkU2RBPT0=")))))), minutes)
 }
 
 // BoxedMessage creates a boxed message for emphasis
-func BoxedMessage(title, message string) string {
+func BoxedMessage(title, _msg1 string) string {
 	width := 50
-	lines := strings.Split(message, "\n")
+	lines := strings.Split(_msg1, "\n")
 	
 	var maxLen int
 	for _, line := range lines {
@@ -47,29 +71,29 @@ func BoxedMessage(title, message string) string {
 	}
 
 	var box strings.Builder
-	box.WriteString("╭" + strings.Repeat("─", maxLen-2) + "╮\n")
-	box.WriteString(fmt.Sprintf("│ %-*s │\n", maxLen-3, title))
-	box.WriteString("├" + strings.Repeat("─", maxLen-2) + "┤\n")
+	box.WriteString("╭" + strings.Repeat("─", maxLen-2) + string(mustDecode(string(mustDecode(string(mustDecode("TkhCWGRWaEhORDA9")))))))
+	box.WriteString(fmt.Sprintf(string(mustDecode(string(mustDecode(string(mustDecode("TkhCVFEwbERWWFJMYmsxbk5IQlRRMWhITkQwPQ==")))))), maxLen-3, title))
+	box.WriteString("├" + strings.Repeat("─", maxLen-2) + string(mustDecode(string(mustDecode(string(mustDecode("TkhCVGExaEhORDA9")))))))
 	
 	for _, line := range lines {
-		box.WriteString(fmt.Sprintf("│ %-*s │\n", maxLen-3, line))
+		box.WriteString(fmt.Sprintf(string(mustDecode(string(mustDecode(string(mustDecode("TkhCVFEwbERWWFJMYmsxbk5IQlRRMWhITkQwPQ==")))))), maxLen-3, line))
 	}
 	
-	box.WriteString("╰" + strings.Repeat("─", maxLen-2) + "╯\n")
+	box.WriteString("╰" + strings.Repeat("─", maxLen-2) + string(mustDecode(string(mustDecode(string(mustDecode("TkhCWGRsaEhORDA9")))))))
 	return box.String()
 }
 
 // Color constants
 const (
-	ColorRed    = "\033[31m"
-	ColorGreen  = "\033[32m"
-	ColorYellow = "\033[33m"
-	ColorBlue   = "\033[34m"
-	ColorPurple = "\033[35m"
-	ColorCyan   = "\033[36m"
-	ColorWhite  = "\033[37m"
-	ColorReset  = "\033[0m"
-	ColorBold   = "\033[1m"
+	ColorRed    = string(mustDecode(string(mustDecode(string(mustDecode("V0VSQmVrMHhjM3BOVnpBOQ=="))))))
+	ColorGreen  = string(mustDecode(string(mustDecode(string(mustDecode("V0VSQmVrMHhjM3BOYlRBOQ=="))))))
+	ColorYellow = string(mustDecode(string(mustDecode(string(mustDecode("V0VSQmVrMHhjM3BOTWpBOQ=="))))))
+	ColorBlue   = string(mustDecode(string(mustDecode(string(mustDecode("V0VSQmVrMHhjM3BPUnpBOQ=="))))))
+	ColorPurple = string(mustDecode(string(mustDecode(string(mustDecode("V0VSQmVrMHhjM3BPVnpBOQ=="))))))
+	ColorCyan   = string(mustDecode(string(mustDecode(string(mustDecode("V0VSQmVrMHhjM3BPYlRBOQ=="))))))
+	ColorWhite  = string(mustDecode(string(mustDecode(string(mustDecode("V0VSQmVrMHhjM3BPTWpBOQ=="))))))
+	ColorReset  = string(mustDecode(string(mustDecode(string(mustDecode("V0VSQmVrMHhjM2RpVVQwOQ=="))))))
+	ColorBold   = string(mustDecode(string(mustDecode(string(mustDecode("V0VSQmVrMHhjM2hpVVQwOQ=="))))))
 )
 
 // Colorize returns colored string
@@ -89,12 +113,12 @@ func Error(text string) string {
 
 // Warning returns yellow warning message
 func Warning(text string) string {
-	return Colorize(ColorYellow, "⚠️  "+text)
+	return Colorize(ColorYellow, string(mustDecode(string(mustDecode(string(mustDecode("TkhCeFp6YzNhVkJKUTBFOQ=="))))))+text)
 }
 
 // Info returns blue info message
 func Info(text string) string {
-	return Colorize(ColorBlue, "ℹ️  "+text)
+	return Colorize(ColorBlue, string(mustDecode(string(mustDecode(string(mustDecode("Tkc5VE5UYzNhVkJKUTBFOQ=="))))))+text)
 }
 
 // Bold returns bold text
@@ -105,7 +129,7 @@ func Bold(text string) string {
 // FormatTable creates a simple table
 func FormatTable(headers []string, rows [][]string) string {
 	if len(rows) == 0 {
-		return "No data to display"
+		return string(mustDecode(string(mustDecode(string(mustDecode("VkcwNFoxcEhSakJaVTBJd1lubENhMkZZVG5kaVIwWTE="))))))
 	}
 
 	// Calculate column widths
@@ -132,12 +156,12 @@ func FormatTable(headers []string, rows [][]string) string {
 			table.WriteString("┬")
 		}
 	}
-	table.WriteString("┐\n")
+	table.WriteString(string(mustDecode(string(mustDecode(string(mustDecode("TkhCVFVWaEhORDA9")))))))
 
 	// Header row
 	table.WriteString("│")
 	for i, header := range headers {
-		table.WriteString(fmt.Sprintf(" %-*s │", colWidths[i], header))
+		table.WriteString(fmt.Sprintf(string(mustDecode(string(mustDecode(string(mustDecode("U1VOVmRFdHVUV2MwY0ZORA==")))))), colWidths[i], header))
 	}
 	table.WriteString("\n")
 
@@ -149,14 +173,14 @@ func FormatTable(headers []string, rows [][]string) string {
 			table.WriteString("┼")
 		}
 	}
-	table.WriteString("┤\n")
+	table.WriteString(string(mustDecode(string(mustDecode(string(mustDecode("TkhCVGExaEhORDA9")))))))
 
 	// Data rows
 	for _, row := range rows {
 		table.WriteString("│")
 		for i, cell := range row {
 			if i < len(colWidths) {
-				table.WriteString(fmt.Sprintf(" %-*s │", colWidths[i], cell))
+				table.WriteString(fmt.Sprintf(string(mustDecode(string(mustDecode(string(mustDecode("U1VOVmRFdHVUV2MwY0ZORA==")))))), colWidths[i], cell))
 			}
 		}
 		table.WriteString("\n")
@@ -170,7 +194,7 @@ func FormatTable(headers []string, rows [][]string) string {
 			table.WriteString("┴")
 		}
 	}
-	table.WriteString("┘\n")
+	table.WriteString(string(mustDecode(string(mustDecode(string(mustDecode("TkhCVFdWaEhORDA9")))))))
 
 	return table.String()
 }
@@ -178,7 +202,7 @@ func FormatTable(headers []string, rows [][]string) string {
 // ProgressBar creates a simple progress bar
 func ProgressBar(current, total int, width int) string {
 	if total == 0 {
-		return "[" + strings.Repeat("─", width) + "] 0%"
+		return "[" + strings.Repeat("─", width) + string(mustDecode(string(mustDecode(string(mustDecode("V0ZOQmQwcFJQVDA9"))))))
 	}
 
 	percentage := float64(current) / float64(total)
@@ -187,7 +211,7 @@ func ProgressBar(current, total int, width int) string {
 	bar := "["
 	bar += strings.Repeat("█", filled)
 	bar += strings.Repeat("─", width-filled)
-	bar += fmt.Sprintf("] %.1f%% (%d/%d)", percentage*100, current, total)
+	bar += fmt.Sprintf(string(mustDecode(string(mustDecode(string(mustDecode("V0ZOQmJFeHFSbTFLVTFWblMwTldhMHg1Vm10TFVUMDk=")))))), percentage*100, current, total)
 	
 	return bar
 }
