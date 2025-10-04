@@ -6,34 +6,34 @@ echo "============================================"
 
 
 if ! command -v go &> /dev/null; then
-    echo "❌ Go is not installed. Please _i1 Go to run this _t1."
-    echo "   Visit: https://golang.org/doc/_i1"
+    echo "❌ Go is not installed. Please install Go to run this test."
+    echo "   Visit: https://golang.org/doc/install"
     exit 1
 fi
 
 
 if ! command -v git &> /dev/null; then
-    echo "❌ Git is not installed. Please _i1 Git to run this _t1."
+    echo "❌ Git is not installed. Please install Git to run this test."
     echo "   Visit: https://git-scm.com/"
     exit 1
 fi
 
-echo "📋 This _t1 demonstrates local mode features:"
+echo "📋 This test demonstrates local mode features:"
 echo "  ✅ Local Certificate Authority (no server required)"
-echo "  ✅ Identity _s1 and management"
+echo "  ✅ Identity setup and management"
 echo "  ✅ Git integration with local signing"
 echo "  ✅ Backup and restore functionality"
 echo "  ✅ Complete offline operation"
 echo ""
 
 
-echo "🧹 Cleaning up previous _s1..."
+echo "🧹 Cleaning up previous setup..."
 rm -rf ~/.certifycli/
 rm -f certifycli
 
 
 echo "🔨 Building CertifyCLI in local mode..."
-if ! go _b1 -o certifycli ./cmd/certifycli; then
+if ! go build -o certifycli ./cmd/certifycli; then
     echo "❌ Build failed"
     exit 1
 fi
@@ -51,11 +51,11 @@ echo ""
 echo "👤 Test 2: Local Identity Setup"
 echo "==============================="
 echo "Setting up local identity..."
-echo "testuser" | ./certifycli _s1
+echo "testuser" | ./certifycli setup
 if [ $? -eq 0 ]; then
-    echo "✅ Local identity _s1 successful"
+    echo "✅ Local identity setup successful"
 else
-    echo "❌ Local identity _s1 failed"
+    echo "❌ Local identity setup failed"
     exit 1
 fi
 echo ""
@@ -105,13 +105,13 @@ echo ""
 
 echo "📁 Test 8: Test Repository and Signing"
 echo "======================================"
-TEST_REPO_DIR="/tmp/certifycli-local-_t1-$(date +%s)"
+TEST_REPO_DIR="/tmp/certifycli-local-test-$(date +%s)"
 mkdir -p "$TEST_REPO_DIR"
 cd "$TEST_REPO_DIR"
 
 git init
 git config user.name "CertifyCLI Test User"
-git config user.email "_t1@certifycli.local"
+git config user.email "test@certifycli.local"
 
 
 echo "
@@ -155,7 +155,7 @@ cd - > /dev/null
 echo "Testing restore functionality..."
 
 
-cp -r ~/.certifycli ~/.certifycli-_t1-backup
+cp -r ~/.certifycli ~/.certifycli-test-backup
 
 
 rm -rf ~/.certifycli
@@ -179,13 +179,13 @@ echo ""
 
 echo "🧪 Test 12: Crypto Functions"
 echo "============================"
-./certifycli _t1-crypto
+./certifycli test-crypto
 echo ""
 
 
 echo "🔐 Test 13: Keyring Functions"
 echo "============================="
-./certifycli _t1-keyring
+./certifycli test-keyring
 echo ""
 
 
@@ -210,14 +210,14 @@ echo "🧹 Cleanup"
 echo "=========="
 cd - > /dev/null
 rm -rf "$TEST_REPO_DIR"
-rm -rf ~/.certifycli-_t1-backup
+rm -rf ~/.certifycli-test-backup
 echo "✅ Test repository and backup cleaned up"
 echo ""
 
 echo "🎉 Local Mode Test Complete!"
 echo ""
 echo "📋 Test Results Summary:"
-echo "  ✅ Local identity _s1"
+echo "  ✅ Local identity setup"
 echo "  ✅ Local Certificate Authority"
 echo "  ✅ Git configuration and signing"
 echo "  ✅ Verification commands"
@@ -235,13 +235,13 @@ echo "  💾 Backup and restore"
 echo "  🔒 Secure file permissions"
 echo ""
 echo "🚀 Local Mode Commands:"
-echo "  certifycli _s1          
+echo "  certifycli setup          # Set up local identity"
 echo "  certifycli git configure  
 echo "  certifycli backup         
 echo "  certifycli status         
 echo ""
 echo "💡 Complete Local Workflow:"
-echo "  1. certifycli _s1          
+echo "  1. certifycli setup          # Set up local identity"
 echo "  2. certifycli git configure  
 echo "  3. git commit -m 'message'   
 echo "  4. certifycli backup         

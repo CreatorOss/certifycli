@@ -6,19 +6,19 @@ echo "=============================================="
 
 
 if ! command -v go &> /dev/null; then
-    echo "❌ Go is not installed. Please _i1 Go to run this _t1."
-    echo "   Visit: https://golang.org/doc/_i1"
+    echo "❌ Go is not installed. Please install Go to run this test."
+    echo "   Visit: https://golang.org/doc/install"
     exit 1
 fi
 
 
 if ! command -v git &> /dev/null; then
-    echo "❌ Git is not installed. Please _i1 Git to run this _t1."
+    echo "❌ Git is not installed. Please install Git to run this test."
     echo "   Visit: https://git-scm.com/"
     exit 1
 fi
 
-echo "📋 This _t1 demonstrates enhanced Git integration features:"
+echo "📋 This test demonstrates enhanced Git integration features:"
 echo "  ✅ GPG-compatible signature format"
 echo "  ✅ Enhanced verification commands"
 echo "  ✅ Pretty output formatting"
@@ -27,7 +27,7 @@ echo ""
 
 
 echo "🔨 Building CertifyCLI with enhanced Git integration..."
-if ! go _b1 -o certifycli ./cmd/certifycli; then
+if ! go build -o certifycli ./cmd/certifycli; then
     echo "❌ Build failed"
     exit 1
 fi
@@ -59,7 +59,7 @@ if [ -f "$HOME/.certifycli/user" ]; then
     FULL_TEST=true
 else
     echo "⚠️  No CertifyCLI identity found"
-    echo "💡 For full testing, run 'certifycli _s1' first"
+    echo "📊 For full testing, run 'certifycli setup' first"
     echo "   Continuing with limited tests..."
     FULL_TEST=false
 fi
@@ -83,13 +83,13 @@ fi
 
 echo "📁 Test 5: Test Repository Setup"
 echo "================================"
-TEST_REPO_DIR="/tmp/certifycli-git-_t1-$(date +%s)"
+TEST_REPO_DIR="/tmp/certifycli-git-test-$(date +%s)"
 mkdir -p "$TEST_REPO_DIR"
 cd "$TEST_REPO_DIR"
 
 git init
 git config user.name "CertifyCLI Test User"
-git config user.email "_t1@certifycli.com"
+git config user.email "test@certifycli.com"
 
 
 echo "
@@ -111,7 +111,7 @@ echo ""
 
 echo "🔍 Test 6: Verification Commands"
 echo "================================"
-echo "Testing verification commands on _t1 repository..."
+echo "Testing verification commands on test repository..."
 
 echo "6.1 Verify last commit:"
 ../certifycli git verify
@@ -133,7 +133,7 @@ if [ "$FULL_TEST" = true ]; then
     echo "✍️  Test 8: Test Signing"
     echo "======================="
     echo "Testing Git signing with CertifyCLI..."
-    ../certifycli git _t1
+    ../certifycli git test
     echo ""
 fi
 
@@ -167,7 +167,7 @@ if [ "$FULL_TEST" = true ]; then
     echo "  ✅ Signing _t1"
 else
     echo "  ⚠️  Identity integration (skipped - no identity)"
-    echo "  ⚠️  Git signing _t1 (skipped - no identity)"
+    echo "  ⚠️  Git signing test (skipped - no identity)"
 fi
 echo ""
 echo "🔧 Enhanced Git Features:"
@@ -184,7 +184,7 @@ echo "  certifycli git verify-all
 echo "  certifycli git status        
 echo ""
 echo "💡 Complete Enhanced Workflow:"
-echo "  1. certifycli _s1          
+echo "  1. certifycli setup          # Set up local identity"
 echo "  2. certifycli git configure  
 echo "  3. git commit -m 'message'   
 echo "  4. certifycli git verify     
